@@ -29,7 +29,7 @@ def read_file(file_path):
         try:
             with open(file_path, 'rb') as f:
                 data = pickle.load(f)
-            logging.info(f"Data successfully loaded from {file_path} as pickle")
+            print(f"Data successfully loaded from {file_path} as pickle")
             return data
         except:
             pass
@@ -38,7 +38,7 @@ def read_file(file_path):
         try:
             with open(file_path, 'r') as f:
                 data = json.load(f)
-            logging.info(f"Data successfully loaded from {file_path} as JSON")
+            print(f"Data successfully loaded from {file_path} as JSON")
             return data
         except:
             pass
@@ -47,7 +47,7 @@ def read_file(file_path):
         try:
             with open(file_path, 'r') as f:
                 data = f.read()
-            logging.info(f"Data successfully loaded from {file_path} as plain text")
+            print(f"Data successfully loaded from {file_path} as plain text")
             return data
         except:
             pass
@@ -61,7 +61,6 @@ def read_file(file_path):
         logging.error(f"Error reading file: {str(e)}")
     
     return None
-
 
 def reorder_lists(object_list, list_to_order, ordering_parameters):
     """
@@ -99,42 +98,46 @@ def reorder_lists(object_list, list_to_order, ordering_parameters):
 
 
 def get_model_info_and_parameters(base_folder, separate_modified_params=False):
-        """
-        Retrieves and processes model information and parameters 
-        (dividing or merging default and modified parameters)
-        from the given base folder.
+    """
+    Retrieves and processes model information and parameters 
+    (dividing or merging default and modified parameters)
+    from the given base folder.
 
-        Parameters:
-        base_folder (str): The path to the base folder containing model information and parameters.
-        separate_modified_params (bool): If True, return modified parameters separately. Default is False.
+    Parameters:
+    base_folder (str): The path to the base folder containing model information and parameters.
+    separate_modified_params (bool): If True, return modified parameters separately. Default is False.
 
-        Returns:
-        tuple: A tuple containing (parameters, info) if separate_modified_params is False,
-               or (modified_parameters, default_parameters, info) if separate_modified_params is True.
-        """
-        modified_parameters_path = os.path.join(base_folder, 'modified_parameters')
-        default_parameters_path = os.path.join(base_folder, 'parameters')
-        info_path = os.path.join(base_folder, 'info')
+    Returns:
+    tuple: A tuple containing (parameters, info) if separate_modified_params is False,
+           or (modified_parameters, default_parameters, info) if separate_modified_params is True.
+       """
+    modified_parameters_path = os.path.join(base_folder, 'modified_parameters.json')
+    default_parameters_path = os.path.join(base_folder, 'parameters.json')
+    sim_info_path = os.path.join(base_folder, 'sim_info.json')
+    recorders_path = os.path.join(base_folder, 'recorders.json')
+    experimental_protocols_path = os.path.join(base_folder, 'experimental_protocols.json')
 
-        modified_parameters = eval(read_file(modified_parameters_path))
-        default_parameters = eval(read_file(default_parameters_path))
-        info = eval(read_file(info_path)) 
+    modified_parameters = read_file(modified_parameters_path)
+    default_parameters = read_file(default_parameters_path)
+    sim_info = read_file(sim_info_path)
+    recorders = read_file(recorders_path)
+    experimental_protocols = read_file(experimental_protocols_path)
 
-        # Remove 'experiments.' parameters and 'results_dir' from modified_parameters
-        modified_parameters = {k: v for k, v in modified_parameters.items() if not k.startswith('experiments.') and k != 'results_dir'}
+    # Remove 'experiments.' parameters and 'results_dir' from modified_parameters
+    modified_parameters = {k: v for k, v in modified_parameters.items() if not k.startswith('experiments.') and k != 'results_dir'}
 
-        # Compare remaining items in modified_parameters with default_parameters
-        for key in list(modified_parameters.keys()):
-            if key in default_parameters and modified_parameters[key] == default_parameters[key]:
-                del modified_parameters[key]
+    # Compare remaining items in modified_parameters with default_parameters
+    for key in list(modified_parameters.keys()):
+        if key in default_parameters and modified_parameters[key] == default_parameters[key]:
+            del modified_parameters[key]
 
-        if separate_modified_params:
-            return modified_parameters, default_parameters, info
-        else:
-            # Merge modified parameters into default parameters
-            merged_parameters = default_parameters.copy()
-            merged_parameters.update(modified_parameters)
-            return merged_parameters, info
+    if separate_modified_params:
+        return modified_parameters, default_parameters, sim_info, recorders, experimental_protocols
+    else:
+        # Merge modified parameters into default parameters
+        merged_parameters = default_parameters.copy()
+        merged_parameters.update(modified_parameters)
+        return merged_parameters, sim_info, recorders, experimental_protocols
 
 def classify_stimulus_parameters_into_constant_and_varying(stims):
     """
@@ -165,6 +168,7 @@ def classify_stimulus_parameters_into_constant_and_varying(stims):
 
     return constant_params, varying_params
 
+
 def export_from_datastore_to_hdf5(data_store, st_name, data_type, cut_start=None, cut_end=None):
     """
     Export data from a datastore to a HDF5 file.
@@ -192,12 +196,14 @@ def export_from_datastore_to_hdf5(data_store, st_name, data_type, cut_start=None
                 serialized[key] = value
         return serialized
     
-    def create_hdf5_structure(hf, info, default_parameters, modified_parameters, st_name, varying_stim_params, constant_stim_params, data_type, cut_start, cut_end):
+    def create_hdf5_structure(hf, sim_info, default_parameters, modified_parameters, recorders, experimental_protocols, st_name, varying_stim_params, constant_stim_params, data_type, cut_start, cut_end):
         # Add default parameters and info as metadata to the group
         hf.attrs['default_parameters'] = str(serialize_parameters(default_parameters))
-        hf.attrs['info'] = str(info)
+        hf.attrs['sim_info'] = str(sim_info)
         hf.attrs['data_type'] = data_type
         hf.attrs['st_name'] = st_name
+        hf.attrs['recorders'] = str(recorders)
+        hf.attrs['experimental_protocols'] = str(experimental_protocols)
 
         # Create a subgroup based on modified parameters
         if modified_parameters:
@@ -212,11 +218,11 @@ def export_from_datastore_to_hdf5(data_store, st_name, data_type, cut_start=None
 
         # Add merged parameters as metadata to the model_subgroup
         model_subgroup.attrs['parameters'] = str(serialize_parameters(merged_parameters))
-        logging.info(f"Model subgroup '{model_subgroup_name}' created with merged parameters as metadata.")
+        print(f"Model subgroup '{model_subgroup_name}' created with merged parameters as metadata.")
 
         # Create a stimuli subgroup
         stimuli_subgroup = model_subgroup.create_group(st_name)
-        logging.info(f"Datasets subgroup created under 'stimuli' in '{model_subgroup_name}'.")
+        print(f"Datasets subgroup created under 'stimuli' in '{model_subgroup_name}'.")
 
         # Add varying parameters as metadata to the stimuli subgroup
         stimuli_subgroup.attrs['varying_paramers'] = list(varying_stim_params.keys())
@@ -252,7 +258,7 @@ def export_from_datastore_to_hdf5(data_store, st_name, data_type, cut_start=None
 
     def extract_sheet_data_and_save_to_h5py(stims, segs, varying_stim_params, data_type, stimuli_subgroup, sheet_name, cut_start, cut_end):
         # Get data to export
-        logging.info(f"Extracting {data_type} data from {len(segs)} segments in sheet {sheet_name}")
+        print(f"Extracting {data_type} data from {len(segs)} segments in sheet {sheet_name}")
         data = []
         for seg in segs:  
             if data_type == 'mean_rates':
@@ -290,19 +296,21 @@ def export_from_datastore_to_hdf5(data_store, st_name, data_type, cut_start=None
         # Identify which dimension corresponds to trial
         trial_dim = None
         for i, param in enumerate(varying_stim_params.keys()):
+            print(varying_stim_params)
             if param == 'trial':
                 trial_dim = i
                 stimuli_subgroup.attrs['trial_dim'] = trial_dim
                 break
 
         # Drop the trial dimension by selecting the first element along it
-        if trial_dim is not None:
+        if trial_dim != None:
             reordered_stims = np.take(reordered_stims, 0, axis=trial_dim)
-        
-        # create index to reinsert trial dimension
+        # create index
         reordered_stims_flat = reordered_stims.flatten()
         reordered_stims_idx = np.arange(len(reordered_stims_flat)).reshape(reordered_stims.shape)
-        reordered_stims_idx = np.expand_dims(reordered_stims_idx, axis=trial_dim).repeat(len(varying_stim_params['trial']), axis=trial_dim)
+        # reinsert trial dimension
+        if trial_dim != None:
+            reordered_stims_idx = np.expand_dims(reordered_stims_idx, axis=trial_dim).repeat(len(varying_stim_params['trial']), axis=trial_dim)
 
         sensory_stim = np.array(ds.get_sensory_stimulus([str(s) for s in reordered_stims_flat])).squeeze()
         stimuli_subgroup.create_dataset('stimuli', data=sensory_stim)   
@@ -313,7 +321,7 @@ def export_from_datastore_to_hdf5(data_store, st_name, data_type, cut_start=None
     base_folder = data_store.parameters['root_directory']
     with h5py.File(os.path.join(base_folder, 'exported_data.h5'), 'w') as hf:
         # Get model info and parameters
-        modified_parameters, default_parameters, info = get_model_info_and_parameters(base_folder, separate_modified_params=True)
+        modified_parameters, default_parameters, info, recorders, experimental_protocols = get_model_info_and_parameters(base_folder, separate_modified_params=True)
         sheets =  data_store.sheets() 
         hf.attrs['sheets'] = [sheet.replace('/', '') for sheet in sheets]
         
@@ -326,17 +334,17 @@ def export_from_datastore_to_hdf5(data_store, st_name, data_type, cut_start=None
             # Create HDF5 structure for the first sheet
             if i == 0:
                 stimuli_subgroup = create_hdf5_structure(
-                    hf, info, default_parameters, modified_parameters, st_name,
+                    hf, info, default_parameters, modified_parameters, recorders, experimental_protocols, st_name,
                     varying_stim_params, constant_stim_params, data_type, cut_start, cut_end
                 )
 
-            # Extract data and save to h5py
-            extract_sheet_data_and_save_to_h5py(stims, segs, varying_stim_params, data_type, stimuli_subgroup, sheet_name, cut_start, cut_end)
+            # # Extract data and save to h5py
+            extract_sheet_data_and_save_to_h5py(stims, segs, varying_stim_params, data_type, stimuli_subgroup, sheet_name, cut_start, cut_end) 
 
         # Add stimuli dataset
         add_stimuli_dataset(stimuli_subgroup, stims, varying_stim_params, data_store)
 
-    logging.info(f"HDF5 file created with default parameters, info, list of sheets as metadata, stimuli subgroup, and datasets subgroup.")
+    print(f"HDF5 file created with default parameters, info, list of sheets as metadata, stimuli subgroup, and datasets subgroup.")
 
 
 def merge_hdf5_files(file_list, output_file):
@@ -377,12 +385,14 @@ def merge_hdf5_files(file_list, output_file):
     with h5py.File(output_file, 'w') as f_merged:
         # Initialize variables to store common information
         default_parameters = None
-        info = None
+        sim_info = None
         results_dirs = []
-        creation_data = []
+        run_dates = []
+        experimental_protocols = []
         sheets = None
         data_type = None
         st_name = None
+        
 
         # Open all input files
         with contextlib.ExitStack() as stack:
@@ -391,42 +401,49 @@ def merge_hdf5_files(file_list, output_file):
             # Check if all files have the same attributes
             for idx, f in enumerate(files):
                 current_default_params = eval(f.attrs['default_parameters'])
-                current_info = eval(f.attrs['info'])
+                current_sim_info = eval(f.attrs['sim_info'])
                 current_sheets = f.attrs['sheets']
                 current_data_type = f.attrs['data_type']
                 current_st_name = f.attrs['st_name']
+                current_recorders = f.attrs['recorders']
 
                 results_dirs.append(current_default_params.pop('results_dir'))
-                creation_data.append(current_info.pop('creation_data'))
+                run_dates.append(current_sim_info.pop('run_date'))
+                experimental_protocols.append(f.attrs['experimental_protocols'])
 
                 if idx == 0:
                     default_parameters = copy.deepcopy(current_default_params)
-                    info = copy.deepcopy(current_info)
+                    sim_info = copy.deepcopy(current_sim_info)
                     sheets = current_sheets
                     data_type = current_data_type
                     st_name = current_st_name
+                    recorders = current_recorders
                 else:
                     if current_default_params != default_parameters:
                         raise ValueError(f"File {file_list[idx]} has different default parameters")
-                    if current_info != info:
-                        raise ValueError(f"File {file_list[idx]} has different info")
+                    if current_sim_info != sim_info:
+                        raise ValueError(f"File {file_list[idx]} has different sim_info")
                     if not np.array_equal(current_sheets, sheets):
                         raise ValueError(f"File {file_list[idx]} has different sheets")
                     if current_data_type != data_type:
                         raise ValueError(f"File {file_list[idx]} has different data_type")
                     if current_st_name != st_name:
                         raise ValueError(f"File {file_list[idx]} has different st_name")
+                    if current_recorders != recorders:
+                        raise ValueError(f"File {file_list[idx]} has different recorders")
+
+            # add back results_dir and run_date to default_parameters and sim_info
+            default_parameters['results_dir'] = results_dirs
+            sim_info['run_date'] = run_dates
 
             # Write attributes to merged file
             f_merged.attrs['default_parameters'] = str(default_parameters)
-            f_merged.attrs['info'] = str(info)
-            f_merged.attrs['source_dataset_metadata'] = str({
-                'results_dirs': results_dirs,
-                'creation_data': creation_data
-            })
+            f_merged.attrs['sim_info'] = str(sim_info)
+            f_merged.attrs['experimental_protocols'] = experimental_protocols
             f_merged.attrs['data_type'] = data_type
             f_merged.attrs['st_name'] = st_name
             f_merged.attrs['sheets'] = sheets
+            f_merged.attrs['recorders'] = recorders
 
             # Process model subgroups
             for model_key in files[0].keys():
@@ -481,10 +498,18 @@ def merge_hdf5_files(file_list, output_file):
                         else:
                             merged_stim_subgroup.attrs[k] = np.concatenate([ssg.attrs[k] for ssg in stim_subgroups])
 
+                    # Add merging dimension and sizes of each input dataset in that dimension
+                    merged_stim_subgroup.attrs['merging_dimension'] = different_param_dim
+                    merged_stim_subgroup.attrs['merging_dimension_name'] = different_key
+                    merged_stim_subgroup.attrs['merging_input_sizes'] = [ssg['stimuli'].shape[different_param_dim] for ssg in stim_subgroups]
+
                     # Merge datasets
                     for sheet in sheets:
                         sheet_data = np.concatenate([ssg[sheet][:] for ssg in stim_subgroups], axis=different_param_dim)
-                        merged_stim_subgroup.create_dataset(sheet, data=sheet_data)
+                        if f_merged.attrs['data_type'] == 'spiketrains':
+                            merged_stim_subgroup.create_dataset(sheet, data=sheet_data, dtype=h5py.special_dtype(vlen=np.dtype('float')))
+                        else:
+                            merged_stim_subgroup.create_dataset(sheet, data=sheet_data)
 
                     stimuli_idx_merged = np.concatenate([ssg['stimuli_idx'][:] + sum(len(s['stimuli'][:]) for s in stim_subgroups[:i]) for i, ssg in enumerate(stim_subgroups)], axis=different_param_dim)
                     merged_stim_subgroup.create_dataset('stimuli_idx', data=stimuli_idx_merged)
@@ -492,6 +517,191 @@ def merge_hdf5_files(file_list, output_file):
                     stimuli_merged = np.concatenate([ssg['stimuli'][:] for ssg in stim_subgroups])
                     merged_stim_subgroup.create_dataset('stimuli', data=stimuli_merged)
 
-                logging.info(f'Merged {stim_key} in {model_key}')
+                print(f'Merged {stim_key} in {model_key}')
 
-    logging.info(f'Successfully merged {len(file_list)} files into {output_file}')
+    print(f'Successfully merged {len(file_list)} files into {output_file}')
+
+# generic functions to use with with h5py mozaik data files 
+def get_stimulus_response_pairs(file_path, model_key, stim_key, sheet, indices):
+    """
+    Access specific pairs of stimuli and responses in the HDF5 file.
+    
+    Parameters:
+    file_path (str): Path to the HDF5 file
+    model_key (str): Key for the model subgroup
+    stim_key (str): Key for the stimulus subgroup
+    sheet (str): Name of the sheet (e.g., 'V1_Exc_L23')
+    indices (tuple, array or list of int): Indices of the stimuli to retrieve. Length of indices must match the number of dimensions of the stimuli index dataset.
+    
+    Returns:
+    tuple: (stimuli, responses)
+    """
+    with h5py.File(file_path, 'r') as f:
+        # Convert indices to tuple
+        indices = tuple(indices)
+
+        # Navigate to the specific subgroup
+        subgroup = f[model_key][stim_key]
+        
+        # Get the stimuli
+        stimuli_idx_dataset = subgroup['stimuli_idx'][:]
+        stimuli_dataset = subgroup['stimuli'][:]
+      
+        stimulus_idx = stimuli_idx_dataset[indices]
+        stimuli = stimuli_dataset[stimulus_idx]
+        
+        # Get the responses
+        response_dataset = subgroup[sheet]
+        responses = response_dataset[indices]
+        return stimuli, responses
+
+def print_dataset_content(file_path, dataset_path):
+    """
+    Print the content of a specific dataset in an HDF5 file.
+    
+    Parameters:
+    file_path (str): Path to the HDF5 file
+    dataset_path (str): Path to the dataset within the HDF5 file
+    """
+    with h5py.File(file_path, 'r') as f:
+        if dataset_path in f:
+            dataset = f[dataset_path]
+            print(dataset.shape)
+            print(f"Content of dataset: {dataset_path}")
+            
+            # Check if the dataset contains variable-length data
+            if h5py.check_dtype(vlen=dataset.dtype) == np.dtype('float'):
+                print("Variable-length float data:")
+                for i, row in enumerate(dataset):
+                    print(f"  Row {i}: {row}")
+            else:
+                print(dataset[:])
+        else:
+            print(f"Dataset {dataset_path} not found in the file.")
+
+def explore_hdf5(file_path):
+    """
+    Explore the entire structure of an HDF5 file, printing all groups, datasets, attributes, and top-level attributes.
+    
+    Parameters:
+    file_path (str): Path to the HDF5 file
+    """
+    def print_attrs(name, obj):
+        print(f"Object: {name}")
+        for key, val in obj.attrs.items():
+            print(f"  Attribute: {key} = {val}")
+
+    def print_structure(name, obj):
+        if isinstance(obj, h5py.Group):
+            print(f"Group: {name}")
+        elif isinstance(obj, h5py.Dataset):
+            print(f"Dataset: {name}, Shape: {obj.shape}, Type: {obj.dtype}")
+        print_attrs(name, obj)
+
+    with h5py.File(file_path, 'r') as f:
+        print("\nTop-level attributes:")
+        for key, val in f.attrs.items():
+            print(f"  {key} = {val}")
+
+        print("File Structure:")
+        f.visititems(print_structure)
+
+
+def get_hdf5_group_list_of_attributes(file_path, group_name=None):
+    """
+    Get a list of attributes for a given HDF5 group or the file itself.
+
+    Parameters:
+    file_path (str): Path to the HDF5 file.
+    group_name (str, optional): Name of the group within the HDF5 file. If None, attributes of the file itself are returned.
+
+    Returns:
+    list: A list of attribute names.
+    """
+    with h5py.File(file_path, 'r') as hf:
+        if group_name is None:
+            return list(hf.attrs.keys())
+        else:
+            return list(hf[group_name].attrs.keys())
+
+
+def get_hdf5_group_attribute(file_path, group_name, attribute_name):
+    """
+    Get the value of a specific attribute for a given HDF5 group or the file itself.
+
+    Parameters:
+    file_path (str): Path to the HDF5 file.
+    group_name (str): Name of the group within the HDF5 file. If None, the attribute of the file itself is returned.
+    attribute_name (str): Name of the attribute to retrieve.
+
+    Returns:
+    object: The value of the specified attribute.
+    """
+    with h5py.File(file_path, 'r') as hf:
+        if group_name is None:
+            return hf.attrs[attribute_name]
+        else:
+            return hf[group_name].attrs[attribute_name]
+        
+def compare_hdf5_structure(file1, file2):
+    """
+    Compare the structure of two HDF5 files and return the differences.
+
+    Parameters:
+    file1 (str): Path to the first HDF5 file.
+    file2 (str): Path to the second HDF5 file.
+
+    Returns:
+    dict: A dictionary containing the differences between the two HDF5 files.
+          The keys are the names of the groups or datasets that differ, and the values are dictionaries
+          with the following keys:
+          - 'status': A string indicating the status of the difference ('missing in file1', 'missing in file2', 'different').
+          - 'missing_attributes': A dictionary containing the attributes that are missing in either file1 or file2, 
+            with the group they belong to.
+    """
+    def get_structure(hdf5_file):
+        """
+        Get the structure of an HDF5 file.
+
+        Parameters:
+        hdf5_file (h5py.File): An open HDF5 file.
+
+        Returns:
+        dict: A dictionary representing the structure of the HDF5 file.
+              The keys are the names of the groups or datasets, and the values are dictionaries
+              with the following keys:
+              - 'type': A string indicating the type ('group' or 'dataset').
+              - 'attributes': A list of attribute names.
+        """
+        structure = {}
+        def visit(name, obj):
+            obj_type = 'group' if isinstance(obj, h5py.Group) else 'dataset'
+            structure[name] = {'type': obj_type, 'attributes': list(obj.attrs.keys())}
+        hdf5_file.visititems(visit)
+        return structure
+
+    with h5py.File(file1, 'r') as f1, h5py.File(file2, 'r') as f2:
+        structure1 = get_structure(f1)
+        structure2 = get_structure(f2)
+
+    differences = {}
+    all_keys = set(structure1.keys()).union(set(structure2.keys()))
+    for key in all_keys:
+        if key not in structure1:
+            differences[key] = {'status': 'missing in file1', 'missing_attributes': {key: structure2[key]['attributes']}}
+        elif key not in structure2:
+            differences[key] = {'status': 'missing in file2', 'missing_attributes': {key: structure1[key]['attributes']}}
+        else:
+            if structure1[key] != structure2[key]:
+                missing_in_file1 = list(set(structure2[key]['attributes']) - set(structure1[key]['attributes']))
+                missing_in_file2 = list(set(structure1[key]['attributes']) - set(structure2[key]['attributes']))
+                differences[key] = {
+                    'status': 'different',
+                    'missing_attributes': {
+                        'missing_in_file1': {key: missing_in_file1},
+                        'missing_in_file2': {key: missing_in_file2}
+                    }
+                }
+
+    return differences
+
