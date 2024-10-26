@@ -377,8 +377,8 @@ def parameter_search_run_script_distributed_slurm_UK_mpi(simulation_name,master_
     core_number : int
                 How many cores to reserve per process.
     """
-    f = open(master_results_dir+'/parameter_combinations','rb')
-    combinations = pickle.load(f)
+    f = open(master_results_dir+'/parameter_combinations.json','rb')
+    combinations = json.load(f)
     f.close()
 
     # first check whether all parameter combinations contain the same parameter names
@@ -389,7 +389,6 @@ def parameter_search_run_script_distributed_slurm_UK_mpi(simulation_name,master_
         rdn = master_results_dir+'/'+result_directory_name('ParameterSearch',simulation_name,combination)
         p = Popen(['sbatch'] +  ['-o',master_results_dir+"/slurm_analysis-%j.out" ],stdin=PIPE,stdout=PIPE,stderr=PIPE,text=True)
 
-        # THIS IS A BIT OF A HACK, have to add customization for other people ...
         data = '\n'.join([
                             '#!/bin/bash',
                             '#SBATCH -J MozaikParamSearchAnalysis',
