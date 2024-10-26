@@ -19,17 +19,24 @@ def read_file(file_path):
     Read data from a file, attempting different formats if the file extension is not recognized.
 
     Args:
-    file_path (str): Path to the file.
+        file_path (str): Path to the file.
 
     Returns:
-    object: Data loaded from the file, or None if unsuccessful.
+        object: Data loaded from the file, or None if unsuccessful.
+        
+    Notes:
+        Attempts to read the file in the following order:
+        1. As a pickle file
+        2. As a JSON file 
+        3. As plain text
+        Logs success/failure messages for debugging.
     """
     try:
         # First, try to read as pickle
         try:
             with open(file_path, 'rb') as f:
                 data = pickle.load(f)
-            print(f"Data successfully loaded from {file_path} as pickle")
+            logging.info(f"Data successfully loaded from {file_path} as pickle")
             return data
         except:
             pass
@@ -38,7 +45,7 @@ def read_file(file_path):
         try:
             with open(file_path, 'r') as f:
                 data = json.load(f)
-            print(f"Data successfully loaded from {file_path} as JSON")
+            logging.info(f"Data successfully loaded from {file_path} as JSON")
             return data
         except:
             pass
@@ -47,7 +54,7 @@ def read_file(file_path):
         try:
             with open(file_path, 'r') as f:
                 data = f.read()
-            print(f"Data successfully loaded from {file_path} as plain text")
+            logging.info(f"Data successfully loaded from {file_path} as plain text")
             return data
         except:
             pass
@@ -68,13 +75,19 @@ def reorder_lists(object_list, list_to_order, ordering_parameters):
     specified in `ordering_parameters`, and applies the same reordering to `list_to_order`.
     
     Parameters:
-    - object_list: List of MozaikParametrized objects to be sorted.
-    - list_to_order: List that needs to be reordered in the same order as `object_list`.
-    - ordering_parameters: List of strings representing the attributes of the objects in 
-                           `object_list` to sort by.
+        object_list (list): List of MozaikParametrized objects to be sorted.
+        list_to_order (list): List that needs to be reordered in the same order as `object_list`.
+        ordering_parameters (list): List of strings representing the attributes of the objects in 
+                                  `object_list` to sort by.
     
     Returns:
-    - Tuple containing the reordered `object_list` and `list_to_order`.
+        tuple: A tuple containing:
+            - reordered_object_list (list): The sorted list of MozaikParametrized objects
+            - reordered_list_to_order (list): The list_to_order sorted in the same order as reordered_object_list
+            
+    Notes:
+        The function maintains the pairwise association between elements in both lists
+        while sorting based on multiple attributes of the MozaikParametrized objects.
     """
     def sort_by_multiple_attributes(attributes):
         """
@@ -99,18 +112,32 @@ def reorder_lists(object_list, list_to_order, ordering_parameters):
 
 def get_model_info_and_parameters(base_folder, separate_modified_params=False):
     """
-    Retrieves and processes model information and parameters 
-    (dividing or merging default and modified parameters)
-    from the given base folder.
+    Retrieves and processes model information and parameters from the given base folder.
 
     Parameters:
-    base_folder (str): The path to the base folder containing model information and parameters.
-    separate_modified_params (bool): If True, return modified parameters separately. Default is False.
+        base_folder (str): The path to the base folder containing model information and parameters.
+        separate_modified_params (bool): If True, return modified parameters separately. Default is False.
 
     Returns:
-    tuple: A tuple containing (parameters, info) if separate_modified_params is False,
-           or (modified_parameters, default_parameters, info) if separate_modified_params is True.
-       """
+        If separate_modified_params is False:
+            tuple: (merged_parameters, sim_info, recorders, experimental_protocols)
+                - merged_parameters: Dictionary containing all parameters with modified ones overriding defaults
+                - sim_info: Dictionary containing simulation information
+                - recorders: Dictionary containing recorder configurations
+                - experimental_protocols: Dictionary containing experimental protocol settings
+                
+        If separate_modified_params is True:
+            tuple: (modified_parameters, default_parameters, sim_info, recorders, experimental_protocols)
+                - modified_parameters: Dictionary containing only parameters that differ from defaults
+                - default_parameters: Dictionary containing original default parameters
+                - sim_info: Dictionary containing simulation information
+                - recorders: Dictionary containing recorder configurations
+                - experimental_protocols: Dictionary containing experimental protocol settings
+                
+    Notes:
+        - Removes 'experiments.' parameters (as they are experiment parameters) and 'results_dir' from modified parameters (as saved elsewhere)
+        - Compares remaining modified parameters with defaults to identify true modifications
+    """
     modified_parameters_path = os.path.join(base_folder, 'modified_parameters.json')
     default_parameters_path = os.path.join(base_folder, 'parameters.json')
     sim_info_path = os.path.join(base_folder, 'sim_info.json')
@@ -143,13 +170,17 @@ def classify_stimulus_parameters_into_constant_and_varying(stims):
     """
     Classify the parameters of a list of stimuli into constant and varying categories.
 
-    Args:
-    stims (list): A list of stimulus objects.
+    Parameters:
+        stims (list): A list of stimulus objects.
 
     Returns:
-    tuple: A tuple containing two OrderedDict objects:
-        - constant_params: Parameters that remain constant across all stimuli.
-        - varying_params: Parameters that vary across stimuli, with sorted values.
+        tuple: A tuple containing:
+            - constant_params (OrderedDict): Parameters that remain constant across all stimuli
+            - varying_params (OrderedDict): Parameters that vary across stimuli, with their sorted unique values
+            
+    Notes:
+        - Ensures 'trial' parameter is the first key in varying_params if it exists
+        - Uses OrderedDict to maintain consistent parameter ordering
     """
     constant_params = OrderedDict()
     varying_params = OrderedDict()
@@ -171,18 +202,27 @@ def classify_stimulus_parameters_into_constant_and_varying(stims):
 
 def export_from_datastore_to_hdf5(data_store, st_name, data_type, cut_start=None, cut_end=None):
     """
-    Export data from a datastore to a HDF5 file.
+    Export data from a Mozaik datastore to a HDF5 file with a standardized structure.
 
     Parameters:
-    base_folder (str): The path to the base folder containing the datastore and model information.
-    h5py_path (str): The path to the HDF5 file where the data will be saved.
-    st_name (str): The name of the stimulus to be exported.
-    data_type (str): The type of data to be exported. Options are 'mean_rates', 'spiketrains', or 'segments'.
-    cut_start (int): The start time for data extraction. Default is 0.
-    cut_end (int): The end time for data extraction. Default is None.
+        data_store (DataStore): The Mozaik datastore containing simulation results
+        st_name (str): The name of the stimulus to be exported
+        data_type (str): The type of data to export. Options:
+                        - 'mean_rates': Average firing rates
+                        - 'spiketrains': Raw spike times
+        cut_start (float, optional): Start time (ms) for data extraction
+        cut_end (float, optional): End time (ms) for data extraction
 
-    Returns:
-    None
+    Notes:
+        Creates an HDF5 file with the following structure:
+        - Root attributes: default_parameters, sim_info, sheets, data_type, st_name, recorders
+        - Model groups: Contains parameter sets and stimulus data
+        - Stimulus groups: Contains:
+            - Constant/varying parameter information
+            - Neural response data for each sheet
+            - Stimulus data and indices
+            - Data cut timing information
+
     """
 
     def serialize_parameters(params):
@@ -218,11 +258,11 @@ def export_from_datastore_to_hdf5(data_store, st_name, data_type, cut_start=None
 
         # Add merged parameters as metadata to the model_subgroup
         model_subgroup.attrs['parameters'] = str(serialize_parameters(merged_parameters))
-        print(f"Model subgroup '{model_subgroup_name}' created with merged parameters as metadata.")
+        logging.info(f"Model subgroup '{model_subgroup_name}' created with merged parameters as metadata.")
 
         # Create a stimuli subgroup
         stimuli_subgroup = model_subgroup.create_group(st_name)
-        print(f"Datasets subgroup created under 'stimuli' in '{model_subgroup_name}'.")
+        logging.info(f"Datasets subgroup created under 'stimuli' in '{model_subgroup_name}'.")
 
         # Add varying parameters as metadata to the stimuli subgroup
         stimuli_subgroup.attrs['varying_paramers'] = list(varying_stim_params.keys())
@@ -258,7 +298,7 @@ def export_from_datastore_to_hdf5(data_store, st_name, data_type, cut_start=None
 
     def extract_sheet_data_and_save_to_h5py(stims, segs, varying_stim_params, data_type, stimuli_subgroup, sheet_name, cut_start, cut_end):
         # Get data to export
-        print(f"Extracting {data_type} data from {len(segs)} segments in sheet {sheet_name}")
+        logging.info(f"Extracting {data_type} data from {len(segs)} segments in sheet {sheet_name}")
         data = []
         for seg in segs:  
             if data_type == 'mean_rates':
@@ -296,7 +336,7 @@ def export_from_datastore_to_hdf5(data_store, st_name, data_type, cut_start=None
         # Identify which dimension corresponds to trial
         trial_dim = None
         for i, param in enumerate(varying_stim_params.keys()):
-            print(varying_stim_params)
+            logging.info(varying_stim_params)
             if param == 'trial':
                 trial_dim = i
                 stimuli_subgroup.attrs['trial_dim'] = trial_dim
@@ -344,43 +384,38 @@ def export_from_datastore_to_hdf5(data_store, st_name, data_type, cut_start=None
         # Add stimuli dataset
         add_stimuli_dataset(stimuli_subgroup, stims, varying_stim_params, data_store)
 
-    print(f"HDF5 file created with default parameters, info, list of sheets as metadata, stimuli subgroup, and datasets subgroup.")
+    logging.info(f"HDF5 file created with default parameters, info, list of sheets as metadata, stimuli subgroup, and datasets subgroup.")
 
 
 def merge_hdf5_files(file_list, output_file):
     """
     Merge multiple HDF5 files created by Mozaik into a single HDF5 file.
 
-    This function combines data from multiple HDF5 files, assuming they were generated
-    from similar Mozaik simulations with varying parameters. It checks for consistency
-    across files and merges data along the dimension that differs.
-
     Parameters:
-    -----------
-    file_list : list of str
-        List of paths to the input HDF5 files to be merged.
-    output_file : str
-        Path to the output merged HDF5 file.
-
-    Returns:
-    --------
-    None
-        The function doesn't return anything, but creates a new merged HDF5 file.
-
-    Raises:
-    -------
-    ValueError
-        If inconsistencies are found between the input files or if merge conditions are not met.
+        file_list (list): List of paths to the input HDF5 files to be merged
+        output_file (str): Path to the output merged HDF5 file
 
     Notes:
-    ------
-    - The function assumes that the input files have a specific structure created by
-      Mozaik's export_to_hdf5 function.
-    - It merges data only if there is exactly one varying parameter with different values across
-      files. If this condition is not met, the merge operation is skipped.
-    - The merged file maintains the structure of the original files, combining data
-      along the dimension that varies across files.
-    - Logging is used to provide information about the merging process.
+        Requirements for merging:
+        - Files must have identical structure except for one varying parameter
+        - All files must have the same:
+            - Default parameters (except results_dir)
+            - Simulation info (except run_date)
+            - Sheets configuration
+            - Data type
+            - Stimulus name
+            - Recorders configuration
+            
+        The merged file:
+        - Combines data along the dimension of the varying parameter
+        - Preserves all metadata and attributes
+        - Maintains the original file structure
+        - Includes information about the merge operation:
+            - Merging dimension name and index
+            - Input sizes from each file
+            - Combined parameter values
+            
+        Handles both regular datasets and variable-length datasets (e.g., spiketrains)
     """
     with h5py.File(output_file, 'w') as f_merged:
         # Initialize variables to store common information
@@ -517,24 +552,40 @@ def merge_hdf5_files(file_list, output_file):
                     stimuli_merged = np.concatenate([ssg['stimuli'][:] for ssg in stim_subgroups])
                     merged_stim_subgroup.create_dataset('stimuli', data=stimuli_merged)
 
-                print(f'Merged {stim_key} in {model_key}')
+                logging.info(f'Merged {stim_key} in {model_key}')
 
-    print(f'Successfully merged {len(file_list)} files into {output_file}')
+    logging.info(f'Successfully merged {len(file_list)} files into {output_file}')
 
 # generic functions to use with with h5py mozaik data files 
 def get_stimulus_response_pairs(file_path, model_key, stim_key, sheet, indices):
     """
     Access specific pairs of stimuli and responses in the HDF5 file.
-    
-    Parameters:
-    file_path (str): Path to the HDF5 file
-    model_key (str): Key for the model subgroup
-    stim_key (str): Key for the stimulus subgroup
-    sheet (str): Name of the sheet (e.g., 'V1_Exc_L23')
-    indices (tuple, array or list of int): Indices of the stimuli to retrieve. Length of indices must match the number of dimensions of the stimuli index dataset.
-    
-    Returns:
-    tuple: (stimuli, responses)
+
+    Parameters
+    ----------
+    file_path : str
+                Path to the HDF5 file
+    model_key : str  
+                Key for the model subgroup
+    stim_key : str
+                Key for the stimulus subgroup 
+    sheet : str
+                Name of the sheet (e.g., 'V1_Exc_L23')
+    indices : tuple, array or list of int
+                Indices of the stimuli to retrieve. Length must match the number of dimensions 
+                of the stimuli index dataset.
+
+    Returns
+    -------
+    tuple : (stimuli, responses)
+            - stimuli: The stimulus data for the specified indices
+            - responses: The corresponding neural responses
+
+    Notes
+    -----
+    - Indices should match the dimensionality of the data (e.g., for data with trial and orientation
+      dimensions, indices should be a tuple of (trial_idx, orientation_idx))
+    - For merged files, indices should account for the merged dimension
     """
     with h5py.File(file_path, 'r') as f:
         # Convert indices to tuple
@@ -558,65 +609,100 @@ def get_stimulus_response_pairs(file_path, model_key, stim_key, sheet, indices):
 def print_dataset_content(file_path, dataset_path):
     """
     Print the content of a specific dataset in an HDF5 file.
-    
-    Parameters:
-    file_path (str): Path to the HDF5 file
-    dataset_path (str): Path to the dataset within the HDF5 file
+
+    Parameters
+    ----------
+    file_path : str
+                Path to the HDF5 file
+    dataset_path : str  
+                Path to the dataset within the HDF5 file
     """
     with h5py.File(file_path, 'r') as f:
         if dataset_path in f:
             dataset = f[dataset_path]
-            print(dataset.shape)
-            print(f"Content of dataset: {dataset_path}")
+            logging.info(dataset.shape)
+            logging.info(f"Content of dataset: {dataset_path}")
             
             # Check if the dataset contains variable-length data
             if h5py.check_dtype(vlen=dataset.dtype) == np.dtype('float'):
-                print("Variable-length float data:")
+                logging.info("Variable-length float data:")
                 for i, row in enumerate(dataset):
-                    print(f"  Row {i}: {row}")
+                    logging.info(f"  Row {i}: {row}")
             else:
-                print(dataset[:])
+                logging.info(dataset[:])
         else:
-            print(f"Dataset {dataset_path} not found in the file.")
+            logging.info(f"Dataset {dataset_path} not found in the file.")
 
 def explore_hdf5(file_path):
     """
     Explore the entire structure of an HDF5 file, printing all groups, datasets, attributes, and top-level attributes.
-    
-    Parameters:
-    file_path (str): Path to the HDF5 file
+
+    Parameters
+    ----------
+    file_path : str
+                Path to the HDF5 file
     """
     def print_attrs(name, obj):
-        print(f"Object: {name}")
+        logging.info(f"Object: {name}")
         for key, val in obj.attrs.items():
-            print(f"  Attribute: {key} = {val}")
+            logging.info(f"  Attribute: {key} = {val}")
 
     def print_structure(name, obj):
         if isinstance(obj, h5py.Group):
-            print(f"Group: {name}")
+            logging.info(f"Group: {name}")
         elif isinstance(obj, h5py.Dataset):
-            print(f"Dataset: {name}, Shape: {obj.shape}, Type: {obj.dtype}")
-        print_attrs(name, obj)
+            logging.info(f"Dataset: {name}, Shape: {obj.shape}, Type: {obj.dtype}")
+        logging.info_attrs(name, obj)
 
     with h5py.File(file_path, 'r') as f:
-        print("\nTop-level attributes:")
+        logging.info("\nTop-level attributes:")
         for key, val in f.attrs.items():
-            print(f"  {key} = {val}")
+            logging.info(f"  {key} = {val}")
 
-        print("File Structure:")
+        logging.info("File Structure:")
         f.visititems(print_structure)
+
+def get_structure_of_hdf5(hdf5_file):
+        """
+        Get the structure of an HDF5 file.
+
+        Parameters
+        ----------
+        hdf5_file : h5py.File
+                    An open HDF5 file
+
+        Returns
+        -------
+        dict
+            A dictionary representing the structure of the HDF5 file.
+            The keys are the names of the groups or datasets, and the values are dictionaries
+            with the following keys:
+            - 'type': A string indicating the type ('group' or 'dataset').
+            - 'attributes': A list of attribute names.
+        """
+        structure = {}
+        def visit(name, obj):
+            obj_type = 'group' if isinstance(obj, h5py.Group) else 'dataset'
+            structure[name] = {'type': obj_type, 'attributes': list(obj.attrs.keys())}
+        hdf5_file.visititems(visit)
+        return structure
 
 
 def get_hdf5_group_list_of_attributes(file_path, group_name=None):
     """
     Get a list of attributes for a given HDF5 group or the file itself.
 
-    Parameters:
-    file_path (str): Path to the HDF5 file.
-    group_name (str, optional): Name of the group within the HDF5 file. If None, attributes of the file itself are returned.
+    Parameters
+    ----------
+    file_path : str
+                Path to the HDF5 file
+    group_name : str, optional
+                Name of the group within the HDF5 file. If None, attributes of the file itself are returned.
 
-    Returns:
-    list: A list of attribute names.
+    Returns
+    -------
+    list
+        A list of attribute names.
     """
     with h5py.File(file_path, 'r') as hf:
         if group_name is None:
@@ -629,13 +715,19 @@ def get_hdf5_group_attribute(file_path, group_name, attribute_name):
     """
     Get the value of a specific attribute for a given HDF5 group or the file itself.
 
-    Parameters:
-    file_path (str): Path to the HDF5 file.
-    group_name (str): Name of the group within the HDF5 file. If None, the attribute of the file itself is returned.
-    attribute_name (str): Name of the attribute to retrieve.
+    Parameters
+    ----------
+    file_path : str
+                Path to the HDF5 file
+    group_name : str
+                Name of the group within the HDF5 file. If None, the attribute of the file itself is returned.
+    attribute_name : str
+                Name of the attribute to retrieve
 
-    Returns:
-    object: The value of the specified attribute.
+    Returns
+    -------
+    object
+        The value of the specified attribute.
     """
     with h5py.File(file_path, 'r') as hf:
         if group_name is None:
@@ -647,42 +739,27 @@ def compare_hdf5_structure(file1, file2):
     """
     Compare the structure of two HDF5 files and return the differences.
 
-    Parameters:
-    file1 (str): Path to the first HDF5 file.
-    file2 (str): Path to the second HDF5 file.
+    Parameters
+    ----------
+    file1 : str
+                Path to the first HDF5 file
+    file2 : str
+                Path to the second HDF5 file
 
-    Returns:
-    dict: A dictionary containing the differences between the two HDF5 files.
-          The keys are the names of the groups or datasets that differ, and the values are dictionaries
-          with the following keys:
-          - 'status': A string indicating the status of the difference ('missing in file1', 'missing in file2', 'different').
-          - 'missing_attributes': A dictionary containing the attributes that are missing in either file1 or file2, 
-            with the group they belong to.
+    Returns
+    -------
+    dict
+        A dictionary containing the differences between the two HDF5 files.
+        The keys are the names of the groups or datasets that differ, and the values are dictionaries
+        with the following keys:
+        - 'status': A string indicating the status of the difference ('missing in file1', 'missing in file2', 'different').
+        - 'missing_attributes': A dictionary containing the attributes that are missing in either file1 or file2, 
+          with the group they belong to.
     """
-    def get_structure(hdf5_file):
-        """
-        Get the structure of an HDF5 file.
-
-        Parameters:
-        hdf5_file (h5py.File): An open HDF5 file.
-
-        Returns:
-        dict: A dictionary representing the structure of the HDF5 file.
-              The keys are the names of the groups or datasets, and the values are dictionaries
-              with the following keys:
-              - 'type': A string indicating the type ('group' or 'dataset').
-              - 'attributes': A list of attribute names.
-        """
-        structure = {}
-        def visit(name, obj):
-            obj_type = 'group' if isinstance(obj, h5py.Group) else 'dataset'
-            structure[name] = {'type': obj_type, 'attributes': list(obj.attrs.keys())}
-        hdf5_file.visititems(visit)
-        return structure
 
     with h5py.File(file1, 'r') as f1, h5py.File(file2, 'r') as f2:
-        structure1 = get_structure(f1)
-        structure2 = get_structure(f2)
+        structure1 = get_structure_of_hdf5(f1)
+        structure2 = get_structure_of_hdf5(f2)
 
     differences = {}
     all_keys = set(structure1.keys()).union(set(structure2.keys()))
