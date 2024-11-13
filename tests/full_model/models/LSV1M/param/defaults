@@ -32,4 +32,5 @@
     'l23' : True,
     'trial' : 0,
     'explosion_monitoring': None,
+    'steps_get_data': 0,
 }

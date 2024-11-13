@@ -64,9 +64,13 @@ class Model(BaseComponent):
         Length of the single step of the simulation. 
 
     explosion_monitoring: ParameterSet
-        Defines the sheet to monitor and the threshold of mean rate over which the activity is 
-        considered too high and for which the simulation should be cancelled.
-        None if no monitoring
+                        Defines the sheet to monitor and the threshold of mean rate over which the activity is 
+                        considered too high and for which the simulation should be cancelled.
+                        None if no monitoring
+    steps_get_data: int
+                If None, gets all the data of a given segment at once.
+                Otherwise, defines the number of neurons to get data from after each step
+                This is a solution to the fact that gather can overflow if we get too much data at once
     """
 
     required_parameters = ParameterSet({
@@ -89,6 +93,7 @@ class Model(BaseComponent):
                                               #                 sheet_name : str,
                                               #                 threshold : float,
                                               #            }
+        'steps_get_data': int,
     })
 
     def __init__(self, sim, num_threads, parameters):
@@ -140,6 +145,7 @@ class Model(BaseComponent):
             if self.first_time:
                sheet.record()
         null_segments,sim_run_time = self.reset()
+        
         for sheet in self.sheets.values():
             sheet.prepare_artificial_stimulation(stimulus.duration,self.simulator_time,artificial_stimulators.get(sheet.name,[]))
         if self.input_space:

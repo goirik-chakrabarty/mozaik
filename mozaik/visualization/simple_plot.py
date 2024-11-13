@@ -627,7 +627,7 @@ class StandardStyleAnimatedPlot(StandardStyle):
                    Duration of single frame.
     """
 
-    def plot_next_frame(self):
+    def plot_next_frame(self,frame):
         """
         The function that each instance of `StandardStyleAnimatedPlot` has to implement, in which it updated
         the data in the plot to the next frame.
@@ -635,8 +635,8 @@ class StandardStyleAnimatedPlot(StandardStyle):
         raise NotImplementedError
 
     @staticmethod  # hack to make it compatible with FuncAnimation - we have to make it static
-    def _plot_next_frame(self):
-        a = self.plot_next_frame()
+    def _plot_next_frame(self,frame):
+        a = self.plot_next_frame(frame)
         return a,
 
     def post_plot(self):
@@ -671,18 +671,12 @@ class PixelMovie(StandardStyleAnimatedPlot):
         self.parameters["left_border"] = False
         self.parameters["bottom_border"] = False
 
-    def plot_next_frame(self):
-        if self.i == self.l:
-            self.im.set_array(self.movie[0]*0)
-        else:
-            self.im.set_array(self.movie[self.i])
-            self.i = self.i + 1
-
+    def plot_next_frame(self,frame):
+        self.im.set_array(self.movie[frame])
         return self.im
 
     def plot(self):
         self.im = self.axis.imshow(self.movie[0],interpolation='nearest',vmin=0,vmax=self.background_luminance*2,cmap='gray')
-
 
 class ScatterPlotMovie(StandardStyleAnimatedPlot):
     """
@@ -715,14 +709,11 @@ class ScatterPlotMovie(StandardStyleAnimatedPlot):
         self.parameters["bottom_border"] = False
         self.parameters["colors"] = False
 
-    def plot_next_frame(self):
+    def plot_next_frame(self,frame):
         if isinstance(self.parameters['colors'],numpy.ndarray):
-            self.scatter.set_color(self.z[self.i, :])
+            self.scatter.set_color(self.z[frame, :])
         else:
-            self.scatter.set_array(self.z[self.i, :])
-        self.i = self.i + 1
-        if self.i == self.l:
-            self.i = 0
+            self.scatter.set_array(self.z[frame, :])
         return self.scatter
 
     def plot(self):
@@ -930,7 +921,9 @@ class StandardStyleLinePlot(StandardStyle):
         self.parameters["linewidth"] = 1
 
         if error != None:
-           assert numpy.shape(error) == numpy.shape(y)
+            assert len(y) == len(error)
+            for yy, err in zip(y,error):
+                assert numpy.shape(err) == numpy.shape(yy)
 
         assert len(x) == len(y)
         if labels != None:
@@ -1066,7 +1059,7 @@ class ConductancePlot(StandardStyle):
             self.cond_color = '#A9BCF5'
             self.mean_color = 'b'
         else:
-            raise ValueError('%s is not an appropriate name for parameter `type_`. Only `exc` or `inh` are valid', self.type_)
+            raise ValueError('%s is not an appropriate name for parameter `type_`. Only `exc` or `inh` are valid', type_)
 
     def plot(self):
         mean_cond = numpy.zeros(numpy.shape(self.cond[0]))
