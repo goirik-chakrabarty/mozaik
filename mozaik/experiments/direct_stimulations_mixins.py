@@ -2,8 +2,6 @@ from mozaik.tools.distribution_parametrization import ParameterWithUnitsAndPerio
 from mozaik.sheets.direct_stimulator import Depolarization
 from collections import OrderedDict
 
-
-
 def add_per_stimulus_current_injection(exp,stimulation_configuration,stimulation_sheet,stimulation_current):
     """
     To experiment *exp*, add an injection of current of magnitude *stimulation_current* to neurons from sheet *stimulation_sheet*

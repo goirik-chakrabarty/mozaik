@@ -585,6 +585,7 @@ class SpatioTemporalFilterRetinaLGN(SensoryInputComponent):
             (input_currents, retinal_input) = cached
 
         ts = self.model.sim.get_time_step()
+
         # Correcting for nest/PyNN time inconsistency + adding one ts as injected current at the current time is not taken into account
         new_offset = convert_time_pyNN_to_nest(self.model.sim,offset) + ts
 
@@ -631,6 +632,7 @@ class SpatioTemporalFilterRetinaLGN(SensoryInputComponent):
         # if record() has already been called, setup the recording now
         self._built = True
         self.write_cache(st, input_currents, retinal_input)
+        
         # also save into internal cache
         self.internal_stimulus_cache[str(st)] = (input_currents, retinal_input)
 
@@ -753,22 +755,35 @@ class SpatioTemporalFilterRetinaLGN(SensoryInputComponent):
                     for t in threads:
                         t.join()
 
+
+        assert self.model.parameters.store_stimuli.frame_grab_period % self.model.input_space.update_interval == 0 , "frame_grab_period (%d) has to be multiple of input space update interval (%d)" % (self.model.parameters.store_stimuli.frame_grab_period,self.model.input_space.update_interval)
+
+        next_frame_to_grab = self.model.parameters.store_stimuli.first_frame
+        frames_grabbed = 0
+
         while t < duration:
             t = visual_space.update()
             for rf_type in self.rf_types:
                 for cell in input_cells[rf_type]:
                     cell.view()
+            
 
-            if self.model.parameters.store_stimuli == True:
-                if (self.model.parameters.time_of_frame_to_store >= t and self.model.parameters.time_of_frame_to_store < t + visual_space.update_interval) or self.model.parameters.time_of_frame_to_store < 0:
-                    visual_region = VisualRegion(location_x=0, location_y=0,
-                                            size_x=self.model.visual_field.size_x,
-                                            size_y=self.model.visual_field.size_y)
-                    im = visual_space.view(visual_region,pixel_size=self.rf["X_ON"].spatial_resolution)
-                    retinal_input.append(im)
+            if self.model.parameters.store_stimuli != None:
+                if (frames_grabbed < self.model.parameters.store_stimuli.num_to_grab) or self.model.parameters.store_stimuli.num_to_grab == 0:
+                    if (next_frame_to_grab >= t-visual_space.update_interval and next_frame_to_grab < t):
+                        visual_region = VisualRegion(location_x=0, location_y=0,
+                                                size_x=self.model.visual_field.size_x,
+                                                size_y=self.model.visual_field.size_y)
+                        im = visual_space.view(visual_region,pixel_size=self.rf["X_ON"].spatial_resolution)
+                        retinal_input.append(im)
+                        frames_grabbed = frames_grabbed + 1
+                        next_frame_to_grab = next_frame_to_grab+self.model.parameters.store_stimuli.frame_grab_period
 
         input_currents = OrderedDict()
         for rf_type in self.rf_types:
             input_currents[rf_type] = [cell.response_current()
                                        for cell in input_cells[rf_type]]
         return (input_currents, retinal_input)
+
+
+

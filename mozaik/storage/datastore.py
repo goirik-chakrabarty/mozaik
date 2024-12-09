@@ -371,7 +371,7 @@ class DataStore(DataStoreView):
 
     required_parameters = ParameterSet({
         'root_directory': str,
-        'store_stimuli' : bool,
+        'store_stimuli' : ParameterSet,
     })
 
     def __init__(self, load, parameters, **params):

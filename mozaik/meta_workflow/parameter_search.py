@@ -232,136 +232,7 @@ def _parameter_combinations_rec(combination,arrays):
     return sum([_parameter_combinations_rec(combination[:] + [value],arrays[1:]) for value in arrays[0]],[])
     
 
-def parameter_search_run_script_distributed_slurm(simulation_name,master_results_dir,run_script,core_number):
-    """
-    Scheadules the execution of *run_script*, one per each parameter combination of an existing parameter search run.
-    Each execution receives as the first commandline argument the directory in which the results for the given
-    parameter combination were stored.
-    
-    Parameters
-    ----------
-    simulation_name : str
-                    The name of the simulation.
-    master_results_dir : str
-                    The directory where the parameter search results are stored.
-    run_script : str
-                    The name of the script to be run. The directory name of the given parameter combination datastore will be passed to it as the first command line argument.
-    core_number : int
-                How many cores to reserve per process.
-    """
-    with open(master_results_dir + '/parameter_combinations.json', 'r', encoding='utf-8') as f:
-        combinations = json.load(f)    
-
-    # first check whether all parameter combinations contain the same parameter names
-    assert len(set([tuple(set(comb.keys())) for comb in combinations])) == 1 , "The parameter search didn't occur over a fixed set of parameters"
-    
-    from subprocess import Popen, PIPE, STDOUT
-    for i,combination in enumerate(combinations):
-        rdn = master_results_dir+'/'+result_directory_name('ParameterSearch',simulation_name,combination)    
-        p = Popen(['sbatch'] +  ['-o',master_results_dir+"/slurm_analysis-%j.out" ],stdin=PIPE,stdout=PIPE,stderr=PIPE,text=True)
-         
-        # THIS IS A BIT OF A HACK, have to add customization for other people ...            
-        data = '\n'.join([
-                            '#!/bin/bash',
-                            '#SBATCH -J MozaikParamSearchAnalysis',
-                            '#SBATCH -c ' + str(core_number),
-                            'source /opt/software/mpi/openmpi-1.6.3-gcc/env',
-                            'source /home/antolikjan/env/mozaiknew/bin/activate',
-                            'cd ' + os.getcwd(),
-                            'echo "DSADSA"',                            
-                            ' '.join(["mpirun"," --mca mtl ^psm python",run_script,"'"+rdn+"'"]  +['>']  + ["'"+rdn +'/OUTFILE_analysis'+str(time.time()) + "'"]),
-                        ]) 
-        print(p.communicate(input=data)[0])
-        print(data)
-        p.stdin.close()
-
-
-def parameter_search_run_script_distributed_slurm_IoV(simulation_name,master_results_dir,run_script,core_number):
-    """
-    Scheadules the execution of *run_script*, one per each parameter combination of an existing parameter search run.
-    Each execution receives as the first commandline argument the directory in which the results for the given
-    parameter combination were stored.
-    
-    Parameters
-    ----------
-    simulation_name : str
-                    The name of the simulation.
-    master_results_dir : str
-                    The directory where the parameter search results are stored.
-    run_script : str
-                    The name of the script to be run. The directory name of the given parameter combination datastore will be passed to it as the first command line argument.
-    core_number : int
-                How many cores to reserve per process.
-    """
-    with open(master_results_dir + '/parameter_combinations.json', 'r', encoding='utf-8') as f:
-        combinations = json.load(f)
-
-    # first check whether all parameter combinations contain the same parameter names
-    assert len(set([tuple(set(comb.keys())) for comb in combinations])) == 1 , "The parameter search didn't occur over a fixed set of parameters"
-    
-    from subprocess import Popen, PIPE, STDOUT
-    for i,combination in enumerate(combinations):
-        rdn = master_results_dir+'/'+result_directory_name('ParameterSearch',simulation_name,combination)    
-        p = Popen(['sbatch'] +  ['-o',master_results_dir+"/slurm_analysis-%j.out" ],stdin=PIPE,stdout=PIPE,stderr=PIPE,text=True)
-         
-        # THIS IS A BIT OF A HACK, have to add customization for other people ...            
-        data = '\n'.join([
-                            '#!/bin/bash',
-                            '#SBATCH -J MozaikParamSearchAnalysis',
-                            '#SBATCH -c ' + str(core_number),
-                            'source /home/jantolik/virt_env/mozaiknew/bin/activate',
-                            'cd ' + os.getcwd(),
-                            'echo "DSADSA"',                            
-                            ' '.join(["python",run_script,"'"+rdn+"'"]  +['>']  + ["'"+rdn +'/OUTFILE_analysis'+str(time.time()) + "'"]),
-                        ]) 
-        print(p.communicate(input=data)[0])
-        print(data)
-        p.stdin.close()
-
-def parameter_search_run_script_distributed_slurm_UK(simulation_name,master_results_dir,run_script,core_number):
-    """
-    Scheadules the execution of *run_script*, one per each parameter combination of an existing parameter search run.
-    Each execution receives as the first commandline argument the directory in which the results for the given
-    parameter combination were stored.
-    
-    Parameters
-    ----------
-    simulation_name : str
-                    The name of the simulation.
-    master_results_dir : str
-                    The directory where the parameter search results are stored.
-    run_script : str
-                    The name of the script to be run. The directory name of the given parameter combination datastore will be passed to it as the first command line argument.
-    core_number : int
-                How many cores to reserve per process.
-    """
-    with open(master_results_dir + '/parameter_combinations.json', 'r', encoding='utf-8') as f:
-        combinations = json.load(f)
-    
-    # first check whether all parameter combinations contain the same parameter names
-    assert len(set([tuple(set(comb.keys())) for comb in combinations])) == 1 , "The parameter search didn't occur over a fixed set of parameters"
-    
-    from subprocess import Popen, PIPE, STDOUT
-    for i,combination in enumerate(combinations):
-        rdn = master_results_dir+'/'+result_directory_name('ParameterSearch',simulation_name,combination)    
-        p = Popen(['sbatch'] +  ['-o',master_results_dir+"/slurm_analysis-%j.out" ],stdin=PIPE,stdout=PIPE,stderr=PIPE,text=True)
-         
-        # THIS IS A BIT OF A HACK, have to add customization for other people ...            
-        data = '\n'.join([
-                            '#!/bin/bash',
-                            '#SBATCH -J MozaikParamSearchAnalysis',
-                            '#SBATCH -c ' + str(core_number),
-                            '#SBATCH --hint=nomultithread',
-                            'source /home/antolik/virt_env/mozaiknew/bin/activate',
-                            'cd ' + os.getcwd(),
-                            ' '.join(["python",run_script,"'"+rdn+"'"]  +['>']  + ["'"+rdn +'/OUTFILE_analysis'+str(time.time()) + "'"]),
-                        ]) 
-        print(p.communicate(input=data)[0])
-        print(data)
-        p.stdin.close()
-
-
-def parameter_search_run_script_distributed_slurm_UK_mpi(simulation_name,master_results_dir,run_script,core_number, env_path, nodes_to_exclude):
+def parameter_search_run_script_distributed_slurm(simulation_name,master_results_dir,run_script,core_number, env_path, nodes_to_exclude = None):
     """
     Scheadules the execution of *run_script*, one per each parameter combination of an existing parameter search run.
     Each execution receives as the first commandline argument the directory in which the results for the given
@@ -377,10 +248,16 @@ def parameter_search_run_script_distributed_slurm_UK_mpi(simulation_name,master_
                     The name of the script to be run. The directory name of the given parameter combination datastore will be passed to it as the first command line argument.
     core_number : int
                 How many cores to reserve per process.
+
+    env_path : str
+                Path to python environment in which to run the distributed scripts
+
+    nodes_to_exclude : str,
+                List of nodes to exclude as string that will be passed to slurm (refer to slurm documantation on the format)
     """
-    f = open(master_results_dir+'/parameter_combinations.json','rb')
-    combinations = json.load(f)
-    f.close()
+
+    with open(master_results_dir + '/parameter_combinations.json', 'r', encoding='utf-8') as f:
+        combinations = json.load(f)    
 
     # first check whether all parameter combinations contain the same parameter names
     assert len(set([tuple(set(comb.keys())) for comb in combinations])) == 1 , "The parameter search didn't occur over a fixed set of parameters"
@@ -394,8 +271,9 @@ def parameter_search_run_script_distributed_slurm_UK_mpi(simulation_name,master_
                             '#!/bin/bash',
                             '#SBATCH -J MozaikParamSearchAnalysis',
                             '#SBATCH -c ' + str(1),
-                            '#SBATCH -x ' + nodes_to_exclude,
+                            '#SBATCH -x ' + nodes_to_exclude if nodes_to_exclude != None else '',
                             '#SBATCH -n ' + str(core_number),
+                            '#SBATCH -N 1-1 ' ,
                             '#SBATCH --hint=nomultithread',
                             'source ' + env_path,
                             'cd ' + os.getcwd(),

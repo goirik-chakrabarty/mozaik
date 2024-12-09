@@ -5,6 +5,10 @@ import numpy as np
 from numpyencoder import NumpyEncoder
 from sphinx.util import docstrings
 import imageio
+import mozaik
+import numpy
+
+logger = mozaik.getMozaikLogger()
 
 PARAMETERS_REGEX = re.compile(".*Parameters.*")
 OTHER_PARAMETER_REGEX = re.compile(".*Other\ [pP]arameters\ *\n-{15}-+")
@@ -166,8 +170,8 @@ def get_stimuli(data_store, store_stimuli, input_space):
         if params["trial"][0] != 0:
             continue
 
-        raws = data_store.get_sensory_stimulus([s])
-
+        raws1 = data_store.get_sensory_stimulus([s])
+        raws = raws1
         if raws == [] or raws[0] == None:
             img = np.zeros((50,50)).astype(np.uint8)
             raws = [img,img]
@@ -176,6 +180,11 @@ def get_stimuli(data_store, store_stimuli, input_space):
 
         mov_duration = input_space["update_interval"] / 1000.0 if input_space != None else 0.1
         gif_name = params["name"][0] + str(hash(s)) + ".gif"
+        logger.info(sidd)
+        logger.info(numpy.shape(raws))
+        logger.info(numpy.shape(raws1))
+        logger.info(str(raws1[0]))
+        logger.info(mov_duration)
         imageio.mimwrite(data_store.parameters.root_directory + stim_dir + gif_name, raws, duration=mov_duration)
 
         stim_docs.append(

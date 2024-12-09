@@ -54,6 +54,22 @@ class RCAll(PopulationSelector):
       def generate_idd_list_of_neurons(self):
           return self.sheet.pop.all_cells.astype(int)
 
+
+class IDList(PopulationSelector):
+      """
+      Other parameters
+      ----------------
+      list_of_ids : list
+                   The list of neuron ids to select.
+      """
+      
+      required_parameters = ParameterSet({
+        'list_of_ids': int,  # The list of neuron ids to select.
+      })  
+      def generate_idd_list_of_neurons(self):
+          assert self.parameters.list_of_ids in self.sheet.pop.all_cells.astype(int), ("ERROR: IDList: ids %s not in sheet %s." % str(self.parameters.list_of_ids,self.sheet.name))
+          return self.parameters.list_of_ids
+
 class RCRandomN(PopulationSelector):
       """
       Select random neurons.  

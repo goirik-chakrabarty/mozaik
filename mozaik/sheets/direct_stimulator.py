@@ -328,8 +328,7 @@ class Depolarization(DirectStimulator):
     
     Currently the mpi_safe version only works in nest!
     """
-    
-    
+ 
     required_parameters = ParameterSet({
             'current': float,
             'population_selector' : ParameterSet({

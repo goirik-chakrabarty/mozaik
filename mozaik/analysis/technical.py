@@ -11,6 +11,7 @@ import quantities as qt
 import numpy
 import mozaik
 import pickle
+import os.path
 
 logger = mozaik.getMozaikLogger()
 from mozaik.controller import Global
@@ -115,31 +116,40 @@ class ExportRawSpikeData(Analysis):
     })
 
     def perform_analysis(self):
-        res = {}
 
-        dsvs = queries.partition_by_stimulus_paramter_query(self.datastore,["trial"])
+        if not os.path.isfile(Global.root_directory+'/'+self.parameters.file_name):
 
-        for dsv in dsvs:
-                # lets get rid of trial from the stimulus ID to use for the new ADS
-                stim = dsv.get_stimuli()[0]
-                stim = MozaikParametrized.idd(stim)
-                stim.trial = None
-                stim = str(stim)
+            res = {}
 
-                if not stim in res.keys():
-                       res[stim]={}
+            dsvs = queries.partition_by_stimulus_paramter_query(self.datastore,["trial"])
+            a = len(dsvs)
+            i=0 
+            for dsv in dsvs:
+                    i+=1
+                    print(str(i)+"/"+str(a))
+                    # lets get rid of trial from the stimulus ID to use for the new ADS
+                    stim = dsv.get_stimuli()[0]
+                    stim = MozaikParametrized.idd(stim)
+                    stim.trial = None
+                    stim = str(stim)
 
-                for seg in self.datastore.get_segments():
-                    sheet_name = seg.annotations['sheet_name']
+                    if not stim in res.keys():
+                        res[stim]={}
 
-                    if sheet_name not in res[stim].keys():
-                       res[stim][sheet_name]=[] 
+                    for seg in dsv.get_segments():
+                        sheet_name = seg.annotations['sheet_name']
 
-                    res[stim][sheet_name].append([s.magnitude for s in seg.spiketrains]) 
+                        if sheet_name not in res[stim].keys():
+                            res[stim][sheet_name]=[] 
 
-        for k in res.keys():
-            for kk in res[k].keys():
-                res[k][kk] = numpy.array(res[k][kk])
+                        res[stim][sheet_name].append([s.magnitude for s in seg.spiketrains]) 
 
-        f = open(Global.root_directory+self.parameters.file_name,'wb')
-        pickle.dump(res,f)
+            for k in res.keys():
+                for kk in res[k].keys():
+                    res[k][kk] = numpy.array(res[k][kk])
+            print("Writing")   
+            f = open(Global.root_directory+'/'+self.parameters.file_name,'wb')
+            pickle.dump(res,f)
+    
+        else:
+            logger.error("file already exists")

@@ -36,12 +36,13 @@ class Model(BaseComponent):
         If True the pyNN.reset() is used to reset the network between stimulus presentations. 
         Otherwise a blank stimulus is shown for a period of time defined by the parameter null_stimulus_period.
     
-    store_stimuli : bool
-        If True, the stimuli shown to the network are stored in the datastore.
-    
-    time_of_frame_to_store : int
-        The time of the frame to store in ms. If negative, all frames are stored.
-    
+    store_stimuli : ParemeterSet
+        If None, the stimuli shown to the network are not stored in the datastore.
+        Else the stimuli are stored using the parametrs specified in the ParemeterSet:
+            frame_grab_frequency : how often (in ms) to grap a frame of the retinal input. This has to be a multiple of the update rate of the retinal model. If 0 it means every frame.
+            first_frame : float, # Time of the first frame to grab from the onset of the stimulus. This has to be a multiple of the update rate of the retinal model. If 0 it means every frame.
+            num_to_grab : int, # How many frames to grab. Make sure you do not specify more than the length of the stimulus allows. 0 means as many as fit until the end of stimulus
+
     null_stimulus_period : float
         The length of blank stimulus presentation during the simulation.
     
@@ -76,8 +77,12 @@ class Model(BaseComponent):
     required_parameters = ParameterSet({
         'name': str,
         'results_dir': str,
-        'store_stimuli' : bool,
-        'time_of_frame_to_store' : int,
+        'store_stimuli': ParameterSet, # Can be None. Strucutured as follows:
+                                              #            {
+                                              #                 frame_grab_period : float, # How often (in ms) to grap a frame of the retinal input. This has to be a multiple of the update rate of the retinal model. If 0 it means every frame.
+                                              #                 first_frame : float, # Time of the first frame to grab from the onset of the stimulus. This has to be a multiple of the update rate of the retinal model. If 0 it means every frame.
+                                              #                 num_to_grab : int, # How many frames to grab. Make sure you do not specify more than the length of the stimulus allows. 0 means as many as fit until the end of stimulus
+                                              #            }
         'reset': bool,
         'null_stimulus_period': float,
         'input_space': ParameterSet, # can be none - in which case input_space_type is ignored
@@ -149,6 +154,7 @@ class Model(BaseComponent):
         for sheet in self.sheets.values():
             sheet.prepare_artificial_stimulation(stimulus.duration,self.simulator_time,artificial_stimulators.get(sheet.name,[]))
         if self.input_space:
+
             self.input_space.clear()
             if not isinstance(stimulus,InternalStimulus):
                 self.input_space.add_object(str(stimulus), stimulus)
@@ -187,11 +193,11 @@ class Model(BaseComponent):
         if mozaik.mpi_comm:
             exploded = mozaik.mpi_comm.bcast(exploded, root=mozaik.MPI_ROOT)
         
-        #remove any artificial stimulators 
+        # remove any artificial stimulators 
         for sheet in self.sheets.values():
             for ds in artificial_stimulators.get(sheet.name,[]):
                 ds.inactivate(self.simulator_time)
-        
+
         logger.info("Stimulus presentation took %.0f s, of which %.0f s was simulation time"  % (time.time() - t0,sim_run_time))
 
         return (segments, null_segments,sensory_input,sim_run_time,exploded)

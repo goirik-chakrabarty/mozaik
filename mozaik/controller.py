@@ -107,6 +107,8 @@ def prepare_workflow(simulation_name, model_class):
         modified_parameters,
     ) = parse_workflow_args()
 
+
+    # sepparate modified_parameteres into experiment parameters and model parameters
     experiments_parameters = {}
     model_modified_parameters = {}
     for p in modified_parameters:
@@ -115,7 +117,6 @@ def prepare_workflow(simulation_name, model_class):
             experiments_parameters[new_p] = modified_parameters[p]
         else: 
             model_modified_parameters[p] = modified_parameters[p]
-            
 
     # First we load the parameters just to retrieve seeds. We will throw them away, because at this stage the PyNNDistribution values were not yet initialized correctly.
     parameters = load_parameters(parameters_url, model_modified_parameters)

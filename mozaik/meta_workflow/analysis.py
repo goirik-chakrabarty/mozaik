@@ -39,7 +39,7 @@ def load_fixed_parameter_set_parameter_search(simulation_name,master_results_dir
     for i,combination in enumerate(combinations):
         rdn = result_directory_name('ParameterSearch',simulation_name,combination)
         try:
-            data_store = PickledDataStore(load=True,parameters=ParameterSet({'root_directory': master_results_dir + '/' + rdn,'store_stimuli' : False}),replace=False)
+            data_store = PickledDataStore(load=True,parameters=ParameterSet({'root_directory': master_results_dir + '/' + rdn,'store_stimuli' : None}),replace=False)
             if filter != None:
                filter.query(data_store).remove_ads_outside_of_dsv()
             datastore.append(([combination[k] for k in parameters],data_store))
