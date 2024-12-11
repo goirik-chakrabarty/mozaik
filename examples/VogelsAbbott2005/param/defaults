@@ -9,8 +9,11 @@
     'null_stimulus_period' : 0.0,
     'input_space' : None,
     'input_space_type' : 'None',
-    'store_stimuli' : True,
-    'time_of_frame_to_store': -1,
+    'store_stimuli' : {
+                        'frame_grab_period' : 0,
+                        'first_frame' : 0,
+                        'num_to_grab' : 0,
+                      },
     'min_delay' : 0.1,
     'max_delay' : 1.3,
     'time_step' : 0.1,

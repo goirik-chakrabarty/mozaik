@@ -53,7 +53,33 @@ class RCAll(PopulationSelector):
       """
       def generate_idd_list_of_neurons(self):
           return self.sheet.pop.all_cells.astype(int)
+      
+class RCAllWihinBoundry(PopulationSelector):
+      """
+      This PopulationSelector selects all neurons within a rectangular boudnry defined by its center and size of its side.
+      
+      Other parameters
+      ----------------
 
+      size : float (micro meters of cortical space)
+           The size of the boundry (it is assumed to be square)
+      
+      offset_x : float (micro meters of cortical space)
+           The x axis offset from the center of the sheet of the center of the boundry.
+
+      offset_y : float (micro meters of cortical space)
+           The y axis offset from the center of the sheet of the center of the boundry.
+      """
+      
+      required_parameters = ParameterSet({
+        'size': float,  # the size of the grid (it is assumed to be square) - it has to be multiple of spacing (micro meters)
+        'offset_x' : float, # the x axis offset from the center of the sheet (micro meters)
+        'offset_y' : float, # the y axis offset from the center of the sheet (micro meters)
+      })  
+      
+      def generate_idd_list_of_neurons(self):
+          z = self.sheet.pop.all_cells.astype(int)
+          return list(set(z[(abs(self.sheet.pop.positions[0]-self.parameters.offset_x) <= self.parameters.size/2) & (abs(self.sheet.pop.positions[1]-self.parameters.offset_y) <= self.parameters.size/2)]))
 
 class IDList(PopulationSelector):
       """
@@ -64,7 +90,7 @@ class IDList(PopulationSelector):
       """
       
       required_parameters = ParameterSet({
-        'list_of_ids': int,  # The list of neuron ids to select.
+        'list_of_ids': list,  # The list of neuron ids to select.
       })  
       def generate_idd_list_of_neurons(self):
           assert self.parameters.list_of_ids in self.sheet.pop.all_cells.astype(int), ("ERROR: IDList: ids %s not in sheet %s." % str(self.parameters.list_of_ids,self.sheet.name))

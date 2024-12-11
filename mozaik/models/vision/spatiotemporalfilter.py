@@ -674,6 +674,15 @@ class SpatioTemporalFilterRetinaLGN(SensoryInputComponent):
         else:
             times = numpy.array([offset + 3 * ts,duration-visual_space.update_interval+offset])
             zers = numpy.zeros_like(times)
+        logger.info('provide_null_input')
+        logger.info(self.integrated_cs)
+        logger.info(offset)
+        logger.info(duration)
+        logger.info(visual_space.update_interval)
+        logger.info(ts)
+        logger.info(times)
+        if self.integrated_cs:
+            logger.info(new_offset)
 
         input_cells = OrderedDict()
         for rf_type in self.rf_types:
@@ -695,7 +704,6 @@ class SpatioTemporalFilterRetinaLGN(SensoryInputComponent):
             if self.integrated_cs:
                 for i, lgn_cell in enumerate(self.sheets[rf_type].pop):
                     lgn_cell.set_parameters(amplitude_times=times, amplitude_values=(zers+amplitude)*1000)
-
             else:
                 for i, (scs, ncs) in enumerate(zip(self.scs[rf_type],self.ncs[rf_type])):
                     scs.set_parameters(times=times,amplitudes=zers+amplitude,copy=False)
@@ -755,11 +763,10 @@ class SpatioTemporalFilterRetinaLGN(SensoryInputComponent):
                     for t in threads:
                         t.join()
 
-
-        assert self.model.parameters.store_stimuli.frame_grab_period % self.model.input_space.update_interval == 0 , "frame_grab_period (%d) has to be multiple of input space update interval (%d)" % (self.model.parameters.store_stimuli.frame_grab_period,self.model.input_space.update_interval)
-
-        next_frame_to_grab = self.model.parameters.store_stimuli.first_frame
-        frames_grabbed = 0
+        if self.model.parameters.store_stimuli != None:
+            assert self.model.parameters.store_stimuli.frame_grab_period % self.model.input_space.update_interval == 0 , "frame_grab_period (%d) has to be multiple of input space update interval (%d)" % (self.model.parameters.store_stimuli.frame_grab_period,self.model.input_space.update_interval)
+            next_frame_to_grab = self.model.parameters.store_stimuli.first_frame
+            frames_grabbed = 0
 
         while t < duration:
             t = visual_space.update()
@@ -767,7 +774,6 @@ class SpatioTemporalFilterRetinaLGN(SensoryInputComponent):
                 for cell in input_cells[rf_type]:
                     cell.view()
             
-
             if self.model.parameters.store_stimuli != None:
                 if (frames_grabbed < self.model.parameters.store_stimuli.num_to_grab) or self.model.parameters.store_stimuli.num_to_grab == 0:
                     if (next_frame_to_grab >= t-visual_space.update_interval and next_frame_to_grab < t):

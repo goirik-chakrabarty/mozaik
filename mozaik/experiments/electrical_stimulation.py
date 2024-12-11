@@ -50,11 +50,12 @@ class RandomSingleNeuronStepCurrentInjection(Experiment):
             from mozaik.sheets.direct_stimulator import Depolarization
 
             population_selector = load_component(self.parameters.stimulation_configuration.component)
-            ids = population_selector(model.sheets[sheet],self.parameters.population_selector.params).generate_idd_list_of_neurons()
+            ids = population_selector(model.sheets[self.parameters.sheet],self.parameters.stimulation_configuration.params).generate_idd_list_of_neurons()
 
             ids = random.sample(ids,self.parameters.num_neurons)
 
             d  = OrderedDict()
+            self.direct_stimulation = []
 
             for i in range(0,self.parameters.num_trials):
                 random.shuffle(ids)
@@ -63,19 +64,21 @@ class RandomSingleNeuronStepCurrentInjection(Experiment):
                     p = MozaikExtendedParameterSet({
                                                     'current' : self.parameters.current,
                                                     'population_selector' : MozaikExtendedParameterSet({
-                                                         'component' : 'IDList',
-                                                         'list_of_ids' : [idd]
-                                                    })
+                                                         'component' : 'mozaik.sheets.population_selector.IDList',
+                                                         'params' : MozaikExtendedParameterSet({
+                                                            'list_of_ids' : [idd]
+                                                          })
+                                                      })
                                                   })
 
                     d[self.parameters.sheet] = [Depolarization(model.sheets[self.parameters.sheet],p)]
                     
-                    self.direct_stimulation = [d]
+                    self.direct_stimulation.append(d)
                     self.stimuli.append(
                                 InternalStimulus(   
                                                     frame_duration=self.parameters.duration, 
                                                     duration=self.parameters.duration,
-                                                    trial=0,
+                                                    trial=i,
                                                     direct_stimulation_name='Injection',
                                                     direct_stimulation_parameters = p
                                                 )

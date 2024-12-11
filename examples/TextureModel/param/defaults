@@ -17,7 +17,11 @@
     'name' : 'Jens Model',
     'reset' : False,
     'null_stimulus_period' : 140.0,
-    'store_stimuli' : True,
+    'store_stimuli' : {
+                        'frame_grab_period' : 0,
+                        'first_frame' : 0,
+                        'num_to_grab' : 0,
+                      },
     'min_delay' : 0.1,
     'max_delay' : 100,
     'time_step' : 0.1,

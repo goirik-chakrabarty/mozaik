@@ -53,7 +53,7 @@ if True:
     
 else: 
     setup_logging()
-    data_store = PickledDataStore(load=True,parameters=ParameterSet({'root_directory':'FeedForwardInhibition_test_____', 'store_stimuli' : False}),replace=True)
+    data_store = PickledDataStore(load=True,parameters=ParameterSet({'root_directory':'FeedForwardInhibition_test_____', 'store_stimuli' : None}),replace=True)
     logger.info('Loaded data store')
     #data_store.save()
     from analysis_and_visualization import perform_analysis_and_visualization

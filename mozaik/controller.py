@@ -276,10 +276,11 @@ def run_experiments(model,experiment_list,parameters,load_from=None):
             break
         logger.info('Experiment %d/%d finished' % (i+1,len(experiment_list)))
 
-    last_blank_run_time = 0
     # Do a reset after the last stimulus. If reset is done as blank stimulus, this makes sure we have some blank recorded also after last stimulus.
     ds =  OrderedDict()
-    s = EndOfSimulationBlank(trial=0,duration=parameters.null_stimulus_period,frame_duration=parameters.null_stimulus_period)
+    last_blank_run_time = parameters.null_stimulus_period if parameters.null_stimulus_period != 0 else 100 
+
+    s = EndOfSimulationBlank(trial=0,duration=last_blank_run_time,frame_duration=last_blank_run_time)
     (segments,null_segments,input_stimulus,last_blank_run_time,_) = model.present_stimulus_and_record(s,ds)
     data_store.add_recording(segments,s)
     data_store.add_stimulus(input_stimulus,s)

@@ -97,10 +97,20 @@ def merge_datastores(
     The type of data that should be merged can be controlled through the merge_recordings, merge_analysis and merge_stimuli booleans
     It returns this datastore as a Datastore object.
     """
+ 
+    if merge_stimuli == False: 
+        ss = None
+    else:
+        ss = {
+             'frame_grab_period' : 0,
+             'first_frame' : 0,
+             'num_to_grab' : 0,
+        }
+
     merged_datastore = PickledDataStore(
         load=False,
         parameters=ParameterSet(
-            {"root_directory": root_directory, "store_stimuli": merge_stimuli}
+            {"root_directory": root_directory, "store_stimuli": ss}
         ),
         replace=replace,
     )

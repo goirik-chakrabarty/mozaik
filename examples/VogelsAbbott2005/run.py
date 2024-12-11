@@ -44,7 +44,7 @@ else:
                 "root_directory": result_directory_name(
                     simulation_run_name, simulation_name, modified_parameters
                 ),
-                "store_stimuli": False,
+                "store_stimuli": None,
             }
         ),
         replace=True,

@@ -80,7 +80,7 @@ class TestMergeDatastore(object):
         return PickledDataStore(
             load=True,
             parameters=ParameterSet(
-                {"root_directory": base_dir, "store_stimuli": False}
+                {"root_directory": base_dir, "store_stimuli": None}
             ),
             replace=False,
         )
