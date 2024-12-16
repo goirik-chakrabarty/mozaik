@@ -109,7 +109,6 @@ def reorder_lists(object_list, list_to_order, ordering_parameters):
     # Convert to list before returning
     return list(reordered_object_list), list(reordered_list_to_order)
 
-
 def get_model_info_and_parameters(base_folder, separate_modified_params=False):
     """
     Retrieves and processes model information and parameters from the given base folder.
@@ -199,7 +198,6 @@ def classify_stimulus_parameters_into_constant_and_varying(stims):
 
     return constant_params, varying_params
 
-
 def export_from_datastore_to_hdf5(data_store, st_name, data_type, cut_start=None, cut_end=None):
     """
     Export data from a Mozaik datastore to a HDF5 file with a standardized structure.
@@ -265,13 +263,13 @@ def export_from_datastore_to_hdf5(data_store, st_name, data_type, cut_start=None
         logging.info(f"Datasets subgroup created under 'stimuli' in '{model_subgroup_name}'.")
 
         # Add varying parameters as metadata to the stimuli subgroup
-        stimuli_subgroup.attrs['varying_paramers'] = list(varying_stim_params.keys())
+        stimuli_subgroup.attrs['varying_parameters'] = list(varying_stim_params.keys())
         for param_name, param_values in varying_stim_params.items():
             stimuli_subgroup.attrs[f'{param_name}'] = param_values
         stimuli_subgroup.attrs['data_dimensions'] = [len(varying_stim_params[param]) for param in varying_stim_params.keys()]
 
         # Add constant parameters as metadata to the stimuli subgroup
-        stimuli_subgroup.attrs['constant_paramers'] = list(constant_stim_params.keys())
+        stimuli_subgroup.attrs['constant_parameters'] = list(constant_stim_params.keys())
         for param_name, param_values in constant_stim_params.items():
             stimuli_subgroup.attrs[f'{param_name}'] = str(param_values) if param_values is not None else "None"
 
@@ -285,7 +283,7 @@ def export_from_datastore_to_hdf5(data_store, st_name, data_type, cut_start=None
     def get_segments_and_stimuli_and_constant_and_varying_parameters(data_store, sheet_name, st_name):
         # Get segments and stimuli
         dsv = param_filter_query(data_store, st_name=st_name, sheet_name=sheet_name)
-        segs = dsv.get_segments(ordered=True)
+        segs = dsv.get_segments()
         stims = [MozaikParametrized.idd(seg.annotations['stimulus']) for seg in segs]
 
         # Get varying parameters
@@ -355,6 +353,10 @@ def export_from_datastore_to_hdf5(data_store, st_name, data_type, cut_start=None
         sensory_stim = np.array(ds.get_sensory_stimulus([str(s) for s in reordered_stims_flat])).squeeze()
         stimuli_subgroup.create_dataset('stimuli', data=sensory_stim)   
         stimuli_subgroup.create_dataset('stimuli_idx', data=reordered_stims_idx)
+
+        # Save the stimulus_name dataset
+        stimulus_names = np.array([str(stim) for stim in stims])
+        stimuli_subgroup.create_dataset('stimulus_name', data=stimulus_names, dtype=h5py.special_dtype(vlen=np.dtype('str')))
 
 
     ## Create an HDF5 file (main function)
@@ -497,16 +499,16 @@ def merge_hdf5_files(file_list, output_file):
                     stim_subgroups = [msg[stim_key] for msg in model_subgroups]
                     
                     # Check constant parameters
-                    constant_params = stim_subgroups[0].attrs['constant_paramers']
-                    if not all(np.array_equal(ssg.attrs['constant_paramers'], constant_params) for ssg in stim_subgroups):
+                    constant_params = stim_subgroups[0].attrs['constant_parameters']
+                    if not all(np.array_equal(ssg.attrs['constant_parameters'], constant_params) for ssg in stim_subgroups):
                         raise ValueError("Constant parameters differ across files")
                     for constant_key in constant_params:
                         if not all(ssg.attrs[constant_key] == stim_subgroups[0].attrs[constant_key] for ssg in stim_subgroups):
                             raise ValueError(f"Constant parameter {constant_key} differs across files")
 
                     # Check varying parameters
-                    varying_params = stim_subgroups[0].attrs['varying_paramers']
-                    if not all(np.array_equal(ssg.attrs['varying_paramers'], varying_params) for ssg in stim_subgroups):
+                    varying_params = stim_subgroups[0].attrs['varying_parameters']
+                    if not all(np.array_equal(ssg.attrs['varying_parameters'], varying_params) for ssg in stim_subgroups):
                         raise ValueError("Varying parameters differ across files")
 
                     different_key = None
@@ -556,55 +558,68 @@ def merge_hdf5_files(file_list, output_file):
 
     logging.info(f'Successfully merged {len(file_list)} files into {output_file}')
 
-# generic functions to use with with h5py mozaik data files 
-def get_stimulus_response_pairs(file_path, model_key, stim_key, sheet, indices):
+def get_stimuli_and_response_datasets(file_path, model_key, stim_key, sheet, mean_over_trials=False, select_trials=None, response_indices=None):
     """
-    Access specific pairs of stimuli and responses in the HDF5 file.
+    Retrieve pairs of stimuli and responses from an HDF5 file for a given model and stimulus key.
 
     Parameters
     ----------
     file_path : str
-                Path to the HDF5 file
-    model_key : str  
-                Key for the model subgroup
+        Path to the HDF5 file containing the data.
+    model_key : str
+        Key identifying the model within the HDF5 file.
     stim_key : str
-                Key for the stimulus subgroup 
+        Key identifying the stimulus within the model group.
     sheet : str
-                Name of the sheet (e.g., 'V1_Exc_L23')
-    indices : tuple, array or list of int
-                Indices of the stimuli to retrieve. Length must match the number of dimensions 
-                of the stimuli index dataset.
+        Name of the sheet from which to extract responses.
+    mean_over_trials : bool, optional
+        If True, average the responses over trials. Default is False.
+    select_trials : list of int, optional
+        Specific trials to select from the responses. If None, all trials are used. Default is None.
+    response_indices : list of int, optional
+        Indices specifying which responses (and stimuli) to extract. If None, all responses (and stimuli) are extracted. Default is None.
 
     Returns
     -------
-    tuple : (stimuli, responses)
-            - stimuli: The stimulus data for the specified indices
-            - responses: The corresponding neural responses
+    tuple
+        A tuple containing:
+        - stimuli : numpy.ndarray
+            The extracted stimuli data.
+        - responses : numpy.ndarray
+            The extracted responses data, optionally averaged over trials.
 
-    Notes
-    -----
-    - Indices should match the dimensionality of the data (e.g., for data with trial and orientation
-      dimensions, indices should be a tuple of (trial_idx, orientation_idx))
-    - For merged files, indices should account for the merged dimension
     """
     with h5py.File(file_path, 'r') as f:
-        # Convert indices to tuple
-        indices = tuple(indices)
-
         # Navigate to the specific subgroup
         subgroup = f[model_key][stim_key]
         
-        # Get the stimuli
-        stimuli_idx_dataset = subgroup['stimuli_idx'][:]
-        stimuli_dataset = subgroup['stimuli'][:]
-      
-        stimulus_idx = stimuli_idx_dataset[indices]
-        stimuli = stimuli_dataset[stimulus_idx]
+        # Get the stimuli index and responses
+        stimuli_idx = subgroup['stimuli_idx'][:]
+        trial_dim = subgroup.attrs['trial_dim']
+
+        # Use advanced indexing to directly get the stimuli
+        if response_indices is not None:
+            stimuli = subgroup['stimuli'][tuple(response_indices)]
+        else:
+            matching_idxs = np.take(stimuli_idx, 0, axis=trial_dim)
+            stimuli = subgroup['stimuli'][matching_idxs]
+
+        # Load only specific responses if response_indices is provided
+        if response_indices is not None:
+            response_slices = [slice(None)] + response_indices
+            responses = subgroup[sheet][tuple(response_slices)]
+        else:
+            responses = subgroup[sheet][:]
+
+        if select_trials is not None:
+            responses = np.take(responses, select_trials, axis=trial_dim)
+
+        # Optionally average over trial
+        if mean_over_trials:
+            responses = responses.mean(axis=trial_dim)
         
-        # Get the responses
-        response_dataset = subgroup[sheet]
-        responses = response_dataset[indices]
         return stimuli, responses
+
 
 def print_dataset_content(file_path, dataset_path):
     """
@@ -620,18 +635,18 @@ def print_dataset_content(file_path, dataset_path):
     with h5py.File(file_path, 'r') as f:
         if dataset_path in f:
             dataset = f[dataset_path]
-            logging.info(dataset.shape)
-            logging.info(f"Content of dataset: {dataset_path}")
+            print(dataset.shape)
+            print(f"Content of dataset: {dataset_path}")
             
             # Check if the dataset contains variable-length data
             if h5py.check_dtype(vlen=dataset.dtype) == np.dtype('float'):
-                logging.info("Variable-length float data:")
+                print("Variable-length float data:")
                 for i, row in enumerate(dataset):
-                    logging.info(f"  Row {i}: {row}")
+                    print(f"  Row {i}: {row}")
             else:
-                logging.info(dataset[:])
+                print(dataset[:])
         else:
-            logging.info(f"Dataset {dataset_path} not found in the file.")
+            print(f"Dataset {dataset_path} not found in the file.")
 
 def explore_hdf5(file_path):
     """
@@ -643,23 +658,23 @@ def explore_hdf5(file_path):
                 Path to the HDF5 file
     """
     def print_attrs(name, obj):
-        logging.info(f"Object: {name}")
+        print(f"Object: {name}")
         for key, val in obj.attrs.items():
-            logging.info(f"  Attribute: {key} = {val}")
+            print(f"  Attribute: {key} = {val}")
 
     def print_structure(name, obj):
         if isinstance(obj, h5py.Group):
-            logging.info(f"Group: {name}")
+            print(f"Group: {name}")
         elif isinstance(obj, h5py.Dataset):
-            logging.info(f"Dataset: {name}, Shape: {obj.shape}, Type: {obj.dtype}")
-        logging.info_attrs(name, obj)
+            print(f"Dataset: {name}, Shape: {obj.shape}, Type: {obj.dtype}")
+        print_attrs(name, obj)
 
     with h5py.File(file_path, 'r') as f:
-        logging.info("\nTop-level attributes:")
+        print("\nTop-level attributes:")
         for key, val in f.attrs.items():
-            logging.info(f"  {key} = {val}")
+            print(f"  {key} = {val}")
 
-        logging.info("File Structure:")
+        print("File Structure:")
         f.visititems(print_structure)
 
 def get_structure_of_hdf5(hdf5_file):
