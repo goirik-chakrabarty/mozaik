@@ -341,13 +341,14 @@ class Depolarization(DirectStimulator):
         
     def __init__(self, sheet, parameters):
         DirectStimulator.__init__(self, sheet,parameters)
-        
+
         population_selector = load_component(self.parameters.population_selector.component)
         ids = population_selector(sheet,self.parameters.population_selector.params).generate_idd_list_of_neurons()
         d = dict((j,i) for i,j in enumerate(self.sheet.pop.all_cells))
         to_stimulate_indexes = [d[i] for i in ids]
         
         self.scs = self.sheet.sim.StepCurrentSource(times=[0.0], amplitudes=[0.0])
+
         for i in to_stimulate_indexes:
             self.sheet.pop.all_cells[i].inject(self.scs)
 
@@ -356,8 +357,6 @@ class Depolarization(DirectStimulator):
         
     def inactivate(self,offset):
         self.scs.set_parameters(times=[offset+self.sheet.dt*3], amplitudes=[0.0],copy=False)
-
-
 
 class OpticalStimulatorArray(DirectStimulator):
     """
@@ -400,7 +399,7 @@ class OpticalStimulatorArray(DirectStimulator):
                      the stimulation is update_interval times the number of values
                      returned by the function specified in the `stimulating_signal`
                      parameter.
-    
+
     depth_sampling_step : float (μm)
                      For optimization reasons we will assume that neurons lie at
                      discrete range of depth spaced at `depth_sampling_step`

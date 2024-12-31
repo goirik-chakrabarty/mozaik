@@ -241,7 +241,7 @@ def partition_by_stimulus_paramter_query(dsv, parameter_list):
         new_dsv.analysis_results = dsv.analysis_result_copy()
         new_dsv.block.segments.extend(vals)
         dsvs.append(new_dsv)
-    new_dsv.block.segments = sorted(new_dsv.block.segments,key=lambda x:x.rec_datetime)
+        new_dsv.block.segments = sorted(new_dsv.block.segments,key=lambda x:x.rec_datetime)
     return dsvs
 
 

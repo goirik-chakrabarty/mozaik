@@ -674,15 +674,6 @@ class SpatioTemporalFilterRetinaLGN(SensoryInputComponent):
         else:
             times = numpy.array([offset + 3 * ts,duration-visual_space.update_interval+offset])
             zers = numpy.zeros_like(times)
-        logger.info('provide_null_input')
-        logger.info(self.integrated_cs)
-        logger.info(offset)
-        logger.info(duration)
-        logger.info(visual_space.update_interval)
-        logger.info(ts)
-        logger.info(times)
-        if self.integrated_cs:
-            logger.info(new_offset)
 
         input_cells = OrderedDict()
         for rf_type in self.rf_types:
