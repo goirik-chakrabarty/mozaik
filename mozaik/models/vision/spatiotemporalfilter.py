@@ -675,9 +675,6 @@ class SpatioTemporalFilterRetinaLGN(SensoryInputComponent):
             times = numpy.array([offset + 3 * ts,duration-visual_space.update_interval+offset])
             zers = numpy.zeros_like(times)
 
-        if self.integrated_cs:
-            logger.info(new_offset)
-
         input_cells = OrderedDict()
         for rf_type in self.rf_types:
             input_cells[rf_type] = CellWithReceptiveField(self.sheets[rf_type].pop.positions[0][0],

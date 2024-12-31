@@ -270,9 +270,9 @@ def parameter_search_run_script_distributed_slurm(simulation_name,master_results
         data = '\n'.join([
                             '#!/bin/bash',
                             '#SBATCH -J MozaikParamSearchAnalysis',
-                            '#SBATCH -c ' + str(1),
+                            '#SBATCH -c ' + str(core_number),
                             '#SBATCH -x ' + nodes_to_exclude if nodes_to_exclude != None else '',
-                            '#SBATCH -n ' + str(core_number),
+                            '#SBATCH -n ' + str(1),
                             '#SBATCH -N 1-1 ' ,
                             '#SBATCH --hint=nomultithread',
                             'source ' + env_path,
@@ -282,3 +282,5 @@ def parameter_search_run_script_distributed_slurm(simulation_name,master_results
         print(p.communicate(input=data)[0])
         print(data)
         p.stdin.close()
+
+

@@ -79,7 +79,10 @@ class RCAllWihinBoundry(PopulationSelector):
       
       def generate_idd_list_of_neurons(self):
           z = self.sheet.pop.all_cells.astype(int)
-          return list(set(z[(abs(self.sheet.pop.positions[0]-self.parameters.offset_x) <= self.parameters.size/2) & (abs(self.sheet.pop.positions[1]-self.parameters.offset_y) <= self.parameters.size/2)]))
+          xx,yy = self.sheet.cs_2_vf(self.parameters.offset_x,self.parameters.offset_y)
+          s,_ = self.sheet.cs_2_vf(self.parameters.size,self.parameters.size)
+          
+          return list(set(z[(abs(self.sheet.pop.positions[0]-xx) <= s/2) & (abs(self.sheet.pop.positions[1]-yy) <= s/2)]))
 
 class IDList(PopulationSelector):
       """

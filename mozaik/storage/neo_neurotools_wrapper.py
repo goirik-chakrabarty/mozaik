@@ -215,7 +215,8 @@ class MozaikSegment(Segment):
                 end = end.rescale(qt.s)
                 return [len(s.time_slice(start,end))/(end.magnitude-start.magnitude) for s in self.spiketrains]
             else:
-               return [len(s)/(s.t_stop.rescale(qt.s).magnitude-s.t_start.rescale(qt.s).magnitude) for s in self.spiketrains]
+               l = (self.spiketrains[0].t_stop.rescale(qt.s).magnitude-self.spiketrains[0].t_start.rescale(qt.s).magnitude)
+               return [len(s)/l for s in self.spiketrains]
 
         def isi(self):
             """
