@@ -14,6 +14,8 @@ import mozaik
 
 logger = mozaik.getMozaikLogger()
 
+counter = 0
+
 class MozaikSegment(Segment):
         """
         This class extends Neo segment with several convenience functions.
@@ -259,7 +261,10 @@ class PickledDataStoreNeoWrapper(MozaikSegment):
             self.datastore_path = datastore_path
 
         def load_full(self):
+            global counter
             f = open(self.datastore_path + '/' + self.identifier + ".pickle", 'rb')
+            print("Loading " + str(counter))
+            counter += 1
             s = pickle.load(f)
             f.close()
             self._spiketrains = s.spiketrains

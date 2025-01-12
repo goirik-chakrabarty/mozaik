@@ -72,6 +72,7 @@ class RandomSingleNeuronStepCurrentInjection(Experiment):
 
                     p = MozaikExtendedParameterSet({
                                                     'current' : self.parameters.current,
+                                                    'onset' : 0,
                                                     'population_selector' : MozaikExtendedParameterSet({
                                                          'component' : 'mozaik.sheets.population_selector.IDList',
                                                          'params' : MozaikExtendedParameterSet({
@@ -108,6 +109,9 @@ class RandomSingleNeuronStepCurrentInjectionDuringDriftingSinusoidalGratingStimu
 
     current : float (mA)
           The magnitude on injected current
+
+    current_onset : float (ms)
+          The onset of the current injection relative to visual stimulation.
           
     sheet : str
           The sheet from which the neurons are selected
@@ -141,6 +145,7 @@ class RandomSingleNeuronStepCurrentInjectionDuringDriftingSinusoidalGratingStimu
     required_parameters = ParameterSet({
             'duration': float,
             'current' : float,
+            'current_onset' : float,
             'sheet' : str,
             'num_neurons' : int,
             'num_trials' : int, 
@@ -173,6 +178,7 @@ class RandomSingleNeuronStepCurrentInjectionDuringDriftingSinusoidalGratingStimu
 
                                     p = MozaikExtendedParameterSet({
                                                                   'current' : self.parameters.current,
+                                                                  'onset' : self.parameters.current_onset,
                                                                   'population_selector' : MozaikExtendedParameterSet({
                                                                         'component' : 'mozaik.sheets.population_selector.IDList',
                                                                         'params' : MozaikExtendedParameterSet({
