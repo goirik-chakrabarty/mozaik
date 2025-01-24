@@ -13,6 +13,100 @@ import h5py
 import numpy as np
 import contextlib
 import logging
+import neo
+
+def count_spikes_in_multiple_windows(segment, time_windows):
+    """
+    Counts spikes in multiple time windows for all spiketrains in a neo.Segment.
+
+    Parameters:
+        segment (neo.Segment): The segment containing spiketrains.
+        time_windows (list of tuple): List of time window tuples (start_time, end_time) in the same units as the spiketrain.
+
+    Returns:
+        np.ndarray: 2D array where each row corresponds to a spiketrain, and each column corresponds to a time window count.
+    """
+    # Initialize an array to store counts for all spiketrains and time windows
+    num_spiketrains = len(segment.spiketrains)
+    num_windows = len(time_windows)
+    counts = np.zeros((num_spiketrains, num_windows), dtype=int)
+
+    # Convert time windows to arrays for vectorized processing
+    window_starts = np.array([w[0] for w in time_windows])
+    window_ends = np.array([w[1] for w in time_windows])
+
+    # Iterate over spiketrains
+    for i, spiketrain in enumerate(segment.spiketrains):
+        spike_times = spiketrain.times.magnitude  # Extract spike times as a NumPy array
+        
+        # Use broadcasting to check spikes within each time window
+        for j, (start, end) in enumerate(zip(window_starts, window_ends)):
+            counts[i, j] = np.sum((spike_times >= start) & (spike_times < end))
+    return counts.squeeze()
+    
+def concatenate_segments_with_offsets(pre_seg, seg, post_seg):
+    """
+    Concatenates three segments (pre_seg, seg, and post_seg) into a single segment.
+    Combines spiketrains into a single spiketrain for each set of spiketrains across pre_seg, seg, and post_seg.
+
+    Parameters:
+        pre_seg (neo.Segment): The segment whose spiketrains will be placed in negative times.
+        seg (neo.Segment): The main segment to keep as-is.
+        post_seg (neo.Segment): The segment whose spiketrains will be appended after `seg`.
+
+    Returns:
+        neo.Segment: A new segment containing a single concatenated spiketrain for each set.
+    """
+    combined_segment = neo.Segment(name="CombinedSegment")
+
+    # Calculate the duration of the main segment
+    t_start_pre = - pre_seg.t_stop
+    t_start_post = seg.t_stop
+    # Iterate over spiketrains in the main segment
+    for i, spiketrain in enumerate(seg.spiketrains):
+        # Collect spiketrain times from pre_seg, seg, and post_seg
+        pre_times = pre_seg.spiketrains[i].times + t_start_pre
+        main_times = spiketrain.times
+        post_times = post_seg.spiketrains[i].times + t_start_post
+
+        # Concatenate the spike times
+        all_times = pre_times.rescale(main_times.units).tolist() + \
+                    main_times.tolist() + \
+                    post_times.rescale(main_times.units).tolist()
+
+        # Create a new spiketrain with concatenated times
+        new_spiketrain = neo.SpikeTrain(
+            sorted(all_times),  # Ensure times are sorted
+            t_start=pre_seg.spiketrains[i].t_start + t_start_pre,
+            t_stop=post_seg.spiketrains[i].t_stop + t_start_post,
+            units=main_times.units
+        )
+        combined_segment.spiketrains.append(new_spiketrain)
+        new_spiketrain
+
+    return combined_segment
+
+def count_spikes_in_window(segment, start_time, end_time):
+    """
+    Counts the number of spikes within a specific time window for each spiketrain in a neo.Segment.
+
+    Parameters:
+        segment (neo.Segment): The segment containing spiketrains.
+        start_time (float or Quantity): Start time of the window (in the same units as the spiketrain).
+        end_time (float or Quantity): End time of the window (in the same units as the spiketrain).
+
+    Returns:
+        np.ndarray: Array of spike counts for each spiketrain.
+    """
+    # Initialize counts
+    counts = []
+
+    for spiketrain in segment.spiketrains:
+        spike_times = spiketrain.times.magnitude 
+        window_mask = (spike_times >= start_time.magnitude) & (spike_times < end_time.magnitude)
+        counts.append(np.count_nonzero(window_mask))
+
+    return np.array(counts)
 
 def read_file(file_path):
     """
@@ -109,7 +203,6 @@ def reorder_lists(object_list, list_to_order, ordering_parameters):
     # Convert to list before returning
     return list(reordered_object_list), list(reordered_list_to_order)
 
-
 def get_model_info_and_parameters(base_folder, separate_modified_params=False):
     """
     Retrieves and processes model information and parameters from the given base folder.
@@ -199,8 +292,7 @@ def classify_stimulus_parameters_into_constant_and_varying(stims):
 
     return constant_params, varying_params
 
-
-def export_from_datastore_to_hdf5(data_store, st_name, data_type, cut_start=None, cut_end=None):
+def export_from_datastore_to_hdf5(data_store, st_name, data_type, start_time=None, stop_time=None, time_windows_size=None, path_to_save_hdf5=None):
     """
     Export data from a Mozaik datastore to a HDF5 file with a standardized structure.
 
@@ -210,8 +302,8 @@ def export_from_datastore_to_hdf5(data_store, st_name, data_type, cut_start=None
         data_type (str): The type of data to export. Options:
                         - 'mean_rates': Average firing rates
                         - 'spiketrains': Raw spike times
-        cut_start (float, optional): Start time (ms) for data extraction
-        cut_end (float, optional): End time (ms) for data extraction
+        start_time (float, optional): Start time (ms) for data extraction
+        stop_time (float, optional): End time (ms) for data extraction
 
     Notes:
         Creates an HDF5 file with the following structure:
@@ -236,7 +328,7 @@ def export_from_datastore_to_hdf5(data_store, st_name, data_type, cut_start=None
                 serialized[key] = value
         return serialized
     
-    def create_hdf5_structure(hf, sim_info, default_parameters, modified_parameters, recorders, experimental_protocols, st_name, varying_stim_params, constant_stim_params, data_type, cut_start, cut_end):
+    def create_hdf5_structure(hf, sim_info, default_parameters, modified_parameters, recorders, experimental_protocols, st_name, varying_stim_params, constant_stim_params, data_type, start_time, stop_time):
         # Add default parameters and info as metadata to the group
         hf.attrs['default_parameters'] = str(serialize_parameters(default_parameters))
         hf.attrs['sim_info'] = str(sim_info)
@@ -265,28 +357,31 @@ def export_from_datastore_to_hdf5(data_store, st_name, data_type, cut_start=None
         logging.info(f"Datasets subgroup created under 'stimuli' in '{model_subgroup_name}'.")
 
         # Add varying parameters as metadata to the stimuli subgroup
-        stimuli_subgroup.attrs['varying_paramers'] = list(varying_stim_params.keys())
+        stimuli_subgroup.attrs['varying_parameters'] = list(varying_stim_params.keys())
         for param_name, param_values in varying_stim_params.items():
             stimuli_subgroup.attrs[f'{param_name}'] = param_values
         stimuli_subgroup.attrs['data_dimensions'] = [len(varying_stim_params[param]) for param in varying_stim_params.keys()]
 
         # Add constant parameters as metadata to the stimuli subgroup
-        stimuli_subgroup.attrs['constant_paramers'] = list(constant_stim_params.keys())
+        stimuli_subgroup.attrs['constant_parameters'] = list(constant_stim_params.keys())
         for param_name, param_values in constant_stim_params.items():
             stimuli_subgroup.attrs[f'{param_name}'] = str(param_values) if param_values is not None else "None"
 
         # Add data related metadata to the stimuli subgroup
         stimuli_subgroup.attrs['data_type'] = data_type
-        stimuli_subgroup.attrs['data_cut_start'] = str(cut_start) if cut_start is not None else "None"
-        stimuli_subgroup.attrs['data_cut_end'] = str(cut_end) if cut_end is not None else "None"
+        stimuli_subgroup.attrs['data_start_time'] = str(start_time) if start_time is not None else "None"
+        stimuli_subgroup.attrs['data_stop_time'] = str(stop_time) if stop_time is not None else "None"
 
         return stimuli_subgroup
 
     def get_segments_and_stimuli_and_constant_and_varying_parameters(data_store, sheet_name, st_name):
         # Get segments and stimuli
         dsv = param_filter_query(data_store, st_name=st_name, sheet_name=sheet_name)
-        segs = dsv.get_segments(ordered=True)
+        segs = dsv.get_segments()
         stims = [MozaikParametrized.idd(seg.annotations['stimulus']) for seg in segs]
+        segs_pre =  dsv.get_segments(null=True)
+        segs_post = [*segs_pre[1:], param_filter_query(data_store, st_name='InternalStimulus', sheet_name=sheet_name).get_segments()[-1]]
+        segs = list(zip(segs_pre, segs, segs_post))
 
         # Get varying parameters
         constant_stim_params, varying_stim_params = classify_stimulus_parameters_into_constant_and_varying(stims)  # alternative: params = OrderedDict((param, sorted(list(parameter_value_list(stims, param)))) for param in varying_parameters(stims))
@@ -296,29 +391,47 @@ def export_from_datastore_to_hdf5(data_store, st_name, data_type, cut_start=None
         assert len(set([str(stim) for stim in stims])) == len(stims), "There are duplicate stimuli"
         return segs, stims, constant_stim_params, varying_stim_params
 
-    def extract_sheet_data_and_save_to_h5py(stims, segs, varying_stim_params, data_type, stimuli_subgroup, sheet_name, cut_start, cut_end):
+    def extract_sheet_data_and_save_to_h5py(stims, segs, varying_stim_params, data_type, stimuli_subgroup, sheet_name, start_time, stop_time, time_windows_size):
         # Get data to export
         logging.info(f"Extracting {data_type} data from {len(segs)} segments in sheet {sheet_name}")
+
+        # define start_time and stop_time if not provided
+        if start_time is None:
+            start_time = 0
+        if stop_time is None:
+            stop_time = stims[0].duration
+
+        # define time_windows
+        if time_windows_size == None: 
+            time_windows = [(start_time, stop_time)]
+            time_windows_size = stop_time - start_time
+        else:
+            assert float(stop_time-start_time) % (time_windows_size) == 0, "time_windows_size must be a multiple of the time_stop - time_start"
+            time_windows = list(zip(np.arange(start_time, stop_time, time_windows_size), np.arange(start_time+time_windows_size, stop_time+time_windows_size, time_windows_size)))
+
         data = []
         for seg in segs:  
-            if data_type == 'mean_rates':
-                if cut_start is not None:
-                    cut_start = Quantity(cut_start, 'ms')
-                if cut_end is not None:
-                    cut_end = Quantity(cut_end, 'ms')
-                data.append(seg.mean_rates(start=cut_start, end=cut_end))
+            concatenated_seg = concatenate_segments_with_offsets(*seg)
+            if data_type == 'spike_counts':
+                data.append(count_spikes_in_multiple_windows(concatenated_seg, time_windows))  
+            elif data_type == 'mean_rates':
+                data.append(count_spikes_in_multiple_windows(concatenated_seg, time_windows)/float(time_windows_size) * 1000)  
             elif data_type == 'spiketrains':
-                data.append([spiketrain.time_slice(cut_start, cut_end).magnitude for spiketrain in seg.get_spiketrains()])
+                data.append([spiketrain.time_slice(start_time, stop_time).magnitude for spiketrain in concatenated_seg.spiketrains])
             else:
                 raise ValueError("Invalid data type")
-        data = np.array(data)
+        if data_type == 'spiketrains':
+            data = np.array(data, dtype=object)
+        else:
+            data = np.stack(data)
+
 
         # Reorder stimuli and data in tensors whose number of dimensions corresponds to the number of varying parameters
-        stims_sorted, data_sorted = reorder_lists(stims, data, varying_stim_params.keys())
-        # stims_tensor = np.reshape(stims_sorted, [len(varying_stim_params[param]) for param in varying_stim_params.keys()])
+        _, data_sorted = reorder_lists(stims, data, varying_stim_params.keys())
+
         params_dims = [len(varying_stim_params[param]) for param in varying_stim_params.keys()]
-        
-        data_tensor = np.reshape(np.array(data_sorted).flatten(), [*params_dims, -1])
+        # reshape data to match the dimensions of varying parameters
+        data_tensor = np.reshape(np.array(data_sorted).flatten(), [*params_dims, *data_sorted[0].shape])
   
         # Add dataset to the stimuli subgroup
         sheet_name_cleaned = sheet_name.replace('/', '')
@@ -329,6 +442,7 @@ def export_from_datastore_to_hdf5(data_store, st_name, data_type, cut_start=None
             stimuli_subgroup.create_dataset(sheet_name_cleaned, data=data_tensor)
 
     def add_stimuli_dataset(stimuli_subgroup, stims, varying_stim_params, ds):
+        logging.info(f"Adding stimuli dataset to {stimuli_subgroup.name}")
         # Reorder stimuli and reshape to match the dimensions of varying parameters
         reordered_stims, _ = reorder_lists(stims, [str(s) for s in stims], varying_stim_params.keys()) 
         reordered_stims = np.array(reordered_stims).reshape([len(varying_stim_params[param]) for param in varying_stim_params.keys()])
@@ -336,7 +450,6 @@ def export_from_datastore_to_hdf5(data_store, st_name, data_type, cut_start=None
         # Identify which dimension corresponds to trial
         trial_dim = None
         for i, param in enumerate(varying_stim_params.keys()):
-            logging.info(varying_stim_params)
             if param == 'trial':
                 trial_dim = i
                 stimuli_subgroup.attrs['trial_dim'] = trial_dim
@@ -356,10 +469,19 @@ def export_from_datastore_to_hdf5(data_store, st_name, data_type, cut_start=None
         stimuli_subgroup.create_dataset('stimuli', data=sensory_stim)   
         stimuli_subgroup.create_dataset('stimuli_idx', data=reordered_stims_idx)
 
+        # Save the stimulus_name dataset
+        stimulus_names = np.array([str(stim) for stim in stims], dtype='S')
+        stimuli_subgroup.create_dataset('stimulus_name', data=stimulus_names, dtype=h5py.string_dtype(encoding='utf-8'))
 
+    ############################################################################################
     ## Create an HDF5 file (main function)
+    ############################################################################################
     base_folder = data_store.parameters['root_directory']
-    with h5py.File(os.path.join(base_folder, 'exported_data.h5'), 'w') as hf:
+    if path_to_save_hdf5 is None:
+        path_to_save_hdf5 = os.path.join(base_folder, 'exported_data.h5')
+    assert path_to_save_hdf5.endswith('.h5'), "path_to_save_hdf5 must end with .h5"
+    os.makedirs(os.path.dirname(path_to_save_hdf5), exist_ok=True)
+    with h5py.File(path_to_save_hdf5, 'w') as hf:
         # Get model info and parameters
         modified_parameters, default_parameters, info, recorders, experimental_protocols = get_model_info_and_parameters(base_folder, separate_modified_params=True)
         sheets =  data_store.sheets() 
@@ -367,19 +489,23 @@ def export_from_datastore_to_hdf5(data_store, st_name, data_type, cut_start=None
         
         # Iterate over all sheets, extract data and save to h5py
         for i, sheet_name in enumerate(sheets):
-            
+            logging.info(f"Processing sheet {sheet_name}")
             # Get segments and stimuli and constant and varying parameters for the current sheet
             segs, stims, constant_stim_params, varying_stim_params = get_segments_and_stimuli_and_constant_and_varying_parameters(data_store=data_store, sheet_name=sheet_name, st_name=st_name)
-
+            
             # Create HDF5 structure for the first sheet
             if i == 0:
                 stimuli_subgroup = create_hdf5_structure(
                     hf, info, default_parameters, modified_parameters, recorders, experimental_protocols, st_name,
-                    varying_stim_params, constant_stim_params, data_type, cut_start, cut_end
+                    varying_stim_params, constant_stim_params, data_type, start_time, stop_time
                 )
 
+            if len(segs[0][1].get_spiketrains()) == 0: # maybe there is a better way to check if there are neurons recorded in the sheet
+                logging.warning(f"No neurons recorded in sheet {sheet_name}")
+                continue
+            
             # # Extract data and save to h5py
-            extract_sheet_data_and_save_to_h5py(stims, segs, varying_stim_params, data_type, stimuli_subgroup, sheet_name, cut_start, cut_end) 
+            extract_sheet_data_and_save_to_h5py(stims, segs, varying_stim_params, data_type, stimuli_subgroup, sheet_name, start_time, stop_time, time_windows_size) 
 
         # Add stimuli dataset
         add_stimuli_dataset(stimuli_subgroup, stims, varying_stim_params, data_store)
@@ -497,16 +623,16 @@ def merge_hdf5_files(file_list, output_file):
                     stim_subgroups = [msg[stim_key] for msg in model_subgroups]
                     
                     # Check constant parameters
-                    constant_params = stim_subgroups[0].attrs['constant_paramers']
-                    if not all(np.array_equal(ssg.attrs['constant_paramers'], constant_params) for ssg in stim_subgroups):
+                    constant_params = stim_subgroups[0].attrs['constant_parameters']
+                    if not all(np.array_equal(ssg.attrs['constant_parameters'], constant_params) for ssg in stim_subgroups):
                         raise ValueError("Constant parameters differ across files")
                     for constant_key in constant_params:
                         if not all(ssg.attrs[constant_key] == stim_subgroups[0].attrs[constant_key] for ssg in stim_subgroups):
                             raise ValueError(f"Constant parameter {constant_key} differs across files")
 
                     # Check varying parameters
-                    varying_params = stim_subgroups[0].attrs['varying_paramers']
-                    if not all(np.array_equal(ssg.attrs['varying_paramers'], varying_params) for ssg in stim_subgroups):
+                    varying_params = stim_subgroups[0].attrs['varying_parameters']
+                    if not all(np.array_equal(ssg.attrs['varying_parameters'], varying_params) for ssg in stim_subgroups):
                         raise ValueError("Varying parameters differ across files")
 
                     different_key = None
@@ -531,7 +657,11 @@ def merge_hdf5_files(file_list, output_file):
                         if k != different_key:
                             merged_stim_subgroup.attrs[k] = stim_subgroups[0].attrs[k]
                         else:
-                            merged_stim_subgroup.attrs[k] = np.concatenate([ssg.attrs[k] for ssg in stim_subgroups])
+                            try: 
+                                merged_stim_subgroup.attrs[k] = np.concatenate([ssg.attrs[k] for ssg in stim_subgroups])
+                            except:
+                                merged_stim_subgroup.attrs[k] = 'too large to be saved in attributes: saved in dataset'
+                                merged_stim_subgroup.create_dataset(k, data=np.concatenate([ssg.attrs[k] for ssg in stim_subgroups], axis=different_param_dim), dtype=h5py.special_dtype(vlen=np.dtype('str')))
 
                     # Add merging dimension and sizes of each input dataset in that dimension
                     merged_stim_subgroup.attrs['merging_dimension'] = different_param_dim
@@ -556,55 +686,68 @@ def merge_hdf5_files(file_list, output_file):
 
     logging.info(f'Successfully merged {len(file_list)} files into {output_file}')
 
-# generic functions to use with with h5py mozaik data files 
-def get_stimulus_response_pairs(file_path, model_key, stim_key, sheet, indices):
+def get_stimuli_and_response_datasets(file_path, model_key, stim_key, sheet, mean_over_trials=False, select_trials=None, response_indices=None):
     """
-    Access specific pairs of stimuli and responses in the HDF5 file.
+    Retrieve pairs of stimuli and responses from an HDF5 file for a given model and stimulus key.
 
     Parameters
     ----------
     file_path : str
-                Path to the HDF5 file
-    model_key : str  
-                Key for the model subgroup
+        Path to the HDF5 file containing the data.
+    model_key : str
+        Key identifying the model within the HDF5 file.
     stim_key : str
-                Key for the stimulus subgroup 
+        Key identifying the stimulus within the model group.
     sheet : str
-                Name of the sheet (e.g., 'V1_Exc_L23')
-    indices : tuple, array or list of int
-                Indices of the stimuli to retrieve. Length must match the number of dimensions 
-                of the stimuli index dataset.
+        Name of the sheet from which to extract responses.
+    mean_over_trials : bool, optional
+        If True, average the responses over trials. Default is False.
+    select_trials : list of int, optional
+        Specific trials to select from the responses. If None, all trials are used. Default is None.
+    response_indices : list of int, optional
+        Indices specifying which responses (and stimuli) to extract. If None, all responses (and stimuli) are extracted. Default is None.
 
     Returns
     -------
-    tuple : (stimuli, responses)
-            - stimuli: The stimulus data for the specified indices
-            - responses: The corresponding neural responses
+    tuple
+        A tuple containing:
+        - stimuli : numpy.ndarray
+            The extracted stimuli data.
+        - responses : numpy.ndarray
+            The extracted responses data, optionally averaged over trials.
 
-    Notes
-    -----
-    - Indices should match the dimensionality of the data (e.g., for data with trial and orientation
-      dimensions, indices should be a tuple of (trial_idx, orientation_idx))
-    - For merged files, indices should account for the merged dimension
     """
     with h5py.File(file_path, 'r') as f:
-        # Convert indices to tuple
-        indices = tuple(indices)
-
         # Navigate to the specific subgroup
         subgroup = f[model_key][stim_key]
         
-        # Get the stimuli
-        stimuli_idx_dataset = subgroup['stimuli_idx'][:]
-        stimuli_dataset = subgroup['stimuli'][:]
-      
-        stimulus_idx = stimuli_idx_dataset[indices]
-        stimuli = stimuli_dataset[stimulus_idx]
+        # Get the stimuli index and responses
+        stimuli_idx = subgroup['stimuli_idx'][:]
+        trial_dim = subgroup.attrs['trial_dim']
+
+        # Use advanced indexing to directly get the stimuli
+        if response_indices is not None:
+            stimuli = subgroup['stimuli'][tuple(response_indices)]
+        else:
+            matching_idxs = np.take(stimuli_idx, 0, axis=trial_dim)
+            stimuli = subgroup['stimuli'][matching_idxs]
+
+        # Load only specific responses if response_indices is provided
+        if response_indices is not None:
+            response_slices = [slice(None)] + response_indices
+            responses = subgroup[sheet][tuple(response_slices)]
+        else:
+            responses = subgroup[sheet][:]
+
+        if select_trials is not None:
+            responses = np.take(responses, select_trials, axis=trial_dim)
+
+        # Optionally average over trial
+        if mean_over_trials:
+            responses = responses.mean(axis=trial_dim)
         
-        # Get the responses
-        response_dataset = subgroup[sheet]
-        responses = response_dataset[indices]
         return stimuli, responses
+
 
 def print_dataset_content(file_path, dataset_path):
     """
@@ -620,18 +763,18 @@ def print_dataset_content(file_path, dataset_path):
     with h5py.File(file_path, 'r') as f:
         if dataset_path in f:
             dataset = f[dataset_path]
-            logging.info(dataset.shape)
-            logging.info(f"Content of dataset: {dataset_path}")
+            print(dataset.shape)
+            print(f"Content of dataset: {dataset_path}")
             
             # Check if the dataset contains variable-length data
             if h5py.check_dtype(vlen=dataset.dtype) == np.dtype('float'):
-                logging.info("Variable-length float data:")
+                print("Variable-length float data:")
                 for i, row in enumerate(dataset):
-                    logging.info(f"  Row {i}: {row}")
+                    print(f"  Row {i}: {row}")
             else:
-                logging.info(dataset[:])
+                print(dataset[:])
         else:
-            logging.info(f"Dataset {dataset_path} not found in the file.")
+            print(f"Dataset {dataset_path} not found in the file.")
 
 def explore_hdf5(file_path):
     """
@@ -643,23 +786,23 @@ def explore_hdf5(file_path):
                 Path to the HDF5 file
     """
     def print_attrs(name, obj):
-        logging.info(f"Object: {name}")
+        print(f"Object: {name}")
         for key, val in obj.attrs.items():
-            logging.info(f"  Attribute: {key} = {val}")
+            print(f"  Attribute: {key} = {val}")
 
     def print_structure(name, obj):
         if isinstance(obj, h5py.Group):
-            logging.info(f"Group: {name}")
+            print(f"Group: {name}")
         elif isinstance(obj, h5py.Dataset):
-            logging.info(f"Dataset: {name}, Shape: {obj.shape}, Type: {obj.dtype}")
-        logging.info_attrs(name, obj)
+            print(f"Dataset: {name}, Shape: {obj.shape}, Type: {obj.dtype}")
+        print_attrs(name, obj)
 
     with h5py.File(file_path, 'r') as f:
-        logging.info("\nTop-level attributes:")
+        print("\nTop-level attributes:")
         for key, val in f.attrs.items():
-            logging.info(f"  {key} = {val}")
+            print(f"  {key} = {val}")
 
-        logging.info("File Structure:")
+        print("File Structure:")
         f.visititems(print_structure)
 
 def get_structure_of_hdf5(hdf5_file):

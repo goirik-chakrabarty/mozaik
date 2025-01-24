@@ -1,8 +1,8 @@
 """
 This module implements the data storage functionality.
 """
-
 import numpy
+import math
 from parameters import ParameterSet
 from neo.core.block import Block
 #from neo.io.hdf5io import NeoHdf5IO
@@ -343,9 +343,49 @@ class DataStoreView(ParametrizedObject):
                 self.full_datastore.stimulus_dict[seg.annotations['stimulus']] = False
                 os.remove(self.full_datastore.parameters.root_directory + '/' + seg.identifier + '.pickle')    
         
-     
+    def purge_segments(self):
+        """Purge spiketrains and analogsignals of all sgements from memory (lazy loading mechanisms will ensure their reload if accessed again)."""
+        for s in self.block.segments:
+            if s.full:
+                s.release()
+
+    # def pre_load(self):
+    #     """
+    #     Force all segments in the DSV to load from permanent memory.
+    #     """
+    #     from multiprocessing import Manager, Process
+    #     num_proc = 32
+    #     chunk_size = math.ceil(len(self.block.segments) / num_proc)
+
+    #     logger.info("Starting pre-load. Num processes: %d  Num segments: %d" % (num_proc,len(self.block.segments)))
+
+    #     # Create threads for each object modification
+    #     processes = []
+
+    #     manager = Manager()
+    #     objects = manager.list(self.block.segments)
         
-    
+    #     def preload_chunk(objects, start, end):
+    #         logger.info("Starting thread.")
+    #         for i in range(start, end):
+    #             logger.info(i)
+    #             objects[i].load_full()
+    #         logger.info("Ending thread.")
+
+
+    #     for t in range(num_proc):
+    #         start = t * chunk_size
+    #         end = min((t + 1) * chunk_size, len(self.block.segments))  # Ensure we don't go out of bounds
+    #         p = Process(target=preload_chunk, args=(objects, start, end))
+    #         processes.append(p)
+    #         p.start()
+
+    #     # Wait for all threads to complete
+    #     for p in processes:
+    #         p.join()
+
+    #     logger.info("Leaving pre-load")
+
 class DataStore(DataStoreView):
     """
     Abstract DataStore class that declares the *mozaik* data store interface.
@@ -660,9 +700,3 @@ class PickledDataStore(Hdf5DataStore):
                      + str(len(self.block.segments) - 1) + ".pickle", 'wb')
             pickle.dump(s, f)
         self.block.segments = sorted(self.block.segments, key=lambda x:x.rec_datetime)
-
-    def purge_segments(self):
-        """Purge spiketrains and analogsignals of all sgements from memory (lazy loading mechanisms will ensure their reload if accessed again)."""
-        for s in self.block.segments:
-            if s.full:
-                s.release()
