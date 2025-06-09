@@ -277,7 +277,7 @@ def parameter_search_run_script_distributed_slurm(simulation_name,master_results
                             '#SBATCH --hint=nomultithread',
                             'source ' + env_path,
                             'cd ' + os.getcwd(),
-                            ' '.join(["srun","--mpi=pmix_v3","python",run_script,"'"+rdn+"'"]  +['>']  + ["'"+rdn +'/OUTFILE_analysis'+str(time.time()) + "'"]),
+                            ' '.join(["srun","--mpi=pmix","python",run_script,"'"+rdn+"'"]  +['>']  + ["'"+rdn +'/OUTFILE_analysis'+str(time.time()) + "'"]),
                         ])
         print(p.communicate(input=data)[0])
         print(data)

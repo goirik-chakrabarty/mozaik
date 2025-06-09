@@ -14,6 +14,8 @@ import mozaik
 
 logger = mozaik.getMozaikLogger()
 
+counter = 0
+
 class MozaikSegment(Segment):
         """
         This class extends Neo segment with several convenience functions.
@@ -46,8 +48,7 @@ class MozaikSegment(Segment):
             """
             Returns the list of SpikeTrain objects stored in this segment.
             """
-            if not self.full:
-                self.load_full()
+            self.load_full()
             return self._spiketrains
 
         def set_spiketrains(self, s):
@@ -62,8 +63,7 @@ class MozaikSegment(Segment):
             """
             Returns the list of AnalogSignal objects stored in this segment.
             """
-            if not self.full:
-                self.load_full()
+            self.load_full()
             return self._analogsignals
 
         def set_analogsignals(self, s):
@@ -110,8 +110,7 @@ class MozaikSegment(Segment):
             A AnalogSignal object if neuron_id is int, or list of AnalogSignal objects if neuron_id is list, the order corresponds to the order in neuron_id argument.
             """
 
-            if not self.full:
-                self.load_full()
+            self.load_full()
 
             for a in self.analogsignals:
                 if a.name == 'v' or a.name == 'V_m':
@@ -131,8 +130,7 @@ class MozaikSegment(Segment):
             -------
             A AnalogSignal object if neuron_id is int, or list of AnalogSignal objects if neuron_id is list, the order corresponds to the order in neuron_id argument.
             """
-            if not self.full:
-                self.load_full()
+            self.load_full()
             for a in self.analogsignals:
                 if a.name == 'gsyn_exc' or a.name == 'g_ex':
                     return a[:, a.annotations['source_ids'].tolist().index(neuron_id)]
@@ -152,8 +150,7 @@ class MozaikSegment(Segment):
             A AnalogSignal object if neuron_id is int, or list of AnalogSignal objects if neuron_id is list, the order corresponds to the order in neuron_id argument.
             """
 
-            if not self.full:
-                self.load_full()
+            self.load_full()
             for a in self.analogsignals:
                 if a.name == 'gsyn_inh' or a.name == 'g_in':
                     return a[:, a.annotations['source_ids'].tolist().index(neuron_id)]
@@ -171,8 +168,7 @@ class MozaikSegment(Segment):
             """
             Returns ids of neurons for which inhibitory conductance is stored in this segment.
             """
-            if not self.full:
-                self.load_full()
+            self.load_full()
             for a in self.analogsignals:
                 if a.name == 'gsyn_inh' or a.name == 'g_in':
                    return a.annotations['source_ids']
@@ -181,8 +177,7 @@ class MozaikSegment(Segment):
             """
             Returns ids of neurons for which excitatory conductance is stored in this segment.
             """
-            if not self.full:
-                self.load_full()
+            self.load_full()
             for a in self.analogsignals:
                 if a.name == 'gsyn_exc' or a.name == 'g_ex':
                    return a.annotations['source_ids']
@@ -191,8 +186,7 @@ class MozaikSegment(Segment):
             """
             Returns ids of neurons for which membrane potential is stored in this segment.
             """
-            if not self.full:
-                self.load_full()
+            self.load_full()
             for a in self.analogsignals:
                 if a.name == 'v' or a.name == 'V_m':
                    return a.annotations['source_ids']
@@ -202,8 +196,7 @@ class MozaikSegment(Segment):
             Returns ids of neurons for which spikes are stored in this segment.
             """
             
-            if not self.full:
-                self.load_full()
+            self.load_full()
             return [s.annotations['source_id'] for s in self.spiketrains]
 
         def mean_rates(self,start=None,end=None):
@@ -259,12 +252,16 @@ class PickledDataStoreNeoWrapper(MozaikSegment):
             self.datastore_path = datastore_path
 
         def load_full(self):
-            f = open(self.datastore_path + '/' + self.identifier + ".pickle", 'rb')
-            s = pickle.load(f)
-            f.close()
-            self._spiketrains = s.spiketrains
-            self._analogsignals = s.analogsignals
-            self.full = True
+            if not self.full:
+                global counter
+                f = open(self.datastore_path + '/' + self.identifier + ".pickle", 'rb')
+                logger.info("Loading " + str(counter))
+                counter += 1
+                s = pickle.load(f)
+                f.close()
+                self._spiketrains = s.spiketrains
+                self._analogsignals = s.analogsignals
+                self.full = True
 
         def __getstate__(self):
             result = self.__dict__.copy()

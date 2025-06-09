@@ -90,6 +90,17 @@ class RandomSingleNeuronStepCurrentInjection(Experiment):
 
                 d = OrderedDict()
 
+                p = MozaikExtendedParameterSet({
+                                                    'current' : self.parameters.current,
+                                                    'onset' : 0,
+                                                    'population_selector' : MozaikExtendedParameterSet({
+                                                         'component' : 'mozaik.sheets.population_selector.IDList',
+                                                         'params' : MozaikExtendedParameterSet({
+                                                            'list_of_ids' : [idd]
+                                                          })
+                                                      })
+                                                  })
+                
                 d[self.parameters.sheet] = [
                     Depolarization(model.sheets[self.parameters.sheet], p)
                 ]
@@ -121,6 +132,9 @@ class RandomSingleNeuronStepCurrentInjectionDuringDriftingSinusoidalGratingStimu
     current : float (mA)
           The magnitude on injected current
 
+    current_onset : float (ms)
+          The onset of the current injection relative to visual stimulation.
+          
     sheet : str
           The sheet from which the neurons are selected
 
@@ -149,21 +163,21 @@ class RandomSingleNeuronStepCurrentInjectionDuringDriftingSinusoidalGratingStimu
           Random seed of the experiment
     """
 
-    required_parameters = ParameterSet(
-        {
-            "duration": float,
-            "current": float,
-            "sheet": str,
-            "num_neurons": int,
-            "num_trials": int,
-            "grating_spatial_frequency": float,
-            "grating_temporal_frequency": float,
-            "grating_contrasts": list,
-            "grating_num_orientations": int,
-            "stimulation_configuration": ParameterSet,
-            "experiment_random_seed": int,
-        }
-    )
+
+    required_parameters = ParameterSet({
+            'duration': float,
+            'current' : float,
+            'current_onset' : float,
+            'sheet' : str,
+            'num_neurons' : int,
+            'num_trials' : int, 
+            'grating_spatial_frequency' : float,
+            'grating_temporal_frequency' : float,
+            'grating_contrasts' : list,
+            'grating_num_orientations' : int,
+            'stimulation_configuration' : ParameterSet,
+            'experiment_random_seed' : int 
+        })
 
     def generate_stimuli(self):
 
@@ -183,25 +197,23 @@ class RandomSingleNeuronStepCurrentInjectionDuringDriftingSinusoidalGratingStimu
 
         self.direct_stimulation = []
 
+                                    
         for c in self.parameters.grating_contrasts:
             for i in range(0, self.parameters.grating_num_orientations):
                 for t in range(0, self.parameters.num_trials):
                     rng.shuffle(ids)
                     for idd in ids:
 
-                        p = MozaikExtendedParameterSet(
-                            {
-                                "current": self.parameters.current,
-                                "population_selector": MozaikExtendedParameterSet(
-                                    {
-                                        "component": "mozaik.sheets.population_selector.IDList",
-                                        "params": MozaikExtendedParameterSet(
-                                            {"list_of_ids": [idd]}
-                                        ),
-                                    }
-                                ),
-                            }
-                        )
+                        p = MozaikExtendedParameterSet({
+                                                                  'current' : self.parameters.current,
+                                                                  'onset' : self.parameters.current_onset,
+                                                                  'population_selector' : MozaikExtendedParameterSet({
+                                                                        'component' : 'mozaik.sheets.population_selector.IDList',
+                                                                        'params' : MozaikExtendedParameterSet({
+                                                                              'list_of_ids' : [idd]
+                                                                        })
+                                                                        })
+                                                                  })
 
                         d = OrderedDict()
 

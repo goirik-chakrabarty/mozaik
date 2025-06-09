@@ -331,6 +331,7 @@ class Depolarization(DirectStimulator):
  
     required_parameters = ParameterSet({
             'current': float,
+            'onset' : float,
             'population_selector' : ParameterSet({
                     'component' : str,
                     'params' : ParameterSet
@@ -353,7 +354,7 @@ class Depolarization(DirectStimulator):
             self.sheet.pop.all_cells[i].inject(self.scs)
 
     def prepare_stimulation(self,duration,offset):
-        self.scs.set_parameters(times=[offset+self.sheet.dt*3], amplitudes=[self.parameters.current],copy=False)
+        self.scs.set_parameters(times=[offset+self.parameters.onset+self.sheet.dt*3], amplitudes=[self.parameters.current],copy=False)
         
     def inactivate(self,offset):
         self.scs.set_parameters(times=[offset+self.sheet.dt*3], amplitudes=[0.0],copy=False)
