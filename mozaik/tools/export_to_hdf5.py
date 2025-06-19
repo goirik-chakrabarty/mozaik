@@ -211,6 +211,9 @@ def export_from_datastore_to_hdf5_with_multiprocessing(data_store, st_name, data
         # Drop the trial dimension by selecting the first element along it
         if trial_dim != None:
             reordered_stims = np.take(reordered_stims, 0, axis=trial_dim)
+            if type(reordered_stims) != np.ndarray:
+                reordered_stims = np.array([reordered_stims])
+                
         # create index
         reordered_stims_flat = reordered_stims.flatten()
         reordered_stims_idx = np.arange(len(reordered_stims_flat)).reshape(reordered_stims.shape)
