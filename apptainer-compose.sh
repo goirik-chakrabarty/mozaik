@@ -19,7 +19,9 @@ echo MOZAIK_ROOT: $MOZAIK_ROOT
 
 # Run the container
 apptainer exec \
+ --cleanenv \
  --env OMPI_MCA_orte_tmpdir_base=/tmp \
+ --env PYTHONPATH="/mozaik:$PYTHONPATH" \
  --bind "$PROJECT_ROOT:/project" \
  --bind "$MOZAIK_ROOT:/mozaik" \
  "$SIF_IMAGE" \

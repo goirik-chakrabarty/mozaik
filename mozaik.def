@@ -144,12 +144,12 @@ From: ubuntu:22.04
     # Check install
     python -c 'import nest; nest.Install("stepcurrentmodule")'
     
-    # 8. Install mozaik itself
-    # The repo files were copied to /app by the %files section
-    cd /app
-    pip install .
+    ## 8. Install mozaik itself
+    ## The repo files were copied to /app by the %files section
+    # cd /app
+    # pip install .
 
-    # 9. Pre-compile pyNN extensions (FIX)
+    # 9. Pre-compile pyNN extensions
     # This forces pyNN to build its extensions now, while the FS is writable.
     echo "Pre-compiling pyNN extensions..."
     python -c 'import pyNN.nest'
