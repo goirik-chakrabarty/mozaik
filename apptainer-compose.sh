@@ -2,7 +2,8 @@
 
 # Define variables
 
-PROJECT_ROOT="/mnt/vast-nhr/projects/nix00014/goirik/mozaik-models/Rozsa_Cagnol2024" 
+# PROJECT_ROOT="/mnt/vast-nhr/projects/nix00014/goirik/mozaik-models/Rozsa_Cagnol2024" 
+PROJECT_ROOT="/mnt/vast-nhr/projects/nix00014/goirik/mozaik-models/experanto" 
 SIF_IMAGE="$PWD/mozaik.sif"
 ENV_FILE=".env"
 MOZAIK_ROOT="/mnt/vast-nhr/projects/nix00014/goirik/mozaik"

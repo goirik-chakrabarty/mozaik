@@ -228,6 +228,7 @@ def MeasureSparseBar_default_parameters():
         "y": 0,
         "n_positions": 10,
         "experiment_seed": 17,
+        'shuffle_stimuli': False,
     }
     return d
 

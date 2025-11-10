@@ -102,7 +102,10 @@ From: ubuntu:22.04
         imageio \
         scikit-image \
         som-pbc \
-        pandas
+        pandas \
+        seaborn \
+        jupyterlab \
+        tk
 
     # 4. Download and install imagen
     # (Using antolikjan version from Dockerfile/workflow)
