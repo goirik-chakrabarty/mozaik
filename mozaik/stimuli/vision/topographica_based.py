@@ -1583,6 +1583,10 @@ class PixelMovieExperanto(TopographicaBasedVisualStimulus):
         else:
             with open(p, 'rb') as f:
                 self.mc = numpy.load(f)
+                if len(self.mc.shape) == 2:
+                    print(">>>>>>>>>>>>>>>>>>>>>>>>>>> Got an image")
+                    # if only one frame is present, we need to add a time axis
+                    self.mc = self.mc[numpy.newaxis,:,:]
                 PixelMovieExperanto.cache[p] = self.mc/self.video_max_value  # normalizing the pixel values to [0,1]
 
         # assert self.mc.shape[1] == self.mc.shape[2], "The spatial shape of the pixel movie has to be square"

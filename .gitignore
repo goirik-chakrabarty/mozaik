@@ -10,3 +10,6 @@ cover
 *.bak
 *.out
 data/
+*.npy
+*.mp4
+*.avi
