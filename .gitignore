@@ -13,3 +13,4 @@ data/
 *.npy
 *.mp4
 *.avi
+slurm_files/*

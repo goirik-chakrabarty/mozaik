@@ -2278,7 +2278,7 @@ class MeasurePixelMovieExperanto(VisualExperiment):
     required_parameters = ParameterSet(
         {
             "base_path": str,
-            "movie_name": list,
+            "movie_name": str,
             "num_trials": int,
             "width" : float,
             "movie_frame_duration" : int,

@@ -28,4 +28,4 @@ apptainer exec \
  --bind "$MOZAIK_ROOT:/mozaik" \
  --bind "$DATA_ROOT:/data" \
  "$SIF_IMAGE" \
- bash apptainer-runners/mozaik-model.sh
+ bash apptainer-runners/mozaik-simulation.sh
