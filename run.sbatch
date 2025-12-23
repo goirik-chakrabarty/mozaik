@@ -1,8 +1,9 @@
 #!/bin/bash
 
-#SBATCH --job-name=moziak_simulation
+#SBATCH --job-name=32mozaik_simulation
+#SBATCH --nodes=1
 #SBATCH --ntasks=1
-#SBATCH --cpus-per-task=4
+#SBATCH --cpus-per-task=32
 #SBATCH --partition=grete:shared    # see https://www.hlrn.de/doc/display/PUB/Compute+node+partitions for a list of accessible hlrn partitions
 #SBATCH -G A100:1                   # number of gpus per node
 #SBATCH --time 0-48:00
@@ -19,9 +20,6 @@ export HTTPS_PROXY="http://www-cache.gwdg.de:3128"
 export FTP_PROXY="http://www-cache.gwdg.de:3128"
 
 module load apptainer
-module load cuda/12.2.1
-module load miniforge3
-module load git
 
 cd /mnt/vast-nhr/projects/nix00014/goirik/mozaik
 
@@ -31,6 +29,9 @@ echo "Home directory: ${HOME}"
 echo "Working directory: $PWD"
 echo "Current node: ${SLURM_NODELIST}"
 
-ls
+echo "Unsetting proxies to avoid 'parameters' library bug..."
+unset HTTP_PROXY
+unset HTTPS_PROXY
+unset FTP_PROXY
 
 bash apptainer-compose.sh

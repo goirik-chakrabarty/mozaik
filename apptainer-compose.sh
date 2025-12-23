@@ -7,7 +7,8 @@ PROJECT_ROOT="/mnt/vast-nhr/projects/nix00014/goirik/mozaik-models/experanto"
 SIF_IMAGE="$PWD/mozaik.sif"
 ENV_FILE=".env"
 MOZAIK_ROOT="/mnt/vast-nhr/projects/nix00014/goirik/mozaik"
-DATA_ROOT="/mnt/vast-nhr/projects/nix00014/goirik/data"
+DATA_ROOT="/mnt/vast-react/projects/neural_foundation_model"
+# DATA_ROOT="/mnt/vast-react/projects/neural_foundation_model"
 
 echo PROJECT_ROOT: $PROJECT_ROOT        
 echo SIF_IMAGE: $SIF_IMAGE
