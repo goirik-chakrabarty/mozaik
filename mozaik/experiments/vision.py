@@ -2338,7 +2338,9 @@ class MeasurePixelMovieExperanto(VisualExperiment):
                         if meta['modality'] == 'image':
                             movie_frame_duration = self.frame_duration * \
                                 (meta['presentation_time']*1000 //  self.frame_duration)
-                            blank_duration = meta['pre_blank_period']*1000 - 7 # 7 comes from the default blank stimulus from the experiment config
+                            blank_duration = self.frame_duration * \
+                                ((meta['pre_blank_period']*1000 - 35) // self.frame_duration)
+                       # 35 comes from the default null stimulus from the experiment config
                         elif meta['modality'] == 'video':
                             movie_frame_duration = self.parameters.movie_frame_duration
                         
