@@ -14,3 +14,4 @@ data/
 *.mp4
 *.avi
 slurm_files/*
+slurm*

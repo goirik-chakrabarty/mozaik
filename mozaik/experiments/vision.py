@@ -2283,6 +2283,8 @@ class MeasurePixelMovieExperanto(VisualExperiment):
             "width" : float,
             "movie_frame_duration" : int,
             "global_frame_offset" : int,
+            "stimulus_offset" : int,
+            "stimulus_window" : int,
             "images_per_trial" : int,
             "num_presentation_trials" : int,
             "video_max_value" : float,
@@ -2315,6 +2317,21 @@ class MeasurePixelMovieExperanto(VisualExperiment):
             movie_path = os.path.join(self.parameters.base_path, 'screen', 'data')
             meta_path = os.path.join(self.parameters.base_path, 'screen', 'meta')
             meta_names = [x for x in os.listdir(meta_path) if x.endswith('.yml')]
+            
+            if self.parameters.stimulus_window > 0:
+                meta_names_without_blank = []
+                for meta_name in meta_names:
+                    with open(os.path.join(meta_path, meta_name), 'r') as f:
+                                meta = yaml.safe_load(f)
+                    if meta['modality'] == 'blank':
+                        continue
+                    else:
+                        meta_names_without_blank.append(meta_name)
+                meta_names = meta_names_without_blank
+                print("Total Meta/Stimulus Files:", len(meta_names))
+                meta_names = meta_names[self.parameters.stimulus_offset : self.parameters.stimulus_offset + self.parameters.stimulus_window]
+                print("Using Meta/Stimulus Files:", meta_names)
+
             for k in range(0, self.parameters.num_trials):
                 for l in range(0, self.parameters.num_presentation_trials):
                     for meta_name in meta_names:

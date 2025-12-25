@@ -25,8 +25,10 @@ apptainer exec \
  --cleanenv \
  --env OMPI_MCA_orte_tmpdir_base=/tmp \
  --env PYTHONPATH="/mozaik:$PYTHONPATH" \
+ --env STIM_OFFSET="$STIM_OFFSET" \
+ --env STIM_WINDOW="$STIM_WINDOW" \
  --bind "$PROJECT_ROOT:/project" \
  --bind "$MOZAIK_ROOT:/mozaik" \
  --bind "$DATA_ROOT:/data" \
  "$SIF_IMAGE" \
- bash apptainer-runners/mozaik-data-export.sh
+ bash apptainer-runners/mozaik-simulation-array.sh

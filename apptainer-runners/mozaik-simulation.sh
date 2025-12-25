@@ -1,8 +1,8 @@
 cd /project
-rm -r SelfSustainedPushPull_test:test32_____
+rm -r SelfSustainedPushPull_test:cpufull96_____
 
 # python run_parameter_search.py run_spont.py nest param_MSA/defaults 
 # python run_spont.py nest 2 param_MSA/defaults 'test'
 # echo "Waiting for debugger attach..."
 # python -m debugpy --listen 0.0.0.0:5678 --wait-for-client run.py nest 2 param_MSA/defaults 'test:3'
-python -u run.py nest 32 param_MSA/defaults 'test:test32'
+python -u run.py nest 96 param_MSA/defaults 'test:cpufull96'
