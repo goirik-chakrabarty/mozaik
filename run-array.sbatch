@@ -9,7 +9,7 @@
 #SBATCH --time 0-48:00
 #SBATCH --constraint "inet" 
 #SBATCH --mem=200G
-#SBATCH --array=2-16                # the range can be any positive integers separated by hyphen
+#SBATCH --array=0-1                # the range can be any positive integers separated by hyphen
 #SBATCH --output=./slurm_files/arraybig/slurm-%x-%A_%a.out  # Use %A_%a for array job logging
 #SBATCH --error=./slurm_files/arraybig/slurm-%x-%A_%a.err
 #SBATCH --mail-type=begin

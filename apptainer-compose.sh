@@ -29,4 +29,4 @@ apptainer exec \
  --bind "$MOZAIK_ROOT:/mozaik" \
  --bind "$DATA_ROOT:/data" \
  "$SIF_IMAGE" \
- bash apptainer-runners/mozaik-data-export.sh
+ bash apptainer-runners/mozaik-data-export-ipynb.sh
