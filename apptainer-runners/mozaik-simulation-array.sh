@@ -6,7 +6,7 @@ if [ -z "$STIM_OFFSET" ]; then
 fi
 
 # 2. Create a unique run name using the offset
-RUN_NAME="test:fullbig32_${STIM_OFFSET}"
+RUN_NAME="mozaik32_trials10_${STIM_OFFSET}"
 
 # 3. Construct the expected output directory name
 # Mozaik typically constructs this as: ModelName_RunName_____
