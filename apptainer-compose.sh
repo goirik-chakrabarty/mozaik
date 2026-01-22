@@ -3,12 +3,12 @@
 # Define variables
 
 # PROJECT_ROOT="/mnt/vast-nhr/projects/nix00014/goirik/mozaik-models/Rozsa_Cagnol2024" 
-PROJECT_ROOT="/mnt/vast-nhr/projects/nix00014/goirik/mozaik-models/experanto" 
+PROJECT_ROOT="$PWD/../mozaik-models/experanto" 
 SIF_IMAGE="$PWD/mozaik.sif"
 ENV_FILE=".env"
-MOZAIK_ROOT="/mnt/vast-nhr/projects/nix00014/goirik/mozaik"
-EXPERANTO_ROOT="/mnt/vast-nhr/projects/nix00014/goirik/experanto_goirik"
-DATA_ROOT="/mnt/vast-react/projects/neural_foundation_model"
+MOZAIK_ROOT="$PWD"
+EXPERANTO_ROOT="$PWD/../experanto"
+DATA_ROOT="$PWD/../data"
 # DATA_ROOT="/mnt/vast-react/projects/neural_foundation_model"
 
 echo PROJECT_ROOT: $PROJECT_ROOT        
@@ -31,4 +31,4 @@ apptainer exec \
  --bind "$EXPERANTO_ROOT:/experanto" \
  --bind "$DATA_ROOT:/data" \
  "$SIF_IMAGE" \
- bash apptainer-runners/mozaik-data-export.sh
+ bash apptainer-runners/mozaik-simulation.sh

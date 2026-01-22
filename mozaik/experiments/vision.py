@@ -2316,6 +2316,13 @@ class MeasurePixelMovieExperanto(VisualExperiment):
         else:
             movie_path = os.path.join(self.parameters.base_path, 'screen', 'data')
             meta_path = os.path.join(self.parameters.base_path, 'screen', 'meta')
+            print(">>>>>>>>>>>>>>>>>>>",meta_path)
+            print(">>>>>>>>>>>>>>>>>>>",os.getcwd())
+            print(">>>>>>>>>>>>>>>>>>>",os.listdir('.'))
+            print(">>>>>>>>>>>>>>>>>>>",os.listdir('/data'))
+            print(">>>>>>>>>>>>>>>>>>>",os.listdir('/data/dynamic29513-my-test'))
+            print(">>>>>>>>>>>>>>>>>>>",os.listdir('/data/dynamic29513-my-test/screen'))
+            print(">>>>>>>>>>>>>>>>>>>",os.listdir('/data/dynamic29513-my-test/screen/meta'))
             meta_names = [x for x in os.listdir(meta_path) if x.endswith('.yml')]
             
             if self.parameters.stimulus_window > 0:
