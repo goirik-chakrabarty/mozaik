@@ -2,8 +2,8 @@
 
 #SBATCH --job-name=32mozaik_simulation
 #SBATCH --nodes=1
-#SBATCH --ntasks=1
-#SBATCH --cpus-per-task=32
+#SBATCH --ntasks=32
+#SBATCH --cpus-per-task=1
 #SBATCH --partition=grete:shared    # see https://www.hlrn.de/doc/display/PUB/Compute+node+partitions for a list of accessible hlrn partitions
 #SBATCH -G A100:1                   # number of gpus per node
 #SBATCH --time 0-48:00
