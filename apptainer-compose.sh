@@ -22,10 +22,15 @@ echo MOZAIK_ROOT: $MOZAIK_ROOT
 # set +o allexport
 
 # Run the container
+# Run the container
 apptainer exec \
  --cleanenv \
  --env OMPI_MCA_orte_tmpdir_base=/tmp \
  --env PYTHONPATH="/mozaik:$PYTHONPATH" \
+ --env OMP_NUM_THREADS=1 \
+ --env MKL_NUM_THREADS=1 \
+ --env OPENBLAS_NUM_THREADS=1 \
+ --env NUMEXPR_NUM_THREADS=1 \
  --bind "$PROJECT_ROOT:/project" \
  --bind "$MOZAIK_ROOT:/mozaik" \
  --bind "$EXPERANTO_ROOT:/experanto" \
