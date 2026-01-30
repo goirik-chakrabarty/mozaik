@@ -4,7 +4,7 @@
 
 # PROJECT_ROOT="/mnt/vast-nhr/projects/nix00014/goirik/mozaik-models/Rozsa_Cagnol2024" 
 PROJECT_ROOT="$PWD/../mozaik-models/experanto" 
-SIF_IMAGE="$PWD/mozaik-opt.sif"
+SIF_IMAGE="$PWD/mozaik-source.sif"
 ENV_FILE=".env"
 MOZAIK_ROOT="$PWD"
 EXPERANTO_ROOT="$PWD/../experanto"
@@ -29,7 +29,7 @@ export OPENBLAS_NUM_THREADS=1
 export NUMEXPR_NUM_THREADS=1
 export VECLIB_MAXIMUM_THREADS=1
 
-echo "Starting Mozaik Container..."
+echo "Starting Mozaik Container (Source Build)..."
 apptainer exec \
  --cleanenv \
  --env OMPI_MCA_orte_tmpdir_base=/tmp \
@@ -43,4 +43,4 @@ apptainer exec \
  --bind "$EXPERANTO_ROOT:/experanto" \
  --bind "$DATA_ROOT:/data" \
  "$SIF_IMAGE" \
- bash apptainer-runners/mozaik-simulation-mpi.sh
+ bash apptainer-runners/mozaik-simulation-source.sh

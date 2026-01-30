@@ -9,7 +9,8 @@ rm -r SelfSustainedPushPull_test:ntasks32_____
 
 # Check where processes are running (run this with mpirun if possible, or just run it once)
 mpirun -n 32 bash -c "echo 'Rank \${PMIX_RANK} running on core:' \$(taskset -c -p \$\$)"
-mpirun --bind-to core -n 32 python -u run.py nest 32 param_MSA/defaults 'test:ntasks32' &
+# mpirun --bind-to core -n 32 python -u run.py nest 32 param_MSA/defaults 'test:ntasks32' &
+python -u run.py nest 32 param_MSA/defaults 'test:ntasks32' &
 PID=$!
 
 # Monitor loop (prints usage every 10 seconds)
