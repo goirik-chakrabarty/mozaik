@@ -75,8 +75,10 @@ rm -rf SelfSustainedPushPull_test:pyenv_ntasks32_____/
 $MPI_EXEC --bind-to core \
     -n 32 \
     -x OMP_NUM_THREADS=1 \
-    -x MKL_NUM_THREADS=1 \
     -x OPENBLAS_NUM_THREADS=1 \
+    -x MKL_NUM_THREADS=1 \
+    -x NUMEXPR_NUM_THREADS=1 \
+    -x VECLIB_MAXIMUM_THREADS=1 \
     -x PYTHONPATH \
     "$PYTHON_EXEC" -u run.py nest 32 param_MSA/defaults 'test:pyenv_ntasks32'
 

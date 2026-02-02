@@ -125,7 +125,7 @@ print_header("NEUROSCIENCE STACK")
 nest = check_package("nest")
 if nest:
     try:
-        print(f"  NEST Ver: {nest.version()}")
+        print(f"  NEST Ver: {nest.__version__}")
         nest.ResetKernel()
         # Check threads reported by NEST
         status = nest.GetKernelStatus()
