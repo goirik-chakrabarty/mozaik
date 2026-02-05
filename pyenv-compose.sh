@@ -17,10 +17,12 @@ ENV_FILE=".env"
 #    Set this to the path of your Local/PyEnv Python executable
 #    Example: "$HOME/.pyenv/versions/3.10.13/bin/python" or "$HOME/mozaik-env/bin/python"
 PYTHON_EXEC="$HOME/mozaik-env/bin/python"
+# PYTHON_EXEC="/home/goirik/miniconda3/envs/mozaik/bin/python"
 
 #    Set this to your OpenMPI executable to avoid the "Intel Hydra" crash
 #    If you load modules, this might just be "mpirun"
 MPI_EXEC="/usr/bin/mpirun"
+# MPI_EXEC="/home/goirik/miniconda3/envs/mozaik/bin/mpirun"
 
 echo "--- PyEnv Simulation Launch ---"
 echo "Project Root: $PROJECT_ROOT"
@@ -72,7 +74,7 @@ rm -rf SelfSustainedPushPull_test:pyenv_ntasks32_____/
 #    --bind-to core: Pins processes to cores for speed
 #    -x VAR: Exports variables to all workers
 
-$MPI_EXEC --bind-to core \
+$MPI_EXEC --mca pmix pmix_v5 --bind-to core \
     -n 32 \
     -x OMP_NUM_THREADS=1 \
     -x OPENBLAS_NUM_THREADS=1 \
@@ -81,5 +83,8 @@ $MPI_EXEC --bind-to core \
     -x VECLIB_MAXIMUM_THREADS=1 \
     -x PYTHONPATH \
     "$PYTHON_EXEC" -u run.py nest 32 param_MSA/defaults 'test:pyenv_ntasks32'
+
+# $MPI_EXEC -n 32 \
+#     "$PYTHON_EXEC" -u run.py nest 32 param_MSA/defaults 'test:pyenv_ntasks32'
 
 echo "--- Simulation Finished with Code $? ---"
