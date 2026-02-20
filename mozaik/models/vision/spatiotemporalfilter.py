@@ -18,6 +18,7 @@ from mozaik.tools.pyNN import *
 from parameters import ParameterSet
 from builtins import zip
 from collections import OrderedDict
+from mozaik.jit_utils import fast_stf_view_update
 
 logger = mozaik.getMozaikLogger()
 
@@ -254,26 +255,39 @@ class CellWithReceptiveField(object):
         """
         view_array = self.visual_space.view(self.visual_region, pixel_size=self.receptive_field.spatial_resolution)
         self.mean[self.i:self.i+self.update_factor] = numpy.mean(view_array)
-        # We divide the input by background luminance, so that the kernel contrast
-        # response is agnostic to the overall luminance level
-        contrast_time_course = numpy.dot(self.receptive_field.kernel_contrast_component,view_array.reshape(-1)[:numpy.newaxis]  / self.background_luminance)
-        # The luminance response kernel is equal at all spatial positions, so
-        # we don't calculate it for each position, rather multiply the 1D version
-        # of it by the mean image luminance at each time point.
-        # That is equivalent to a 3D luminance kernel which is convolved and with the
-        # image and then summed
-        luminance_time_course = self.receptive_field.kernel_luminance_component * self.mean[self.i]
-        self.va = view_array
 
 
-        d = self.receptive_field.kernel_duration
-        if self.update_factor != 1.0:
-            for j in range(self.i, self.i+self.update_factor):
-                self.contrast_response[j: j+d] += contrast_time_course[:d]
-                self.luminance_response[j: j+d] += luminance_time_course[:d]
-        else:
-            self.contrast_response[self.i: self.i+d] += contrast_time_course[:d]
-            self.luminance_response[self.i: self.i+d] += luminance_time_course[:d]
+        # # We divide the input by background luminance, so that the kernel contrast
+        # # response is agnostic to the overall luminance level
+        # contrast_time_course = numpy.dot(self.receptive_field.kernel_contrast_component,view_array.reshape(-1)[:numpy.newaxis]  / self.background_luminance)
+        # # The luminance response kernel is equal at all spatial positions, so
+        # # we don't calculate it for each position, rather multiply the 1D version
+        # # of it by the mean image luminance at each time point.
+        # # That is equivalent to a 3D luminance kernel which is convolved and with the
+        # # image and then summed
+        # luminance_time_course = self.receptive_field.kernel_luminance_component * self.mean[self.i]
+        # self.va = view_array
+        # d = self.receptive_field.kernel_duration
+        # if self.update_factor != 1.0:
+        #     for j in range(self.i, self.i+self.update_factor):
+        #         self.contrast_response[j: j+d] += contrast_time_course[:d]
+        #         self.luminance_response[j: j+d] += luminance_time_course[:d]
+        # else:
+        #     self.contrast_response[self.i: self.i+d] += contrast_time_course[:d]
+        #     self.luminance_response[self.i: self.i+d] += luminance_time_course[:d]
+
+        fast_stf_view_update(
+            view_array,
+            self.receptive_field.kernel_contrast_component, # Ensure this is passed correctly (check shape!)
+            float(self.background_luminance),
+            self.contrast_response,
+            self.luminance_response,
+            self.receptive_field.kernel_luminance_component,
+            self.mean[self.i:self.i+self.update_factor],
+            self.i,
+            self.update_factor,
+            self.receptive_field.kernel_duration
+        )
 
         self.i += self.update_factor  # we assume there is only ever 1 visual space used between initializations
 

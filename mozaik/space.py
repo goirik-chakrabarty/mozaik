@@ -10,7 +10,6 @@ from parameters import ParameterSet
 from mozaik.core import ParametrizedObject
 from collections import OrderedDict
 
-
 from mozaik import __version__
 
 TRANSPARENT = -1

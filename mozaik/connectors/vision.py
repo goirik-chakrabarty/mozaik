@@ -9,6 +9,7 @@ from mozaik.tools.misc import *
 from parameters import ParameterSet
 from scipy.interpolate import NearestNDInterpolator
 from numpy import sin, cos, pi, exp
+# from mozaik.jit_utils import fast_gabor, fast_gauss, fast_integral_vectorized
 
 from builtins import zip
 
@@ -184,6 +185,22 @@ class GaborArborization(ModularConnectorFunction):
                                        target_ar)
 
         g = gauss(self.source.pop.positions[0],self.source.pop.positions[1],target_posx,target_posy,target_or+pi/2,target_size,target_ar)
+
+        # # Ensure inputs are floats (strip Quantities units if present using .magnitude or float())
+        # x1 = float(self.source.pop.positions[0][index])
+        # y1 = float(self.source.pop.positions[1][index])
+
+        # # Call the JIT functions
+        # w = fast_gabor(x1, y1, 
+        #             target_posx, target_posy, 
+        #             target_or + numpy.pi/2, 
+        #             target_freq, target_phase, 
+        #             target_size, target_ar)
+
+        # g = fast_gauss(x1, y1,
+        #             target_posx, target_posy,
+        #             target_or + numpy.pi/2,
+        #             target_size, target_ar)
                                        
         if self.parameters.ON:
            return numpy.maximum(0,w) + self.parameters.gauss_coefficient * g
@@ -291,6 +308,15 @@ class V1CorrelationBasedConnectivity(ModularConnectorFunction):
        
        return 1./2*(numpy.real(integral_complex_gabors(ux1-ux2,uy1-uy2, phase1-phase2))+ numpy.real(integral_complex_gabors(ux1+ux2,uy1+uy2, phase1+phase2)))
     
+    # @staticmethod            
+    # def integral_of_gabor_multiplication_vectorized(K1, widthx1, widthy1, posx1, posy1, gauss_or1, freq1, sine_orientation1, phase1, 
+    #                                                 K2, widthx2, widthy2, posx2, posy2, gauss_or2, freq2, sine_orientation2, phase2):
+    #     # Simply delegate to the JIT function
+    #     return fast_integral_vectorized(
+    #         K1, widthx1, widthy1, posx1, posy1, gauss_or1, freq1, sine_orientation1, phase1,
+    #         K2, widthx2, widthy2, posx2, posy2, gauss_or2, freq2, sine_orientation2, phase2
+    #     )
+
     @staticmethod            
     def integral_of_gabor_multiplication(K1,widthx1,widthy1,posx1,posy1,gauss_or1,freq1,sine_orientation1,phase1,
                          K2,widthx2,widthy2,posx2,posy2,gauss_or2,freq2,sine_orientation2,phase2):

@@ -12,6 +12,7 @@ From: ubuntu:22.04
     export NEST_INSTALL_DIR=$MOZAIK_HOME
     # Ensure OpenBLAS uses 1 thread per process (MPI manages the parallelism)
     export OPENBLAS_NUM_THREADS=1
+    export NUMBA_CACHE_DIR=/tmp/numba_cache
 
 %files
     # Copy the current directory to /app
@@ -67,7 +68,7 @@ From: ubuntu:22.04
     pip install numpy scipy mpi4py matplotlib quantities lazyarray interval \
         Pillow param==1.5.1 parameters neo==0.12.0 cython==3.0.10 psutil \
         future requests elephant pytest-xdist pytest-timeout junitparser \
-        numba numpyencoder sphinx imageio scikit-image som-pbc pandas seaborn \
+        numba tbb numpyencoder sphinx imageio scikit-image som-pbc pandas seaborn \
         jupyterlab tk
 
     # 4. Install imagen
@@ -124,6 +125,9 @@ From: ubuntu:22.04
     # 8. Pre-compile pyNN extensions
     echo "Pre-compiling pyNN extensions..."
     python -c 'import pyNN.nest'
+
+    cd /app
+    pip install -e .
 
 %runscript
     . $MOZAIK_HOME/bin/activate
