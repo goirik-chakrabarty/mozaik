@@ -65,7 +65,70 @@ def fast_stf_view_update(view_array, kernel_contrast, background_lum,
              contrast_resp[target : target + limit] += contrast_tc[:limit]
              luminance_resp[target : target + limit] += luminance_tc[:limit]
 
-# --- 3. FULL INTEGRAL CALCULATION (Connectivity Phase) ---
+# --- 3. STIMULUS GENERATION KERNELS (Simulation Phase) ---
+
+@jit(nopython=True, cache=True, fastmath=True)
+def fast_grating_offset_scale(contrast, background_luminance):
+    """
+    Compute offset and scale for a grating stimulus with given contrast and background luminance.
+    
+    Used by FullfieldDriftingSinusoidalGrating and FullfieldDriftingSquareGrating.
+    
+    Parameters
+    ----------
+    contrast : float
+        Contrast percentage (0-100).
+    background_luminance : float
+        Background luminance in lux.
+    
+    Returns
+    -------
+    tuple (offset, scale)
+        Imagen-compatible offset and scale parameters.
+    """
+    offset = background_luminance * (100.0 - contrast) / 100.0
+    scale = 2.0 * background_luminance * contrast / 100.0
+    return offset, scale
+
+@jit(nopython=True, cache=True, fastmath=True)
+def fast_sparse_noise_scale(background_luminance):
+    """
+    Compute scale for sparse noise stimulus.
+    
+    Used by SparseNoise stimulus.
+    
+    Parameters
+    ----------
+    background_luminance : float
+        Background luminance in lux.
+    
+    Returns
+    -------
+    float
+        Scale parameter (2 * background_luminance).
+    """
+    return 2.0 * background_luminance
+
+@jit(nopython=True, cache=True, fastmath=True)
+def fast_dense_noise_scale(background_luminance):
+    """
+    Compute scale for dense noise stimulus.
+    
+    Used by DenseNoise stimulus.
+    
+    Parameters
+    ----------
+    background_luminance : float
+        Background luminance in lux.
+    
+    Returns
+    -------
+    float
+        Scale parameter (2 * background_luminance).
+    """
+    return 2.0 * background_luminance
+
+# --- 4. FULL INTEGRAL CALCULATION (Connectivity Phase) ---
 
 @jit(nopython=True, cache=True, fastmath=True)
 def fast_integral_vectorized(K1, wx1, wy1, px1, py1, gor1, freq1, sor1, ph1,
@@ -326,3 +389,45 @@ def fast_resize(img, zoom):
             output[r, c] = val
             
     return output
+
+
+# --- 5. JIT TOGGLE CONTROL ---
+# Environment-variable-based control for enabling/disabling JIT in tests and benchmarks.
+
+import os
+
+_JIT_ENABLED = None
+
+def set_jit_enabled(value):
+    """
+    Explicitly set JIT enable state (True/False).
+    
+    Parameters
+    ----------
+    value : bool
+        Whether JIT compilation is enabled.
+    """
+    global _JIT_ENABLED
+    _JIT_ENABLED = value
+
+def is_jit_enabled():
+    """
+    Query whether JIT compilation is enabled.
+    
+    Checks (in order):
+    1. Explicit setting via set_jit_enabled()
+    2. Environment variable MOZAIK_JIT (1/True = enabled, 0/False = disabled)
+    3. Default: True (JIT enabled by default for production)
+    
+    Returns
+    -------
+    bool
+        True if JIT is enabled, False otherwise.
+    """
+    global _JIT_ENABLED
+    
+    if _JIT_ENABLED is not None:
+        return _JIT_ENABLED
+    
+    env_jit = os.environ.get('MOZAIK_JIT', 'true').lower()
+    return env_jit in ('true', '1', 'yes', 'on')

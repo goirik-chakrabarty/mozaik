@@ -20,6 +20,7 @@ from mozaik.tools.distribution_parametrization import MozaikExtendedParameterSet
 from mozaik.tools.units import cpd
 from numpy import pi
 from quantities import Hz, rad, degrees, ms, dimensionless
+import mozaik.jit_utils as jit_utils
 
 
 class TopographicaBasedVisualStimulus(VisualStimulus):
@@ -38,6 +39,8 @@ class SparseNoise(TopographicaBasedVisualStimulus):
     Produces a matrix filled with 0.5 values and one random entry with 0 or 1.
     The output is then transformed with the following rule:
     output = output * scale  + offset.
+    
+    Optimized with JIT-compiled scale computation when MOZAIK_JIT=1.
     """
     
     experiment_seed = SNumber(dimensionless, doc="The seed of a given experiment")
@@ -59,17 +62,18 @@ class SparseNoise(TopographicaBasedVisualStimulus):
         self.extra_params.polarities = []
 
     def frames(self):
-  
+        # Use JIT kernel to compute scale if enabled
+        scale = self._compute_sparse_noise_scale()
+        
         aux = imagen.random.SparseNoise(
                                       grid_density = self.grid_size * 1.0 / self.size_x,
                                       grid = self.grid,
                                       offset= 0,
-                                      scale= 2 * self.background_luminance,
+                                      scale= scale,
                                       bounds=BoundingBox(radius=self.size_x/2),
                                       xdensity=self.density,
                                       ydensity=self.density,
                                       random_generator=numpy.random.RandomState(seed=self.experiment_seed))
-
 
         while True:
             aux2 = aux()
@@ -85,6 +89,22 @@ class SparseNoise(TopographicaBasedVisualStimulus):
                 yield (aux2,[x,y,polarity])
             for i in range(int(self.blank_time/self.frame_duration)):
                 yield (blank,[0,0,0])
+    
+    def _compute_sparse_noise_scale(self):
+        """
+        Python wrapper: compute sparse noise scale using JIT kernel if enabled.
+        
+        Returns
+        -------
+        float
+            Scale parameter (2 * background_luminance).
+        """
+        if jit_utils.is_jit_enabled():
+            return jit_utils.fast_sparse_noise_scale(float(self.background_luminance))
+        else:
+            # Fallback: inline computation
+            return 2.0 * float(self.background_luminance)
+
             
 
 class DenseNoise(TopographicaBasedVisualStimulus):
@@ -95,6 +115,8 @@ class DenseNoise(TopographicaBasedVisualStimulus):
     Produces a matrix with the values 0, 0.5 and 1 allocated at random
     and then scaled and translated by scale and offset with the next
     transformation rule:  result*scale + offset
+    
+    Optimized with JIT-compiled scale computation when MOZAIK_JIT=1.
     """
     
     experiment_seed = SNumber(dimensionless, doc="The seed of a given experiment") 
@@ -107,10 +129,13 @@ class DenseNoise(TopographicaBasedVisualStimulus):
         assert (self.time_per_image/self.frame_duration) % 1.0 == 0.0
   
     def frames(self):
+        # Use JIT kernel to compute scale if enabled
+        scale = self._compute_dense_noise_scale()
+        
         aux = imagen.random.DenseNoise(
                                        grid_density = self.grid_size * 1.0 / self.size_x,
                                        offset = 0,
-                                       scale = 2 * self.background_luminance, 
+                                       scale = scale, 
                                        bounds = BoundingBox(radius=self.size_x/2),
                                        xdensity = self.density,
                                        ydensity = self.density,
@@ -120,6 +145,21 @@ class DenseNoise(TopographicaBasedVisualStimulus):
             aux2 = aux()
             for i in range(int(self.time_per_image/self.frame_duration)):
                 yield (aux2,[0])
+    
+    def _compute_dense_noise_scale(self):
+        """
+        Python wrapper: compute dense noise scale using JIT kernel if enabled.
+        
+        Returns
+        -------
+        float
+            Scale parameter (2 * background_luminance).
+        """
+        if jit_utils.is_jit_enabled():
+            return jit_utils.fast_dense_noise_scale(float(self.background_luminance))
+        else:
+            # Fallback: inline computation
+            return 2.0 * float(self.background_luminance)
 
 
                     
@@ -134,6 +174,8 @@ class FullfieldDriftingSinusoidalGrating(TopographicaBasedVisualStimulus):
     Notes
     -----
     `max_luminance` is interpreted as scale and `size_x/2` as the bounding box radius.
+    
+    Optimized with JIT-compiled offset/scale computation when MOZAIK_JIT=1.
     """
 
     orientation = SNumber(rad, period=pi, bounds=[0,pi], doc="Grating orientation")
@@ -146,16 +188,39 @@ class FullfieldDriftingSinusoidalGrating(TopographicaBasedVisualStimulus):
         i = 0
         while True:
             i += 1
+            # Use JIT kernel to compute offset/scale if enabled
+            offset, scale = self._compute_grating_params(float(self.contrast))
             yield (imagen.SineGrating(orientation=self.orientation,
                                       frequency=self.spatial_frequency,
                                       phase=self.current_phase,
                                       bounds=BoundingBox(radius=self.size_x/2),
-                                      offset = self.background_luminance*(100.0 - self.contrast)/100.0,
-                                      scale=2*self.background_luminance*self.contrast/100.0,
+                                      offset=offset,
+                                      scale=scale,
                                       xdensity=self.density,
                                       ydensity=self.density)(),
                    [self.current_phase])
             self.current_phase += 2*pi * (self.frame_duration/1000.0) * self.temporal_frequency
+    
+    def _compute_grating_params(self, contrast):
+        """
+        Python wrapper: compute grating offset/scale using JIT kernel if enabled.
+        
+        Parameters
+        ----------
+        contrast : float
+            Contrast percentage (0-100).
+        
+        Returns
+        -------
+        tuple (offset, scale)
+        """
+        if jit_utils.is_jit_enabled():
+            return jit_utils.fast_grating_offset_scale(contrast, float(self.background_luminance))
+        else:
+            # Fallback: inline computation for testing (no JIT overhead)
+            offset = float(self.background_luminance) * (100.0 - contrast) / 100.0
+            scale = 2.0 * float(self.background_luminance) * contrast / 100.0
+            return offset, scale
 
 
 class FullfieldDriftingSquareGrating(TopographicaBasedVisualStimulus):
@@ -166,6 +231,8 @@ class FullfieldDriftingSquareGrating(TopographicaBasedVisualStimulus):
     the visual space. The bars are moving a direction perpendicular to their
     long axis. The speed is dictated by the *temporal_freuquency* parameter
     the width of the bars by *spatial_frequency* parameter.
+    
+    Optimized with JIT-compiled offset/scale computation when MOZAIK_JIT=1.
     """
 
     orientation = SNumber(rad, period=pi, bounds=[0,pi], doc="Grating orientation")
@@ -178,17 +245,40 @@ class FullfieldDriftingSquareGrating(TopographicaBasedVisualStimulus):
         i = 0
         while True:
             i += 1
+            # Use JIT kernel to compute offset/scale if enabled
+            offset, scale = self._compute_grating_params(float(self.contrast))
             yield (imagen.SquareGrating(
                     orientation = self.orientation,
                     frequency = self.spatial_frequency,
                     phase = self.current_phase,
                     bounds = BoundingBox( radius=self.size_x/2 ),
-                    offset = self.background_luminance*(100.0 - self.contrast)/100.0,
-                    scale = 2*self.background_luminance*self.contrast/100.0,
+                    offset = offset,
+                    scale = scale,
                     xdensity = self.density,
                     ydensity = self.density)(),
                 [self.current_phase])
             self.current_phase += 2*pi * (self.frame_duration/1000.0) * self.temporal_frequency
+    
+    def _compute_grating_params(self, contrast):
+        """
+        Python wrapper: compute grating offset/scale using JIT kernel if enabled.
+        
+        Parameters
+        ----------
+        contrast : float
+            Contrast percentage (0-100).
+        
+        Returns
+        -------
+        tuple (offset, scale)
+        """
+        if jit_utils.is_jit_enabled():
+            return jit_utils.fast_grating_offset_scale(contrast, float(self.background_luminance))
+        else:
+            # Fallback: inline computation for testing (no JIT overhead)
+            offset = float(self.background_luminance) * (100.0 - contrast) / 100.0
+            scale = 2.0 * float(self.background_luminance) * contrast / 100.0
+            return offset, scale
 
 class FullfieldDriftingSinusoidalGratingA(TopographicaBasedVisualStimulus):
     """
@@ -198,6 +288,8 @@ class FullfieldDriftingSinusoidalGratingA(TopographicaBasedVisualStimulus):
     the visual space. The bars are moving a direction perpendicular to their
     long axis. The speed is dictated by the *temporal_freuquency* parameter
     the width of the bars by *spatial_frequency* parameter.
+    
+    Optimized with JIT-compiled offset/scale computation when MOZAIK_JIT=1.
     """
 
     orientation = SNumber(rad, period=pi, bounds=[0,pi], doc="Grating orientation")
@@ -213,13 +305,15 @@ class FullfieldDriftingSinusoidalGratingA(TopographicaBasedVisualStimulus):
         t = 0
         while True:
             i += 1
+            # Use JIT kernel to compute offset/scale if enabled
+            offset, scale = self._compute_grating_params(float(self.contrast))
             st = imagen.SineGrating(
                     orientation = self.orientation,
                     frequency = self.spatial_frequency,
                     phase = self.current_phase,
                     bounds = BoundingBox( radius=self.size_x/2 ),
-                    offset = self.background_luminance*(100.0 - self.contrast)/100.0,
-                    scale = 2*self.background_luminance*self.contrast/100.0,
+                    offset = offset,
+                    scale = scale,
                     xdensity = self.density,
                     ydensity = self.density)()
             if t > self.offset_time:
@@ -230,6 +324,27 @@ class FullfieldDriftingSinusoidalGratingA(TopographicaBasedVisualStimulus):
             yield (st,[self.current_phase])
             self.current_phase += 2*pi * (self.frame_duration/1000.0) * self.temporal_frequency
             t=t+self.frame_duration
+    
+    def _compute_grating_params(self, contrast):
+        """
+        Python wrapper: compute grating offset/scale using JIT kernel if enabled.
+        
+        Parameters
+        ----------
+        contrast : float
+            Contrast percentage (0-100).
+        
+        Returns
+        -------
+        tuple (offset, scale)
+        """
+        if jit_utils.is_jit_enabled():
+            return jit_utils.fast_grating_offset_scale(contrast, float(self.background_luminance))
+        else:
+            # Fallback: inline computation for testing (no JIT overhead)
+            offset = float(self.background_luminance) * (100.0 - contrast) / 100.0
+            scale = 2.0 * float(self.background_luminance) * contrast / 100.0
+            return offset, scale
 
  
 

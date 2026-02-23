@@ -10,8 +10,8 @@
 #SBATCH --time=48:00:00
 #SBATCH --output=./slurm_medium/mozaik-opt-%j.out
 #SBATCH --error=./slurm_medium/mozaik-opt-%j.err
-#SBATCH -p medium96s
-#SBATCH -C sapphirerapids    
+#SBATCH -p standard96 # standard96 or medium96s
+#SBATCH -C cascadelake # cascadelake or sapphirerapids
 #SBATCH --mail-type=ALL
 #SBATCH --mail-user=goirik.chakrabarty@uni-goettingen.de
 
@@ -49,5 +49,33 @@ unset HTTP_PROXY
 unset HTTPS_PROXY
 unset FTP_PROXY
 
-# Execute the simulation
+# Run simulation with JIT DISABLED
+echo ""
+echo "=========================================="
+echo "RUN 1: Simulation with JIT DISABLED"
+echo "=========================================="
+export MOZAIK_JIT=0
 bash apptainer-compose-opt.sh
+JIT_OFF_EXIT=$?
+
+# Run simulation with JIT ENABLED
+echo ""
+echo "=========================================="
+echo "RUN 2: Simulation with JIT ENABLED"
+echo "=========================================="
+export MOZAIK_JIT=1
+bash apptainer-compose-opt.sh
+JIT_ON_EXIT=$?
+
+# Print summary
+echo ""
+echo "=========================================="
+echo "EXECUTION SUMMARY"
+echo "=========================================="
+echo "JIT disabled exit code:  $JIT_OFF_EXIT"
+echo "JIT enabled exit code:   $JIT_ON_EXIT"
+if [ $JIT_OFF_EXIT -eq 0 ] && [ $JIT_ON_EXIT -eq 0 ]; then
+    echo "✓ Both runs completed successfully"
+else
+    echo "⚠ One or more runs failed - check output above"
+fi
