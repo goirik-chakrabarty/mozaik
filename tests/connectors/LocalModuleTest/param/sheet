@@ -30,8 +30,8 @@
                             'tau_w' : 88.0,
                             'v_thresh' : -53.0
                         },
-
-                       'initial_values': {
+                        'receptors':None,
+                        'initial_values': {
                                     'v': PyNNDistribution(name='uniform',low=-70,high=-51),
                                 },
 
@@ -72,6 +72,7 @@
         'num_samples_expression' : '',
         'base_weight': 0.0005,
 	'num_samples' : 200,
+        'self_connections': True,
         'local_module': None 
     },
 }

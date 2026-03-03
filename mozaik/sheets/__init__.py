@@ -1,5 +1,5 @@
 # encoding: utf-8
-"""
+r"""
 Module containing the implementation of sheets - one of the basic building blocks of *mozaik* models.
 """
 
@@ -20,7 +20,7 @@ import quantities as pq
 logger = mozaik.getMozaikLogger()
 
 class Sheet(BaseComponent):
-    """
+    r"""
     Sheet is an abstraction of a volume of neurons positioned in a physical space.
 
     It roughly corresponding to the PyNN Sheet class with the added spatial structure 
@@ -31,36 +31,36 @@ class Sheet(BaseComponent):
     ----------------
     
     cell : ParameterSet
-         The parametrization of the cell model that all neurons in this sheet will have.
+        The parametrization of the cell model that all neurons in this sheet will have.
          
     cell.model : str
-               The name of the cell model.
+        The name of the cell model.
     
     cell.params : ParameterSet
-               The set of parameters that the given model requires.
+        The set of parameters that the given model requires.
                
     cell.initial_values : ParameterSet
-                   It can contain a ParameterSet containing the initial values for some of the parameters in cell.params
+        It can contain a ParameterSet containing the initial values for some of the parameters in cell.params
                    
     mpi_safe : bool
-             Whether to set the sheet up to be reproducible in MPI environment. 
-             This is computationally less efficient that if it is set to false, but it will
-             guaruntee the same results irrespective of the number of MPI process used.
+        Whether to set the sheet up to be reproducible in MPI environment. 
+        This is computationally less efficient that if it is set to false, but it will
+        guaruntee the same results irrespective of the number of MPI process used.
              
     artificial_stimulators : ParameterSet
-             Contains a list of ParameterSet objects, one per each :class:`.direct_stimulator.DirectStimulator` object to be created.
-             Each contains a parameter 'component' that specifies which :class:`.direct_stimulator.DirectStimulator` to use, and  a 
-             parameter 'params' which is a ParameterSet to be passed to that `DirectStimulator`.
+        Contains a list of ParameterSet objects, one per each :class:`.direct_stimulator.DirectStimulator` object to be created.
+        Each contains a parameter 'component' that specifies which :class:`.direct_stimulator.DirectStimulator` to use, and  a 
+        parameter 'params' which is a ParameterSet to be passed to that `DirectStimulator`.
     
     name : str
         Name of the sheet.
     
     recorders : ParameterSet
-                Parametrization of recorders in this sheet. The recorders ParameterSet will contain as keys the names
-                of the different recording configuration user want to have in this sheet. For the format of each recording configuration see notes.
+        Parametrization of recorders in this sheet. The recorders ParameterSet will contain as keys the names
+        of the different recording configuration user want to have in this sheet. For the format of each recording configuration see notes.
 
     recording_interval : float (ms)
-                The interval at which analog signals in this sheet will be recorded. 
+        The interval at which analog signals in this sheet will be recorded. 
 
     Notes
     -----
@@ -69,10 +69,13 @@ class Sheet(BaseComponent):
     
     *variables* 
         tuple of strings specifying the variables to measure (allowd values are: 'spikes' , 'v','gsyn_exc' , 'gsyn_inh' )
+
     *componnent* 
         the path to the :class:`mozaik.sheets.population_selector.PopulationSelector` class
+
     *params*
         a ParameterSet containing the parameters for the given :class:`mozaik.sheets.population_selector.PopulationSelector` class 
+    
     """
 
     required_parameters = ParameterSet({
@@ -80,6 +83,7 @@ class Sheet(BaseComponent):
             'model': str,  # the cell type of the sheet
             'native_nest': bool,
             'params': ParameterSet,
+            'receptors': ParameterSet,
             'initial_values': ParameterSet,
         }),
 
@@ -100,6 +104,8 @@ class Sheet(BaseComponent):
         self.size_x = size_x
         self.size_y = size_y
         self.msc=0
+        # By default we assume that the population corresponds to a non multisynapse model
+        self.multisynapse = False
         # We want to be able to define in cell.params the cell parameters as also PyNNDistributions so we can get variably parametrized populations
         # The problem is that the pyNN.Population can accept only scalar parameters. There fore we will remove from cell.params all parameters
         # that are PyNNDistributions, and will initialize them later just after the population is initialized (in property pop())
@@ -112,7 +118,7 @@ class Sheet(BaseComponent):
         
 
     def setup_to_record_list(self):
-        """
+        r"""
         Set up the recording configuration.
         """
         self.to_record = OrderedDict()
@@ -131,7 +137,7 @@ class Sheet(BaseComponent):
             self.to_record[k] = [numpy.flatnonzero(idds == idd)[0] for idd in self.to_record[k]]
             
     def size_in_degrees(self):
-        """Returns the x, y size in degrees of visual field of the given area."""
+        r"""Returns the x, y size in degrees of visual field of the given area."""
         raise NotImplementedError
         pass
 
@@ -159,22 +165,24 @@ class Sheet(BaseComponent):
     pop = property(**pop())  # this will be populated by PyNN population, in the derived classes
 
     def add_neuron_annotation(self, neuron_number, key, value, protected=True):
-        """
+        r"""
         Adds annotation to neuron at index neuron_number.
         
         Parameters
         ----------
+
         neuron_number : int
-                      The index of the neuron in the population to which the annotation will be added.  
+            The index of the neuron in the population to which the annotation will be added.  
         
         key : str
             The name of the annotation
         
         value : object
-              The value of the annotation
+            The value of the annotation
         
         protected : bool (default=True)
-                  If True, the annotation cannot be changed.
+            If True, the annotation cannot be changed.
+
         """
         if not self._pop:
             logger.error('Population has not been yet set in sheet: ' + self.name + '!')
@@ -183,22 +191,50 @@ class Sheet(BaseComponent):
         else:
             self._neuron_annotations[neuron_number][key] = (protected, value)
 
-    def get_neuron_annotation(self, neuron_number, key):
+    def has_neuron_annotation(self, neuron_number, key):
         """
+        Check if an annotation exists for a given neuron.
+
+        Parameters
+        ----------
+        neuron_number : int
+                      The index of the neuron in the population for which the annotation will be checked.
+
+        key : str
+            The name of the annotation
+
+        Returns
+        -------
+            value : Boolean
+                   True if the neurons has such annotation, False otherwise
+        """
+
+        if not self._pop:
+            logger.error('Population has not been yet set in sheet: ' + self.name + '!')
+        if key not in self._neuron_annotations[neuron_number]:
+            return False
+        else:
+            return True
+
+    def get_neuron_annotation(self, neuron_number, key):
+        r"""
         Retrieve annotation for a given neuron.
         
         Parameters
         ----------
+
         neuron_number : int
-                      The index of the neuron in the population to which the annotation will be added.  
+            The index of the neuron in the population to which the annotation will be added.  
         
         key : str
             The name of the annotation
         
         Returns
         -------
-            value : object
-                  The value of the annotation
+        
+        value : object
+            The value of the annotation
+
         """
 
         if not self._pop:
@@ -241,28 +277,68 @@ class Sheet(BaseComponent):
                     self.pop.record(variable,sampling_interval=self.parameters.recording_interval)
 
     def get_data(self, stimulus_duration=None):
-        """
+        r"""
         Retrieve data recorded in this sheet from pyNN in response to the last presented stimulus.
         
         Parameters
         ----------
+
         stimulus_duration : float(ms)
-                          The length of the last stimulus presentation.
+            The length of the last stimulus presentation.
         
         Returns
         -------
+
         segment : Segment
-                The segment holding all the recorded data. See NEO documentation for detail on the format.
+            The segment holding all the recorded data. See NEO documentation for detail on the format.
+
         """
 
-        try:
-            if self.parameters.cell.native_nest:
-                block = self.pop.get_data(['spikes', 'V_m', 'g_ex', 'g_in'],clear=True)
-            else:
-                block = self.pop.get_data(['spikes', 'v', 'gsyn_exc', 'gsyn_inh'],clear=True)
-        except (NothingToWriteError, errmsg):
-            logger.debug(errmsg)
-        
+        if self.parameters.cell.native_nest:
+            vm_name = ['V_m']
+        else:
+            vm_name = ['v']
+
+        if self.multisynapse:
+            gsyn_names = []
+            for k in self.parameters.cell.receptors.keys():
+                gsyn_names.append(k+ '.gsyn') 
+        elif self.parameters.cell.native_nest:
+            gsyn_names = ['g_ex', 'g_in']
+        else: 
+            gsyn_names = ['gsyn_exc', 'gsyn_inh']
+            
+        block = None
+        steps = self.model.parameters.steps_get_data 
+        if steps:
+            for i in range(0,len(self.pop),steps):
+                try:
+                    if i + steps < len(self.pop):
+                        b = self.pop[i:i+steps].get_data(['spikes'] + vm_name + gsyn_names,clear=False)
+                    else:
+                        b = self.pop[i:i+steps].get_data(['spikes'] + vm_name + gsyn_names,clear=True)
+                except (NothingToWriteError, errmsg):
+                    logger.debug(errmsg)
+                if (mozaik.mpi_comm) and (mozaik.mpi_comm.rank == mozaik.MPI_ROOT):
+                    if block:
+                        # the following business with setting sig.segment is a workaround for a bug in Neo
+                        for seg, mseg in zip(b.segments, block.segments):
+                            for sig in seg.analogsignals:
+                                sig.segment = mseg
+                        block.merge(b)
+                    else:
+                        # the following business with setting sig.segment is a workaround for a bug in Neo
+                        for seg in b.segments:
+                            for sig in seg.analogsignals:
+                                sig.segment = seg
+                        block = b
+                mozaik.mpi_comm.barrier()
+        else:
+            try:
+                block = self.pop.get_data(['spikes'] + vm_name + gsyn_names,clear=True)
+            except (NothingToWriteError, errmsg):
+                logger.debug(errmsg)
+
         if (mozaik.mpi_comm) and (mozaik.mpi_comm.rank != mozaik.MPI_ROOT):
            return None
         s = block.segments[-1]
@@ -271,12 +347,12 @@ class Sheet(BaseComponent):
         # lets sort spike train so that it is ordered by IDs and thus hopefully
         # population indexes
         def key(a):
-            return a.annotations['source_id']    
+            return a.annotations['source_id']
 
         self.msc = numpy.mean([len(st)/(st.t_stop-st.t_start)*1000 for st in s.spiketrains])
         s.spiketrains = sorted(s.spiketrains, key=key)
 
-        if stimulus_duration != None:        
+        if stimulus_duration != None:
            for st in s.spiketrains:
                tstart = st.t_start
                st -= tstart
@@ -284,14 +360,14 @@ class Sheet(BaseComponent):
                st.t_start = 0 * pq.ms
            for i in range(0, len(s.analogsignals)):
                s.analogsignals[i].t_start = 0 * pq.ms
-       
+
         return s
 
     def mean_spike_count(self):
         return self.msc
 
     def prepare_artificial_stimulation(self, duration, offset,additional_stimulators):
-        """
+        r"""
         Prepares the background noise and artificial stimulation for the population for the stimulus that is 
         about to be presented. 
         
@@ -299,20 +375,21 @@ class Sheet(BaseComponent):
         ----------
         
         duration : float (ms)
-                 The duration of the stimulus that will be presented.
+            The duration of the stimulus that will be presented.
         
         additional_stimulators : list
-                               List of additional stimulators, defined by the experiment that should be applied during this stimulus. 
+            List of additional stimulators, defined by the experiment that should be applied during this stimulus. 
                 
         offset : float (ms)
-               The current time of the simulation.
+            The current time of the simulation.
+               
         """
         for ds in self.artificial_stimulators + additional_stimulators:
             ds.prepare_stimulation(duration,offset)
         
 
     def setup_artificial_stimulation(self):
-        """
+        r"""
         Called once population is created. Sets up the background noise.
         """
         self.artificial_stimulators = []
@@ -322,7 +399,7 @@ class Sheet(BaseComponent):
 
         
     def setup_initial_values(self):
-        """
+        r"""
         Called once population is set. Set's up the initial values of the neural model variables.
         """
         # Initial state variables

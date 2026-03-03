@@ -4,7 +4,6 @@ import imagen
 import pytest
 import pylab
 import numpy as np
-from pyNN import nest
 
 import mozaik
 from mozaik.models import Model
@@ -91,6 +90,7 @@ params = {
                         "tau_syn_E": 1.5,
                         "tau_syn_I": 10.0,
                     },
+                    "receptors": None,
                     "initial_values": {"v": -70.0},
                 },
                 "noise": {"mean": 0.0, "stdev": 0.0},
@@ -108,6 +108,7 @@ params = {
     "pynn_seed": 936395,
     "mpi_seed": 1023,
     "explosion_monitoring": None,
+    "steps_get_data": 0,
 }
 
 base_stim_params = {
@@ -141,6 +142,9 @@ class TestCellWithReceptiveField:
 
     @classmethod
     def setup_class(cls):
+        from pyNN import nest
+
+        global nest
         size = 3.0
         cls.vs_params = base_stim_params.copy()
         cls.vs_params.update({"size_x": size, "size_y": size})
@@ -204,6 +208,13 @@ class TestCellWithReceptiveField:
 
 
 class TestSpatioTemporalFilterRetinaLGN:
+
+    @classmethod
+    def setup_class(cls):
+        from pyNN import nest
+
+        global nest
+
     @pytest.mark.parametrize("background_luminance", [10, 20, 40, 80])
     @pytest.mark.parametrize("rf_duration", [50, 100, 200])
     def test_blank_stimulus(self, background_luminance, rf_duration):
