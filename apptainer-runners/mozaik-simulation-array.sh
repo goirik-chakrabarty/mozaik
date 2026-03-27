@@ -30,4 +30,4 @@ mpirun \
     -x MKL_NUM_THREADS \
     -x OPENBLAS_NUM_THREADS \
     -x PYTHONPATH \
-    python -u run.py nest $NTASKS param_MSA/defaults "$RUN_NAME"
+    python -u run.py nest $NTASKS param/defaults "$RUN_NAME"

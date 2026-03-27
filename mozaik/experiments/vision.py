@@ -1,3 +1,7 @@
+import os
+import yaml
+import json
+
 import mozaik
 from mozaik.controller import Global
 from mozaik.experiments import Experiment
@@ -9,8 +13,6 @@ from mozaik.stimuli import InternalStimulus
 from mozaik.tools.distribution_parametrization import ParameterWithUnitsAndPeriod, MozaikExtendedParameterSet
 from mozaik.sheets.direct_stimulator import Depolarization
 from collections import OrderedDict
-import os
-import yaml
 
 
 logger = mozaik.getMozaikLogger()
@@ -2449,8 +2451,7 @@ class MeasurePixelMovieExperanto(VisualExperiment):
                             movie_frame_duration = self.frame_duration * \
                                 (meta['presentation_time']*1000 //  self.frame_duration)
                             blank_duration = self.frame_duration * \
-                                ((meta['pre_blank_period']*1000 - 150) // self.frame_duration)
-                       # 35 comes from the default null stimulus from the experiment config
+                                ((meta['pre_blank_period']*1000) // self.frame_duration)
                         elif meta['modality'] == 'video':
                             movie_frame_duration = self.parameters.movie_frame_duration
                         
@@ -2464,7 +2465,6 @@ class MeasurePixelMovieExperanto(VisualExperiment):
                         print("Movie frame duration:", movie_frame_duration)
 
                         if meta['modality'] == 'image':
-                            print("Blank duration:", blank_duration)
                             self.stimuli.append(
                             InternalStimulus(   
                                                 frame_duration=blank_duration, 
@@ -2502,6 +2502,150 @@ class MeasurePixelMovieExperanto(VisualExperiment):
                                                 trial=k,
                                             )
                                     )
+
+class RandomizedExperanto(VisualExperiment):
+    """
+    Present a sequence of images loaded from numpy 3D array stored in npy file.
+
+    The image is assumed to be square.
+
+    Parameters
+    ----------
+    model : Model
+            The model on which to execute the experiment.
+
+    Other parameters
+    ----------------
+    movie_frame_duration : float
+            The duration of single presentation of the movie frame.
+
+    movie_path : str
+            Path to the directory containing the images.
+
+    movie_name : str
+            Name of the directory containing the images.
+
+    num_trials : int
+            Number of trials each each stimulus is shown.
+
+    width : float
+            The width of the image in degrees of visual field.
+
+    global_frame_offset : int
+            The movie frame index from which to start the experiment (0 means start from beginning of the movie) 
+
+    images_per_trial : int
+            How many movie frames to show per trial
+
+    num_presentation_trials : int
+            How many trials of movie frame presentations (with images_per_trial of movie frames presented) to present. Note that each trails will have blank in between them.
+    """
+
+    required_parameters = ParameterSet(
+        {
+            "base_path": str,
+            "chunk_dict_path": str,
+            "width" : float,
+            "movie_frame_duration" : int,
+            "global_frame_offset" : int,
+            "stimulus_offset" : int,
+            "stimulus_window" : int,
+            "images_per_trial" : int,
+            "chunk_id" : int,
+            "video_max_value" : float,
+        }
+    )
+    def generate_stimuli(self):
+        # Load the chunk dict json which contains the mapping between stimulus condition hash 
+        # and the corresponding stimulus parameters (e.g. modality, presentation time, etc.)
+
+        movie_path = os.path.join(self.parameters.base_path, 'screen', 'data')
+        meta_path = os.path.join(self.parameters.base_path, 'screen', 'meta')
+
+        logger.info("Loading chunk dict from %s", os.path.join(meta_path, self.parameters.chunk_dict_path))
+        logger.info("Loading chunk dict from %s", os.listdir(meta_path))
+        with open(os.path.join(meta_path, self.parameters.chunk_dict_path), 'r') as f:
+            chunk_dict = json.load(f)
+        chunk = chunk_dict[str(self.parameters.chunk_id)]
+        print("Chunk: \n\n", chunk)
+
+        for item in chunk:
+            meta_name = item['file']
+            k = item['trial']
+            print(">>>>>>>>>>>>>>>>>>>>>>>>> Meta File", meta_name)
+
+            # Loading the yaml metadata file for stimulus parameters
+            with open(os.path.join(meta_path, meta_name), 'r') as f:
+                meta = yaml.safe_load(f)
+
+            # For all modalities set the num_frames parameter    
+            print(meta['modality'])
+            self.parameters.images_per_trial = meta['num_frames']
+
+            # Skip all black frames for now
+            if meta['modality'] == 'blank':
+                continue
+
+            # For images and videos the amount of time to spend on each frame is different
+            # For images its determined by presentation_time parameter
+            # For videos its fixed at 30 Hz (33 ms)
+            if meta['modality'] == 'image':
+                movie_frame_duration = self.frame_duration * \
+                    (meta['presentation_time']*1000 //  self.frame_duration)
+                blank_duration = self.frame_duration * \
+                    ((meta['pre_blank_period']*1000 - 35 - 35) // self.frame_duration)
+            # 150 comes from the default null stimulus from the experiment config
+            elif meta['modality'] == 'video':
+                movie_frame_duration = self.parameters.movie_frame_duration
+            
+            # blank stimulus does not have a npy file so they are skipped
+            if meta['modality'] != 'blank':    
+                stimulus_name = meta_name.replace('.yml', '.npy')
+                condition_hash = meta['condition_hash']
+
+            print("Duration:", self.parameters.images_per_trial * movie_frame_duration)
+            print("Images per trial:", self.parameters.images_per_trial)
+            print("Movie frame duration:", movie_frame_duration)
+
+            if meta['modality'] == 'image':
+                self.stimuli.append(
+                InternalStimulus(   
+                                    frame_duration=blank_duration, 
+                                    duration=blank_duration,
+                                    trial=k,
+                                )
+                        )
+            
+            self.stimuli.append(
+                topo.PixelMovieExperanto(
+                    frame_duration=self.frame_duration,
+                    movie_path=movie_path,
+                    movie_name=stimulus_name,
+                    condition_hash=condition_hash,
+                    duration=self.parameters.images_per_trial * movie_frame_duration,
+                    size_x=self.model.visual_field.size_x,
+                    size_y=self.model.visual_field.size_y,
+                    density=self.density,
+                    location_x=0.0,
+                    location_y=0.0,
+                    background_luminance=self.background_luminance,
+                    trial=k,
+                    size=self.parameters.width,
+                    movie_frame_duration=movie_frame_duration,
+                    frame_offset=self.parameters.global_frame_offset,
+                    video_max_value=self.parameters.video_max_value,
+                )
+            )
+
+            if meta['modality'] == 'image':
+                self.stimuli.append(
+                InternalStimulus(   
+                                    frame_duration=blank_duration, 
+                                    duration=blank_duration,
+                                    trial=k,
+                                )
+                        )
+
 
     def do_analysis(self, data_store):
         pass

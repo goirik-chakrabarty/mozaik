@@ -26,6 +26,7 @@ export VECLIB_MAXIMUM_THREADS=${OMP_NUM_THREADS:-4}
 
 # Capture SLURM tasks, default to 4
 export NTASKS=${SLURM_NTASKS:-12}
+# export NTASKS=1
 
 echo "Starting Mozaik Container..."
 apptainer exec \

@@ -17,7 +17,7 @@ if [ ! -f "run.py" ]; then
 fi
 
 # 3. Clean up previous results (Updated output name)
-rm -rf SelfSustainedPushPull_test:test${NTASKS}_____
+rm -rf SelfSustainedPushPull_test:test_____
 
 echo "--- Starting Simulation (Internal MPI) ---"
 echo "Host Thread Limit Check: OMP_NUM_THREADS=$OMP_NUM_THREADS"
@@ -34,6 +34,6 @@ mpirun \
     -x MKL_NUM_THREADS \
     -x OPENBLAS_NUM_THREADS \
     -x PYTHONPATH \
-    python -u run.py nest $NTASKS param_MSA/defaults "test:test${NTASKS}"
+    python -u run.py nest $NTASKS param/defaults "test:test" #"test:AA_2sec_200trials-seed"
 
 echo "--- Simulation Finished with Code $? ---"
