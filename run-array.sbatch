@@ -7,10 +7,10 @@
 #SBATCH --cpus-per-task=4
 #SBATCH --hint=nomultithread
 #SBATCH --mem=250G
-#SBATCH --array=0-10
+#SBATCH --array=0-23
 #SBATCH --time=48:00:00
-#SBATCH --output=./slurm_array/mozaik-opt-%j.out
-#SBATCH --error=./slurm_array/mozaik-opt-%j.err
+#SBATCH --output=./slurm_239/mozaik-opt-%j.out
+#SBATCH --error=./slurm_239/mozaik-opt-%j.err
 #SBATCH -p medium96s # standard96 or medium96s
 #SBATCH -C sapphirerapids # cascadelake or sapphirerapids
 #SBATCH --mail-type=ALL
@@ -34,22 +34,21 @@ export MKL_DYNAMIC=FALSE
 export OMP_PLACES=cores
 export OMP_PROC_BIND=TRUE
 
-# Calculate offset
-STIMULUS_PER_JOB=50
-# Set SLURM_ARRAY_TASK_ID to 1 for testing outside of SLURM
+# Set SLURM_ARRAY_TASK_ID to 0 for testing outside of SLURM
 if [ -z "$SLURM_ARRAY_TASK_ID" ]; then
-    echo "SLURM_ARRAY_TASK_ID not set. Defaulting to 1 for testing."
-    export SLURM_ARRAY_TASK_ID=1
+    echo "SLURM_ARRAY_TASK_ID not set. Defaulting to 0 for testing."
+    export SLURM_ARRAY_TASK_ID=59
 fi
 
-STIM_OFFSET=$((SLURM_ARRAY_TASK_ID * STIMULUS_PER_JOB))
-STIM_WINDOW=$STIMULUS_PER_JOB
-export STIM_OFFSET
-export STIM_WINDOW
+N_CHUNKS=12
+TRIAL=$((SLURM_ARRAY_TASK_ID / N_CHUNKS))
+CHUNK=$((SLURM_ARRAY_TASK_ID % N_CHUNKS))
+export TRIAL
+export CHUNK
 
 echo "Job Array ID: ${SLURM_ARRAY_TASK_ID}"
-echo "Stimulus per job: ${STIM_WINDOW}"
-echo "Computed Offset: ${STIM_OFFSET}"
+echo "Trial: ${TRIAL}"
+echo "Chunk: ${CHUNK}"
 
 # Printing out some info.
 echo "Submitting job with sbatch from directory: ${SLURM_SUBMIT_DIR}"

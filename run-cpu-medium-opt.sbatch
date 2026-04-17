@@ -10,8 +10,8 @@
 #SBATCH --time=48:00:00
 #SBATCH --output=./slurm_large/mozaik-opt-%j.out
 #SBATCH --error=./slurm_large/mozaik-opt-%j.err
-#SBATCH -p medium96s # standard96 or medium96s
-#SBATCH -C sapphirerapids # cascadelake or sapphirerapids
+#SBATCH -p standard96 # standard96 or medium96s
+#SBATCH -C cascadelake # cascadelake or sapphirerapids
 #SBATCH --mail-type=ALL
 #SBATCH --mail-user=goirik.chakrabarty@uni-goettingen.de
 
@@ -50,4 +50,4 @@ unset HTTPS_PROXY
 unset FTP_PROXY
 
 # Execute the simulation
-bash apptainer-compose-opt.sh
+bash apptainer-compose.sh
