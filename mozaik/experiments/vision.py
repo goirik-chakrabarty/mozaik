@@ -2548,27 +2548,22 @@ class RandomizedExperanto(VisualExperiment):
             "width" : float,
             "movie_frame_duration" : int,
             "global_frame_offset" : int,
-            "stimulus_offset" : int,
-            "stimulus_window" : int,
             "images_per_trial" : int,
-            "chunk_id" : int,
             "video_max_value" : float,
         }
     )
     def generate_stimuli(self):
-        # Load the chunk dict json which contains the mapping between stimulus condition hash 
-        # and the corresponding stimulus parameters (e.g. modality, presentation time, etc.)
+        # Load the chunk json which contains the list of stimuli for this trial/chunk
 
         movie_path = os.path.join(self.parameters.base_path, 'screen', 'data')
         meta_path = os.path.join(self.parameters.base_path, 'screen', 'meta')
 
-        logger.info("Loading chunk dict from %s", os.path.join(meta_path, self.parameters.chunk_dict_path))
-        logger.info("Loading chunk dict from %s", os.listdir(meta_path))
-        with open(os.path.join(meta_path, self.parameters.chunk_dict_path), 'r') as f:
-            chunk_dict = json.load(f)
-        chunk = chunk_dict[str(self.parameters.chunk_id)]
+        chunk_path = os.path.join(self.parameters.base_path, self.parameters.chunk_dict_path)
+        logger.info("Loading chunk from %s", chunk_path)
+        with open(chunk_path, 'r') as f:
+            chunk = json.load(f)
         print("Chunk: \n\n", chunk)
-
+        logger.info("Chunk loaded, number of stimuli in chunk: %d", len(chunk))
         for item in chunk:
             meta_name = item['file']
             k = item['trial']
@@ -2593,7 +2588,7 @@ class RandomizedExperanto(VisualExperiment):
                 movie_frame_duration = self.frame_duration * \
                     (meta['presentation_time']*1000 //  self.frame_duration)
                 blank_duration = self.frame_duration * \
-                    ((meta['pre_blank_period']*1000 - 35 - 35) // self.frame_duration)
+                    ((meta['pre_blank_period']*1000) // self.frame_duration)
             # 150 comes from the default null stimulus from the experiment config
             elif meta['modality'] == 'video':
                 movie_frame_duration = self.parameters.movie_frame_duration
@@ -2604,8 +2599,6 @@ class RandomizedExperanto(VisualExperiment):
                 condition_hash = meta['condition_hash']
 
             print("Duration:", self.parameters.images_per_trial * movie_frame_duration)
-            print("Images per trial:", self.parameters.images_per_trial)
-            print("Movie frame duration:", movie_frame_duration)
 
             if meta['modality'] == 'image':
                 self.stimuli.append(
@@ -2640,8 +2633,8 @@ class RandomizedExperanto(VisualExperiment):
             if meta['modality'] == 'image':
                 self.stimuli.append(
                 InternalStimulus(   
-                                    frame_duration=blank_duration, 
-                                    duration=blank_duration,
+                                    frame_duration=49, 
+                                    duration=49,
                                     trial=k,
                                 )
                         )
