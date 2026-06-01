@@ -82,8 +82,9 @@ class Model(BaseComponent):
         'max_delay' : float,
         'time_step' : float,
         'sheets' : ParameterSet, # can be none - in which case input_space_type is ignored
-        'mpi_seed' : int,
+        'mozaik_seed' : int,
         'pynn_seed' : int,
+        'noise_seed' : int,
         'explosion_monitoring': ParameterSet, # Can be None. Strucutured as follows:
                                               #            {
                                               #                 sheet_name : str,
@@ -96,7 +97,12 @@ class Model(BaseComponent):
         BaseComponent.__init__(self, self, parameters)
         self.first_time = True
         self.sim = sim
-        self.node = sim.setup(timestep=self.parameters.time_step, min_delay=self.parameters.min_delay, max_delay=self.parameters.max_delay, threads=num_threads)  # should have some parameters here
+        # Derive NEST kernel RNG seed from pynn_seed + noise_seed.
+        # noise_seed varies per trial, so NEST-internal stochastic processes
+        # (e.g. poisson_generator) produce different noise realizations.
+        # Connectivity is unaffected because connectors use mozaik.pynn_rng.
+        nest_rng_seed = self.parameters.pynn_seed + mozaik.noise_seed
+        self.node = sim.setup(timestep=self.parameters.time_step, min_delay=self.parameters.min_delay, max_delay=self.parameters.max_delay, threads=num_threads, rng_seed=nest_rng_seed)
         self.sheets = OrderedDict()
         self.connectors = OrderedDict()
         self.num_threads = num_threads

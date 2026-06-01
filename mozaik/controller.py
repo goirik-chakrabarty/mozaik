@@ -119,6 +119,7 @@ def prepare_workflow(simulation_name, model_class):
     p=OrderedDict()
     if 'mozaik_seed' in parameters : p['mozaik_seed'] = parameters['mozaik_seed']
     if 'pynn_seed' in parameters : p['pynn_seed'] = parameters['pynn_seed']
+    if 'noise_seed' in parameters : p['noise_seed'] = parameters['noise_seed']
 
     # Now initialize mpi with the seeds
     print("START MPI")

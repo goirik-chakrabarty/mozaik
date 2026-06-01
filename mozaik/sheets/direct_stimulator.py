@@ -194,13 +194,13 @@ class BackgroundActivityBombardment(DirectStimulator):
         else:
             if (self.parameters.exc_firing_rate != 0 or self.parameters.exc_weight != 0):
                         self.ssae = self.sheet.sim.Population(self.sheet.pop.size,self.sheet.sim.SpikeSourceArray())
-                        seeds=mozaik.get_seeds((self.sheet.pop.size,))
+                        seeds=mozaik.get_noise_seeds((self.sheet.pop.size,))
                         self.stgene = [StGen(rng=numpy.random.RandomState(seed=seeds[i])) for i in numpy.nonzero(self.sheet.pop._mask_local)[0]]
                         self.sheet.sim.Projection(self.ssae, self.sheet.pop,self.sheet.sim.OneToOneConnector(),synapse_type=exc_syn,receptor_type='excitatory')
 
             if (self.parameters.inh_firing_rate != 0 or self.parameters.inh_weight != 0):
                         self.ssai = self.sheet.sim.Population(self.sheet.pop.size,self.sheet.sim.SpikeSourceArray())
-                        seeds=mozaik.get_seeds((self.sheet.pop.size,))
+                        seeds=mozaik.get_noise_seeds((self.sheet.pop.size,))
                         self.stgeni = [StGen(rng=numpy.random.RandomState(seed=seeds[i])) for i in numpy.nonzero(self.sheet.pop._mask_local)[0]]
                         self.sheet.sim.Projection(self.ssai, self.sheet.pop,self.sheet.sim.OneToOneConnector(),synapse_type=inh_syn,receptor_type='inhibitory')
 
@@ -297,7 +297,7 @@ class Kick(DirectStimulator):
         exc_syn = self.sheet.sim.StaticSynapse(weight=self.parameters.exc_weight,delay=2*self.sheet.model.parameters.min_delay)
         if (self.parameters.exc_firing_rate != 0 or self.parameters.exc_weight != 0):
             self.ssae = self.sheet.sim.Population(self.sheet.pop.size,self.sheet.sim.SpikeSourceArray())
-            seeds=mozaik.get_seeds((self.sheet.pop.size,))
+            seeds=mozaik.get_noise_seeds((self.sheet.pop.size,))
             self.stgene = [StGen(rng=numpy.random.RandomState(seed=seeds[i])) for i in self.to_stimulate_indexes]
             self.sheet.sim.Projection(self.ssae, self.sheet.pop,self.sheet.sim.OneToOneConnector(),synapse_type=exc_syn,receptor_type='excitatory') 
 

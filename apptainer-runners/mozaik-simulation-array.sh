@@ -8,8 +8,10 @@ CHUNK=${CHUNK:-0}
 RUN_NAME="trial${TRIAL}_chunk${CHUNK}"
 
 # 3. Construct the expected output directory name
-# Mozaik typically constructs this as: ModelName_RunName_____
-DIR_NAME="SelfSustainedPushPull_${RUN_NAME}_____"
+# Mozaik appends modified parameters: ModelName_RunName_____key:value
+# noise_seed is passed as a modified parameter, so it appears in the dir name.
+NOISE_SEED=$(( TRIAL * 1000 + CHUNK ))
+DIR_NAME="SelfSustainedPushPull_${RUN_NAME}_____noise_seed:${NOISE_SEED}"
 
 echo "Running simulation with name: $RUN_NAME"
 echo "Cleaning up directory: $DIR_NAME"
@@ -22,13 +24,8 @@ echo "Host Thread Limit Check: OMP_NUM_THREADS=$OMP_NUM_THREADS"
 echo "Running with $NTASKS MPI Tasks"
 echo "Trial: $TRIAL, Chunk: $CHUNK"
 
-# 5. Compute per-trial mozaik_seed so each trial has independent noise
-#    but identical network topology.
-#    - pynn_seed (fixed in param/defaults=5): controls connectivity, positions, weights
-#    - mozaik_seed (varied here): controls background noise generators via mozaik.get_seeds()
-SEED_OFFSET=$(( TRIAL * 1000 + CHUNK ))
-MOZAIK_SEED=$(( 1023 + SEED_OFFSET ))
-echo "Per-trial seed: mozaik_seed=$MOZAIK_SEED (pynn_seed=5 fixed, offset=$SEED_OFFSET)"
+# 5. noise_seed was computed in step 3 above
+echo "Per-trial noise_seed=$NOISE_SEED (pynn_seed=5, mozaik_seed=1023 fixed)"
 
 # 6. Run the python script passing the UNIQUE Run Name
 #    Modified parameters (key value pairs) go between param_file and run_name.
@@ -38,4 +35,4 @@ mpirun \
     -x MKL_NUM_THREADS \
     -x OPENBLAS_NUM_THREADS \
     -x PYTHONPATH \
-    python -u run.py nest $NTASKS param/defaults mozaik_seed $MOZAIK_SEED "$RUN_NAME"
+    python -u run.py nest $NTASKS param/defaults noise_seed $NOISE_SEED "$RUN_NAME"

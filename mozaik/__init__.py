@@ -31,21 +31,33 @@ rng = None
 pynn_rng = None
 mpi_comm = None
 MPI_ROOT = 0
+noise_seed = 0
 
-def setup_mpi(mozaik_seed=513,pynn_seed=1023):
+def setup_mpi(mozaik_seed=513,pynn_seed=1023,noise_seed=0):
     r"""
     Tests the presence of MPI and sets up mozaik wide random number generator.
-    
+
+    Parameters
+    ----------
+    mozaik_seed : int
+        Seed for the mozaik-wide RNG (used for connectivity sampling, stimulus shuffling, etc.)
+    pynn_seed : int
+        Seed for the PyNN RNG (used for connection patterns, neuron positions, parameter distributions)
+    noise_seed : int
+        Offset applied to seeds used by noise generators (background bombardment, LGN noise).
+        When 0 (default), noise seeds are identical to get_seeds() output (backward compatible).
+        Vary this across trials to get different noise realizations with identical network topology.
+
     Notes
     -----
-    
+
     To obtain results repeatable over identical runs of mozaik
     one should use the mozaik.pynn_rng as the random noise generator passed to all pyNN
     functions that accept pynn_rng as one of their paramters
-    
+
     Any other code using random numbers should instead use the mozaik.rng that hold a numpy RandomState instance.
-    It is important to make sure that any piece of  code using this random generator draws from it 
-    exactly the same number of numbers in each process, so that once the code is executed, the rng 
+    It is important to make sure that any piece of  code using this random generator draws from it
+    exactly the same number of numbers in each process, so that once the code is executed, the rng
     is in exactly the same state in each mpi process!
 
     """
@@ -53,9 +65,11 @@ def setup_mpi(mozaik_seed=513,pynn_seed=1023):
     global rng
     global pynn_rng
     global mpi_comm
+    import mozaik
     from pyNN.random import NumpyRNG
     pynn_rng = NumpyRNG(seed=pynn_seed)
     rng = numpy.random.RandomState(mozaik_seed)
+    mozaik.noise_seed = noise_seed
 
     try:
         from mpi4py import MPI
@@ -86,6 +100,23 @@ def get_seeds(size=None):
 
     """
     return rng.randint(2**32-1,size=size)
+
+def get_noise_seeds(size=None):
+    r"""
+    Returns seeds for noise generators with an optional offset from :data:`noise_seed`.
+
+    Internally calls :func:`get_seeds` so that the global RNG state advances identically
+    regardless of the noise_seed value. The offset is then applied to the result.
+    When ``noise_seed == 0``, the output is identical to :func:`get_seeds`.
+
+    Use this instead of :func:`get_seeds` in code that seeds neural noise generators
+    (e.g. background bombardment, LGN noise currents) to allow independent noise
+    realizations across trials without affecting connectivity.
+    """
+    seeds = get_seeds(size)
+    if noise_seed != 0:
+        seeds = (seeds.astype(numpy.int64) + noise_seed) % (2**32 - 1)
+    return seeds
 
 def getMozaikLogger():
     r"""
