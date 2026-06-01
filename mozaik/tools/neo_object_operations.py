@@ -2,9 +2,10 @@ r"""
 This file contains various operations over Neo objects. Such as sum over lists
 of Neo objects etc.
 """
+import numpy
 import quantities as qt
 from neo.core.analogsignal import AnalogSignal as NeoAnalogSignal
-import numpy
+
 
 def neo_sum(l):
     r"""

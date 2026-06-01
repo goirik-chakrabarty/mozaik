@@ -2,8 +2,10 @@ r"""
 This module contains several helper functions for working with periodic variables.
 """
 import logging
+
 import numpy
-from numpy import pi, sin, cos
+from numpy import cos, pi, sin
+
 logger = logging.getLogger("mozaik")
 
 

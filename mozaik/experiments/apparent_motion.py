@@ -1,10 +1,12 @@
-from mozaik.experiments.vision import VisualExperiment
-from parameters import ParameterSet
-import mozaik.stimuli.vision.topographica_based as topo
+import random
+
 import numpy
 import numpy as np
-import random
+from parameters import ParameterSet
+
 import mozaik
+import mozaik.stimuli.vision.topographica_based as topo
+from mozaik.experiments.vision import VisualExperiment
 
 
 class MapSimpleGabor(VisualExperiment):

@@ -16,13 +16,15 @@ This allows for efficient storing  and manipulation of stimulus identities.
 Note that *all* such parameters defined in the class (and its ancestors) will
 be considered as parameters of the BaseStimulus.
 """
-import quantities as qt
-import numpy
-import mozaik
-from operator import itemgetter
-from mozaik.tools.mozaik_parametrized import MozaikParametrized, SNumber, SInteger, SString, SParameterSet
 import collections
+from operator import itemgetter
 
+import numpy
+import quantities as qt
+
+import mozaik
+from mozaik.tools.mozaik_parametrized import (MozaikParametrized, SInteger,
+                                              SNumber, SParameterSet, SString)
 
 logger = mozaik.getMozaikLogger()
 

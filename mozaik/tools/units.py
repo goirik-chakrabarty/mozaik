@@ -1,9 +1,9 @@
 r"""
 This module defines units used in mozaik project and not specified in the quantities package.
 """
-import quantities as qt
-from quantities.unitquantity import UnitQuantity, UnitInformation
 import numpy
+import quantities as qt
+from quantities.unitquantity import UnitInformation, UnitQuantity
 
 sp = spike = UnitInformation(
     'spike',

@@ -2,16 +2,17 @@ r"""
 This module contains various utility functions often useb by analysis code.
 """
 
+from builtins import zip
+
 import numpy
 import quantities as qt
+from neo import AnalogSignal
+
 import mozaik
 import mozaik.tools.units as munits
 from mozaik.controller import Global
 from mozaik.storage.queries import *
 from mozaik.tools.mozaik_parametrized import *
-from neo import AnalogSignal
-
-from builtins import zip
 
 logger = mozaik.getMozaikLogger()
 

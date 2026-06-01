@@ -4,12 +4,16 @@ This module contain query manipulation system that is used to filter information
 The basic principle is that each query takes a existing :class:`.DataSore` (or :class:`.DataStoreView`) as an input and 
 returns and new :class:`.DataSoreView` that is a subset of the input DSV.
 """
-from mozaik.core import ParametrizedObject
-from parameters import ParameterSet
 from collections import OrderedDict
-from mozaik.tools.mozaik_parametrized import colapse,  MozaikParametrized, filter_query, matching_parametrized_object_params
+
 import numpy
+from parameters import ParameterSet
+
 import mozaik
+from mozaik.core import ParametrizedObject
+from mozaik.tools.mozaik_parametrized import (
+    MozaikParametrized, colapse, filter_query,
+    matching_parametrized_object_params)
 
 logger = mozaik.getMozaikLogger()
 

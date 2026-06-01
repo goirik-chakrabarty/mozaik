@@ -3,15 +3,17 @@ r"""
 Definition of the component interfaces. These interfaces are not currently directly checked or enforced.
 """
 
-from mozaik import __version__
-from parameters import ParameterSet
-import parameters.random
-from parameters.random import UniformDist
-import mozaik
-from mozaik.tools.distribution_parametrization import PyNNDistribution
-from string import Template
 from collections import OrderedDict
+from string import Template
+
 import numpy
+import parameters.random
+from parameters import ParameterSet
+from parameters.random import UniformDist
+
+import mozaik
+from mozaik import __version__
+from mozaik.tools.distribution_parametrization import PyNNDistribution
 
 logger = mozaik.getMozaikLogger()
 

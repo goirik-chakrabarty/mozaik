@@ -2,21 +2,24 @@ r"""
 This module implements the data storage functionality.
 """
 
+import collections
+import os
+import os.path
+import pickle
+from collections import OrderedDict
+
 import numpy
-from parameters import ParameterSet
-from neo.core.block import Block
 from neo.core import Segment
+from neo.core.block import Block
+from parameters import ParameterSet
+
 #from neo.io.hdf5io import NeoHdf5IO
 import mozaik
 from mozaik.core import ParametrizedObject
-from .neo_neurotools_wrapper import MozaikSegment, PickledDataStoreNeoWrapper
-from mozaik.tools.mozaik_parametrized import  MozaikParametrized,filter_query
-import pickle
-from collections import OrderedDict
-import collections
-import os.path
-import os
 from mozaik.tools.distribution_parametrization import PyNNDistribution
+from mozaik.tools.mozaik_parametrized import MozaikParametrized, filter_query
+
+from .neo_neurotools_wrapper import MozaikSegment, PickledDataStoreNeoWrapper
 
 logger = mozaik.getMozaikLogger()
 

@@ -1,5 +1,6 @@
 import sys
 
+
 def parse_parameter_search_args():
     if len(sys.argv) == 4:
         run_script = sys.argv[1]

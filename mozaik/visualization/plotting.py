@@ -43,36 +43,46 @@ its own (i.e. becomes the highest-level), and that would otherwise prevent
 flexible use in nesting via the subplot.
 """
 
-import pylab
-import numpy
-import time
 import os
-import quantities as pq
+import time
+from collections import OrderedDict
+
 import matplotlib.cm as cm
 import matplotlib.gridspec as gridspec
-from scipy.interpolate import griddata
-import mozaik.tools.units 
-from parameters import ParameterSet
-from collections import OrderedDict
-from mozaik.tools.circ_stat import *
-from mozaik.core import ParametrizedObject
-from mozaik.storage import queries
-from mozaik.controller import Global
-from mozaik.tools.mozaik_parametrized import colapse_to_dictionary, MozaikParametrized, varying_parameters, matching_parametrized_object_params
-from numpy import pi
+import numpy
+import pylab
+import quantities as pq
 from neo.core.analogsignal import AnalogSignal as NeoAnalogSignal
 from neo.core.spiketrain import SpikeTrain as NeoSpikeTrain
-from .simple_plot import StandardStyleLinePlot, SpikeRasterPlot, \
-                        SpikeHistogramPlot, ConductancePlot, ConductancesPlot, PixelMovie, \
-                        ScatterPlotMovie, ScatterPlot, ConnectionPlot, SimplePlot, HistogramPlot, CorticalColumnSpikeRasterPlot, OrderedAnalogSignalListPlot
-from .plot_constructors import LinePlot, PerStimulusPlot, PerStimulusADSPlot, ADSGridPlot, MultipleFilesPlot
+from numpy import pi
+from parameters import ParameterSet
+from scipy.interpolate import griddata
 
 import mozaik
+import mozaik.tools.units
+from mozaik.controller import Global
+from mozaik.core import ParametrizedObject
+from mozaik.storage import queries
+from mozaik.tools.circ_stat import *
+from mozaik.tools.mozaik_parametrized import (
+    MozaikParametrized, colapse_to_dictionary,
+    matching_parametrized_object_params, varying_parameters)
+
+from .plot_constructors import (ADSGridPlot, LinePlot, MultipleFilesPlot,
+                                PerStimulusADSPlot, PerStimulusPlot)
+from .simple_plot import (ConductancePlot, ConductancesPlot, ConnectionPlot,
+                          CorticalColumnSpikeRasterPlot, HistogramPlot,
+                          OrderedAnalogSignalListPlot, PixelMovie, ScatterPlot,
+                          ScatterPlotMovie, SimplePlot, SpikeHistogramPlot,
+                          SpikeRasterPlot, StandardStyleLinePlot)
+
 logger = mozaik.getMozaikLogger()
 
-from builtins import zip
 import json
+from builtins import zip
+
 from mozaik.tools.json_export import save_json
+
 
 class Plotting(ParametrizedObject):
     r"""

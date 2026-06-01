@@ -1,11 +1,14 @@
-import pickle
-from mozaik.tools.misc import result_directory_name
-from mozaik.storage.datastore import PickledDataStore
-from parameters import ParameterSet
-from mozaik.storage.queries import *
-import sys
 import os
+import pickle
+import sys
 import time
+
+from parameters import ParameterSet
+
+from mozaik.storage.datastore import PickledDataStore
+from mozaik.storage.queries import *
+from mozaik.tools.misc import result_directory_name
+
 
 def load_fixed_parameter_set_parameter_search(simulation_name,master_results_dir,filter=None):
     r"""

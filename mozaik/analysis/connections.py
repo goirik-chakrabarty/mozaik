@@ -1,13 +1,14 @@
+from builtins import zip
+
 import numpy
 import quantities as qt
-from .analysis import Analysis
-from mozaik.analysis.data_structures import SingleValue
-from mozaik.analysis.data_structures import PerNeuronValue
 from parameters import ParameterSet
-from mozaik.storage import queries
-import mozaik
 
-from builtins import zip
+import mozaik
+from mozaik.analysis.data_structures import PerNeuronValue, SingleValue
+from mozaik.storage import queries
+
+from .analysis import Analysis
 
 logger = mozaik.getMozaikLogger()
 

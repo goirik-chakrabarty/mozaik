@@ -3,15 +3,15 @@ This modules implements the API for input space.
 """
 
 import os.path
-import numpy
-import mozaik
-from PIL import Image
-from parameters import ParameterSet
-from mozaik.core import ParametrizedObject
 from collections import OrderedDict
 
+import numpy
+from parameters import ParameterSet
+from PIL import Image
 
+import mozaik
 from mozaik import __version__
+from mozaik.core import ParametrizedObject
 
 TRANSPARENT = -1
 logger = mozaik.getMozaikLogger()

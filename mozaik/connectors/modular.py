@@ -1,18 +1,17 @@
 # encoding: utf-8
-import mozaik
-import numpy
 import ast
+from builtins import zip
+from collections import Counter, OrderedDict
+
+import numpy
+from parameters import ParameterSet
+
+import mozaik
+from mozaik import load_component
 from mozaik.connectors import Connector
 from mozaik.connectors.modular_connector_functions import *
-from collections import Counter
-from parameters import ParameterSet
-from mozaik.tools.misc import sample_from_bin_distribution, normal_function
-from mozaik import load_component
 from mozaik.tools.distribution_parametrization import PyNNDistribution
-from collections import OrderedDict
-
-
-from builtins import zip
+from mozaik.tools.misc import normal_function, sample_from_bin_distribution
 
 logger = mozaik.getMozaikLogger()
 

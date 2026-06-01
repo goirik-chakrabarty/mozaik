@@ -2,22 +2,24 @@
 r"""
 Retina/LGN model based on that developed by Jens Kremkow (CNRS-INCM/ALUF)
 """
-import pylab
-import numpy
 import os.path
 import pickle
-import mozaik
-from pyNN import space
-from  mozaik.models.vision import cai97
-from mozaik.space import VisualSpace, VisualRegion
-from mozaik.core import SensoryInputComponent
-from mozaik.sheets.vision import RetinalUniformSheet
-from mozaik.sheets.vision import VisualCorticalUniformSheet
-from mozaik.tools.mozaik_parametrized import MozaikParametrized
-from mozaik.tools.pyNN import *
-from parameters import ParameterSet
 from builtins import zip
 from collections import OrderedDict
+
+import numpy
+import pylab
+from parameters import ParameterSet
+from pyNN import space
+
+import mozaik
+from mozaik.core import SensoryInputComponent
+from mozaik.models.vision import cai97
+from mozaik.sheets.vision import (RetinalUniformSheet,
+                                  VisualCorticalUniformSheet)
+from mozaik.space import VisualRegion, VisualSpace
+from mozaik.tools.mozaik_parametrized import MozaikParametrized
+from mozaik.tools.pyNN import *
 
 logger = mozaik.getMozaikLogger()
 

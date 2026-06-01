@@ -1,20 +1,20 @@
 r"""
 See :mod:`mozaik.visualization` for more general documentation.
 """
-import mozaik.visualization.helper_functions as phf
-import pylab
-import numpy
 import math
-import mozaik
-import mozaik.tools.units
-import quantities as pq
-from matplotlib.colors import *
-from matplotlib.ticker import MultipleLocator, AutoMinorLocator
-from cycler import cycler
+from builtins import zip
 from collections import OrderedDict
 
+import numpy
+import pylab
+import quantities as pq
+from cycler import cycler
+from matplotlib.colors import *
+from matplotlib.ticker import AutoMinorLocator, MultipleLocator
 
-from builtins import zip
+import mozaik
+import mozaik.tools.units
+import mozaik.visualization.helper_functions as phf
 
 logger = mozaik.getMozaikLogger()
 

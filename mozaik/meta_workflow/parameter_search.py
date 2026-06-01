@@ -1,14 +1,16 @@
-import sys
-import subprocess
-import pickle
-from datetime import datetime
-import os
-import time
-import re
-from mozaik.cli import parse_parameter_search_args
-from mozaik.tools.misc import result_directory_name
 import json
+import os
+import pickle
+import re
+import subprocess
+import sys
+import time
+from datetime import datetime
+
+from mozaik.cli import parse_parameter_search_args
 from mozaik.tools.json_export import save_json
+from mozaik.tools.misc import result_directory_name
+
 
 class ParameterSearchBackend(object):
     r"""
@@ -113,7 +115,8 @@ class SlurmSequentialBackend(object):
              modified_parameters.append(str(parameters[k]))
         
      
-         from subprocess import Popen, PIPE, STDOUT
+         from subprocess import PIPE, STDOUT, Popen
+
          # use sbatch to queue job with params as in  slurm options (except job-geometry)
          p = Popen(['sbatch'] + self.slurm_options +  ['-o',parameters['results_dir'][2:-2]+"/slurm-%j.out"],stdin=PIPE,stdout=PIPE,stderr=PIPE,text=True)
          
@@ -274,7 +277,7 @@ def parameter_search_run_script_distributed_slurm(simulation_name,master_results
     # first check whether all parameter combinations contain the same parameter names
     assert len(set([tuple(set(comb.keys())) for comb in combinations])) == 1 , "The parameter search didn't occur over a fixed set of parameters"
     
-    from subprocess import Popen, PIPE, STDOUT
+    from subprocess import PIPE, STDOUT, Popen
     for i,combination in enumerate(combinations):
         rdn = master_results_dir+'/'+result_directory_name('ParameterSearch',simulation_name,combination)    
         p = Popen(['sbatch'] +  ['-o',master_results_dir+"/slurm_analysis-%j.out" ],stdin=PIPE,stdout=PIPE,stderr=PIPE,text=True)
@@ -323,7 +326,7 @@ def parameter_search_run_script_distributed_slurm_IoV(simulation_name,master_res
     # first check whether all parameter combinations contain the same parameter names
     assert len(set([tuple(set(comb.keys())) for comb in combinations])) == 1 , "The parameter search didn't occur over a fixed set of parameters"
     
-    from subprocess import Popen, PIPE, STDOUT
+    from subprocess import PIPE, STDOUT, Popen
     for i,combination in enumerate(combinations):
         rdn = master_results_dir+'/'+result_directory_name('ParameterSearch',simulation_name,combination)    
         p = Popen(['sbatch'] +  ['-o',master_results_dir+"/slurm_analysis-%j.out" ],stdin=PIPE,stdout=PIPE,stderr=PIPE,text=True)
@@ -372,7 +375,7 @@ def parameter_search_run_script_distributed_slurm_UK(simulation_name,master_resu
     # first check whether all parameter combinations contain the same parameter names
     assert len(set([tuple(set(comb.keys())) for comb in combinations])) == 1 , "The parameter search didn't occur over a fixed set of parameters"
     
-    from subprocess import Popen, PIPE, STDOUT
+    from subprocess import PIPE, STDOUT, Popen
     for i,combination in enumerate(combinations):
         rdn = master_results_dir+'/'+result_directory_name('ParameterSearch',simulation_name,combination)    
         p = Popen(['sbatch'] +  ['-o',master_results_dir+"/slurm_analysis-%j.out" ],stdin=PIPE,stdout=PIPE,stderr=PIPE,text=True)

@@ -3,19 +3,20 @@ r"""
 Module containing the implementation of sheets - one of the basic building blocks of *mozaik* models.
 """
 
-import numpy
-import mozaik
 from collections import OrderedDict
-from mozaik.core import BaseComponent
-from mozaik import load_component
-from mozaik.tools.distribution_parametrization import PyNNDistribution
+from string import Template
+
+import numpy
+import quantities as pq
+from neo.core.spiketrain import SpikeTrain
 from parameters import ParameterSet, UniformDist
 from pyNN import space
 from pyNN.errors import NothingToWriteError
-from string import Template
-from neo.core.spiketrain import SpikeTrain
-import quantities as pq
 
+import mozaik
+from mozaik import load_component
+from mozaik.core import BaseComponent
+from mozaik.tools.distribution_parametrization import PyNNDistribution
 
 logger = mozaik.getMozaikLogger()
 

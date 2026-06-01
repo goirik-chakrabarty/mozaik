@@ -2,22 +2,21 @@
 """
 Module containing texture specific analysis.
 """
-import mozaik
 import numpy
 import quantities as qt
-from mozaik.analysis.analysis import Analysis
-from mozaik.tools.mozaik_parametrized import colapse, colapse_to_dictionary, MozaikParametrized
-from mozaik.analysis.data_structures import SingleValue
-from mozaik.analysis.data_structures import AnalogSignal
-from mozaik.analysis.data_structures import AnalogSignalList
-from mozaik.analysis.data_structures import PerNeuronValue
-
-from mozaik.analysis.helper_functions import psth
+from neo.core.analogsignal import AnalogSignal as NeoAnalogSignal
 from parameters import ParameterSet
+
+import mozaik
+from mozaik.analysis.analysis import Analysis
+from mozaik.analysis.data_structures import (AnalogSignal, AnalogSignalList,
+                                             PerNeuronValue, SingleValue)
+from mozaik.analysis.helper_functions import psth
 from mozaik.storage import queries
 from mozaik.tools.circ_stat import circ_mean, circular_dist
+from mozaik.tools.mozaik_parametrized import (MozaikParametrized, colapse,
+                                              colapse_to_dictionary)
 from mozaik.tools.neo_object_operations import neo_mean, neo_sum
-from neo.core.analogsignal import AnalogSignal as NeoAnalogSignal
 
 
 class TextureModulation(Analysis):

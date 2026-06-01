@@ -4,12 +4,13 @@ This module contains implementation of vision related sheets.
 """
 
 import numpy
-import mozaik
 from parameters import ParameterSet
 from pyNN import space
 from pyNN.errors import NothingToWriteError
+
+import mozaik
 from mozaik.sheets import Sheet
-        
+
 logger = mozaik.getMozaikLogger()
 
 class RetinalUniformSheet(Sheet):

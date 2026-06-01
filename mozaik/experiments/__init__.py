@@ -1,14 +1,17 @@
 r"""
 Module containing the experiment API.
 """
-import numpy
 import resource
-import mozaik
 from collections import OrderedDict
-from mozaik.stimuli import InternalStimulus
+
+import numpy
 from parameters import ParameterSet
+
+import mozaik
 from mozaik.core import ParametrizedObject
-from mozaik.tools.distribution_parametrization import ParameterWithUnitsAndPeriod, MozaikExtendedParameterSet
+from mozaik.stimuli import InternalStimulus
+from mozaik.tools.distribution_parametrization import (
+    MozaikExtendedParameterSet, ParameterWithUnitsAndPeriod)
 
 logger = mozaik.getMozaikLogger()
 

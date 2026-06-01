@@ -9,19 +9,22 @@ allow None value, are instantiated and allow for definition of units and period.
 """
 
 
-from param.parameterized import Parameterized
-from param import Number, Integer, String, produce_value, ClassSelector
-from parameters import ParameterSet
-from collections import OrderedDict
-import logging
-import inspect
-import numbers
-import numpy
 import collections
-from mozaik.tools.distribution_parametrization import ParameterWithUnitsAndPeriod, MozaikExtendedParameterSet
+import inspect
+import logging
+import numbers
 from builtins import zip
+from collections import OrderedDict
 
+import numpy
 import param.parameterized
+from param import ClassSelector, Integer, Number, String, produce_value
+from param.parameterized import Parameterized
+from parameters import ParameterSet
+
+from mozaik.tools.distribution_parametrization import (
+    MozaikExtendedParameterSet, ParameterWithUnitsAndPeriod)
+
 param.parameterized.docstring_signature=False
 
 logger = logging.getLogger("mozaik")

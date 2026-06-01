@@ -1,13 +1,17 @@
-from mozaik.storage.queries import *
-import pylab
 import math
-from scipy.interpolate import griddata
-import matplotlib.cm as cm
-from mozaik.meta_workflow.analysis import load_fixed_parameter_set_parameter_search
-from collections import OrderedDict
 import pickle
 from builtins import zip
-        
+from collections import OrderedDict
+
+import matplotlib.cm as cm
+import pylab
+from scipy.interpolate import griddata
+
+from mozaik.meta_workflow.analysis import \
+    load_fixed_parameter_set_parameter_search
+from mozaik.storage.queries import *
+
+
 def single_value_visualization(simulation_name,master_results_dir,query,value_names=None,filename=None,resolution=None,treat_nan_as_zero=False,ranges={},cols=4):
     r"""
     Visualizes all single values (or those whose names match ones in `value_names` argument)

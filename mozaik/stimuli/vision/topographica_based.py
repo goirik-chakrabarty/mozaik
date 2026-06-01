@@ -5,22 +5,25 @@ The file contains stimuli that use topographica to generate the stimulus
 
 """
 
-from mozaik.stimuli.vision.visual_stimulus import VisualStimulus
 import math
+import pickle
+
 import imagen
 import imagen.random
-from imagen.transferfn import TransferFn
-import param
-from imagen.image import BoundingBox, GenericImage
-import pickle
 import numpy
 import numpy as np
-from mozaik.tools.mozaik_parametrized import SNumber, SString, SParameterSet
-from mozaik.tools.distribution_parametrization import MozaikExtendedParameterSet
-from mozaik.tools.units import cpd
+import param
+from imagen.image import BoundingBox, GenericImage
+from imagen.transferfn import TransferFn
 from numpy import pi
-from quantities import Hz, rad, degrees, ms, dimensionless
+from quantities import Hz, degrees, dimensionless, ms, rad
+
 import mozaik
+from mozaik.stimuli.vision.visual_stimulus import VisualStimulus
+from mozaik.tools.distribution_parametrization import \
+    MozaikExtendedParameterSet
+from mozaik.tools.mozaik_parametrized import SNumber, SParameterSet, SString
+from mozaik.tools.units import cpd
 
 logger = mozaik.getMozaikLogger()
 
@@ -1613,6 +1616,7 @@ class PixelMovieExperanto(TopographicaBasedVisualStimulus):
         TopographicaBasedVisualStimulus.__init__(self, **params)
 
         import os
+
         # Check if file was already loaded earlier as in the cache. If yes use it. If not load it and insert it in the cache.
         p = os.path.join(self.movie_path,self.movie_name)
         if p in PixelMovieExperanto.cache.keys():

@@ -1,18 +1,19 @@
 r"""
 This module contains API of visual stimuli.
 """
-import numpy
-import mozaik
-from quantities import degrees
-from mozaik.stimuli import BaseStimulus
-from mozaik.space import TRANSPARENT, xy2ij, VisualRegion
-from mozaik.tools.mozaik_parametrized import SNumber
-from mozaik.tools.units import lux
-from scipy.ndimage import interpolation
 from collections import OrderedDict
-from mozaik.tools.mozaik_parametrized import SNumber, SString, SParameterSet
-from mozaik.tools.distribution_parametrization import MozaikExtendedParameterSet
-from quantities import Hz, rad, degrees, ms, dimensionless
+
+import numpy
+from quantities import Hz, degrees, dimensionless, ms, rad
+from scipy.ndimage import interpolation
+
+import mozaik
+from mozaik.space import TRANSPARENT, VisualRegion, xy2ij
+from mozaik.stimuli import BaseStimulus
+from mozaik.tools.distribution_parametrization import \
+    MozaikExtendedParameterSet
+from mozaik.tools.mozaik_parametrized import SNumber, SParameterSet, SString
+from mozaik.tools.units import lux
 
 logger = mozaik.getMozaikLogger()
 

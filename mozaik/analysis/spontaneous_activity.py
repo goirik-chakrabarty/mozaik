@@ -1,13 +1,14 @@
+import logging
+
 import numpy
-from mozaik.analysis.data_structures import SingleValue
+import quantities as qt
 from parameters import ParameterSet
-from mozaik.storage import queries
+
 import mozaik
 from mozaik.analysis.analysis import Analysis
+from mozaik.analysis.data_structures import SingleValue
 from mozaik.storage import queries
-import quantities as qt
 
-import logging
 logger = logging.getLogger("mozaik")
 
 class SpontaneousActivityLength(Analysis):

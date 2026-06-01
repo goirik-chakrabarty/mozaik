@@ -4,9 +4,12 @@ This module contains the definition of the AnalysisDataStructure API and impleme
 For more documentation refer to :doc:`mozaik.analysis`
 """
 
-import mozaik
 import numpy
-from mozaik.tools.mozaik_parametrized import MozaikParametrized, SNumber, SInteger, SString
+
+import mozaik
+from mozaik.tools.mozaik_parametrized import (MozaikParametrized, SInteger,
+                                              SNumber, SString)
+
 logger = mozaik.getMozaikLogger()
 
 

@@ -1,10 +1,11 @@
+import json
 import os
 import re
-import json
+
+import imageio
 import numpy as np
 from numpyencoder import NumpyEncoder
 from sphinx.util import docstrings
-import imageio
 
 PARAMETERS_REGEX = re.compile(".*Parameters.*")
 OTHER_PARAMETER_REGEX = re.compile(".*Other\ [pP]arameters\ *\n-{15}-+")
@@ -151,6 +152,7 @@ def get_experimental_protocols(data_store):
     return experimental_protocols_docs
 
 from mozaik.tools.mozaik_parametrized import MozaikParametrized
+
 
 def reduce_dicts(dicts):
     constant = {k : True for k in dicts.keys()}

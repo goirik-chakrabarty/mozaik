@@ -1,12 +1,14 @@
-import elephant
 import warnings
+
+import elephant
 import numpy as np
 import quantities as pq
 from parameters import ParameterSet
 from scipy.optimize import curve_fit
-from mozaik.storage import queries
+
 from mozaik.analysis.analysis import Analysis
 from mozaik.analysis.data_structures import SingleValue, SingleValueList
+from mozaik.storage import queries
 from mozaik.tools.distribution_parametrization import load_parameters
 
 

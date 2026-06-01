@@ -2,21 +2,25 @@
 """
 Module containing vision specific analysis.
 """
-import mozaik
-import numpy
-import scipy
-import quantities as qt
-from .analysis import Analysis
-from mozaik.tools.mozaik_parametrized import colapse, colapse_to_dictionary, MozaikParametrized
-from mozaik.analysis.data_structures import PerNeuronValue
-from mozaik.analysis.helper_functions import psth
-from parameters import ParameterSet
-from mozaik.storage import queries
-from mozaik.tools.circ_stat import circ_mean, circular_dist
-from mozaik.tools.neo_object_operations import neo_mean, neo_sum
 from builtins import zip
 from collections import OrderedDict
+
+import numpy
 import pandas
+import quantities as qt
+import scipy
+from parameters import ParameterSet
+
+import mozaik
+from mozaik.analysis.data_structures import PerNeuronValue
+from mozaik.analysis.helper_functions import psth
+from mozaik.storage import queries
+from mozaik.tools.circ_stat import circ_mean, circular_dist
+from mozaik.tools.mozaik_parametrized import (MozaikParametrized, colapse,
+                                              colapse_to_dictionary)
+from mozaik.tools.neo_object_operations import neo_mean, neo_sum
+
+from .analysis import Analysis
 
 logger = mozaik.getMozaikLogger()
 

@@ -4,14 +4,16 @@ This module contains the implementation of a Model API.
 Each simulation contains one model, that overarches the neural network that has been built using 
 the basic *mozaik* components (sheets and connectors) and some additional structures such as the recording configurations.
 """
-from parameters import ParameterSet
-from mozaik.core import BaseComponent
-from mozaik import load_component
-from mozaik.stimuli import InternalStimulus
-from collections import OrderedDict
-import mozaik
 import time
+from collections import OrderedDict
+
 import numpy
+from parameters import ParameterSet
+
+import mozaik
+from mozaik import load_component
+from mozaik.core import BaseComponent
+from mozaik.stimuli import InternalStimulus
 
 logger = mozaik.getMozaikLogger()
 

@@ -1,5 +1,7 @@
-import pylab
 import pickle
+
+import pylab
+
 
 def visualize_retinal_cache(data_store,which):
     f = open('./retinal_cache/' + str(which) + '.st','r')

@@ -7,35 +7,34 @@ of spikes/currents etc into cells. In mozaik this happens at population level - 
 each direct stimulator specifies how the given population is stimulated. In general each population can have several
 stimultors.
 """
-from mozaik.core import ParametrizedObject
-from parameters import ParameterSet
+import io
+import math
+import pickle
+from builtins import zip
+
+import matplotlib
 import numpy
 import numpy as np
 import numpy.random
-import mozaik
-from mozaik.tools.stgen import StGen
-from mozaik import load_component
-from pyNN.parameters import Sequence
-from mozaik import load_component
-import math
-from mozaik.tools.circ_stat import circular_dist ,circ_mean
 import pylab
-from scipy.integrate import odeint
-import pickle
-import scipy.interpolate
-from mpl_toolkits.mplot3d import Axes3D
-from mozaik.controller import Global
-import matplotlib
-from mozaik.analysis.analysis import SingleValue, AnalogSignalList
-from neo.core.analogsignal import AnalogSignal as NeoAnalogSignal
 import quantities as qt
-from mozaik.tools.units import *
-import io
-from numba import jit
-
-from builtins import zip
-
+import scipy.interpolate
 from mpi4py import MPI
+from mpl_toolkits.mplot3d import Axes3D
+from neo.core.analogsignal import AnalogSignal as NeoAnalogSignal
+from numba import jit
+from parameters import ParameterSet
+from pyNN.parameters import Sequence
+from scipy.integrate import odeint
+
+import mozaik
+from mozaik import load_component
+from mozaik.analysis.analysis import AnalogSignalList, SingleValue
+from mozaik.controller import Global
+from mozaik.core import ParametrizedObject
+from mozaik.tools.circ_stat import circ_mean, circular_dist
+from mozaik.tools.stgen import StGen
+from mozaik.tools.units import *
 
 mpi_comm = MPI.COMM_WORLD
 

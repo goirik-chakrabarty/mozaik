@@ -2,18 +2,21 @@ r"""
 This module contains special analysis functions that relate to some tehnical mozaik architecture aspects and thus 
 do not represent a standard analysis
 """
-from mozaik.analysis.data_structures import PerNeuronValue
-from mozaik.analysis.analysis import Analysis
-from mozaik.storage import queries
-from parameters import ParameterSet
-from mozaik.tools.mozaik_parametrized import MozaikParametrized
-import quantities as qt
-import numpy
-import mozaik
 import pickle
+
+import numpy
+import quantities as qt
+from parameters import ParameterSet
+
+import mozaik
+from mozaik.analysis.analysis import Analysis
+from mozaik.analysis.data_structures import PerNeuronValue
+from mozaik.storage import queries
+from mozaik.tools.mozaik_parametrized import MozaikParametrized
 
 logger = mozaik.getMozaikLogger()
 from mozaik.controller import Global
+
 
 class NeuronAnnotationsToPerNeuronValues(Analysis):
     r"""

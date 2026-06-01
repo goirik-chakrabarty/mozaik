@@ -1,20 +1,23 @@
 r"""
 Vision specific connectors.
 """
+from builtins import zip
+
 import numpy
-import mozaik
-from .modular_connector_functions import ModularConnectorFunction
-from mozaik.tools.circ_stat import *
-from mozaik.tools.misc import *
+from numpy import cos, exp, pi, sin
 from parameters import ParameterSet
 from scipy.interpolate import NearestNDInterpolator
-from numpy import sin, cos, pi, exp
 
-from builtins import zip
+import mozaik
+from mozaik.tools.circ_stat import *
+from mozaik.tools.misc import *
+
+from .modular_connector_functions import ModularConnectorFunction
 
 logger = mozaik.getMozaikLogger()
 
 import pylab
+
 
 class MapDependentModularConnectorFunction(ModularConnectorFunction):
     r"""

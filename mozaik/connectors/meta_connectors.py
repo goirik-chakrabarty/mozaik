@@ -1,14 +1,17 @@
 # encoding: utf-8
 import pickle
-import numpy
-from scipy.interpolate import NearestNDInterpolator, CloughTocher2DInterpolator
-from mozaik.core import BaseComponent
-from mozaik import load_component
-from parameters import ParameterSet
-from mozaik.connectors.modular import ModularSamplingProbabilisticConnector, ModularSamplingProbabilisticConnectorAnnotationSamplesCount
-from mozaik.tools.distribution_parametrization import PyNNDistribution
-
 from builtins import zip
+
+import numpy
+from parameters import ParameterSet
+from scipy.interpolate import CloughTocher2DInterpolator, NearestNDInterpolator
+
+from mozaik import load_component
+from mozaik.connectors.modular import (
+    ModularSamplingProbabilisticConnector,
+    ModularSamplingProbabilisticConnectorAnnotationSamplesCount)
+from mozaik.core import BaseComponent
+from mozaik.tools.distribution_parametrization import PyNNDistribution
 
 r"""
 This file contains meta-connectors. These are classes that represent some higher-level 

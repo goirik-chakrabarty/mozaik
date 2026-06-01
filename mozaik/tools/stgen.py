@@ -1,10 +1,11 @@
 r"""
 This file contains code extracted from the NeuroTools package (http://neuralensemble.org/NeuroTools).
 """
-from numpy import array, log
 import numpy
+from numpy import array, log
 
 import mozaik
+
 logger = mozaik.getMozaikLogger()
 
 class SpikeTrain(object):

@@ -1,6 +1,7 @@
 import numpy
 import scipy.stats
 
+
 def confidence_interval(data, confidence=0.95):
     mean = numpy.mean(data)
     n = len(data)

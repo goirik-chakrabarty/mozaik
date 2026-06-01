@@ -4,16 +4,23 @@ A typical example is a class that helps with creating a line of plots with a com
 """
 
 import os
-import pylab
-import param
-from param.parameterized import Parameterized
-from mozaik.storage.queries import partition_by_stimulus_paramter_query, partition_analysis_results_by_stimulus_parameters_query,param_filter_query
-import matplotlib.gridspec as gridspec
-from mozaik.tools.mozaik_parametrized import MozaikParametrized, varying_parameters, parameter_value_list
-from mozaik.visualization.simple_plot import SimplePlot
 from collections import OrderedDict
-import mozaik
+
+import matplotlib.gridspec as gridspec
 import numpy
+import param
+import pylab
+from param.parameterized import Parameterized
+
+import mozaik
+from mozaik.storage.queries import (
+    param_filter_query,
+    partition_analysis_results_by_stimulus_parameters_query,
+    partition_by_stimulus_paramter_query)
+from mozaik.tools.mozaik_parametrized import (MozaikParametrized,
+                                              parameter_value_list,
+                                              varying_parameters)
+from mozaik.visualization.simple_plot import SimplePlot
 
 logger = mozaik.getMozaikLogger()
 

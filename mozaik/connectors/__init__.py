@@ -3,17 +3,18 @@
 Mozaik connector interface.
 """
 import math
-import numpy
-import mozaik
 import time
-from mozaik.core import BaseComponent
-from mozaik.sheets.vision import SheetWithMagnificationFactor
-from parameters import ParameterSet
-from mozaik.tools.misc import sample_from_bin_distribution, normal_function
+from builtins import zip
 from collections import Counter
+
+import numpy
+from parameters import ParameterSet
 from pyNN import random, space
 
-from builtins import zip
+import mozaik
+from mozaik.core import BaseComponent
+from mozaik.sheets.vision import SheetWithMagnificationFactor
+from mozaik.tools.misc import normal_function, sample_from_bin_distribution
 
 logger = mozaik.getMozaikLogger()
 

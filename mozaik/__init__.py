@@ -27,6 +27,7 @@ Parameters
 """
 __version__ = "0.1.0"
 import numpy.random
+
 rng = None
 pynn_rng = None
 mpi_comm = None
@@ -65,8 +66,9 @@ def setup_mpi(mozaik_seed=513,pynn_seed=1023,noise_seed=0):
     global rng
     global pynn_rng
     global mpi_comm
-    import mozaik
     from pyNN.random import NumpyRNG
+
+    import mozaik
     pynn_rng = NumpyRNG(seed=pynn_seed)
     rng = numpy.random.RandomState(mozaik_seed)
     mozaik.noise_seed = noise_seed

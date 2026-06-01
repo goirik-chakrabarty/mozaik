@@ -1,19 +1,20 @@
-import os
-import yaml
 import json
-
-import mozaik
-from mozaik.controller import Global
-from mozaik.experiments import Experiment
-from parameters import ParameterSet
-import mozaik.stimuli.vision.topographica_based as topo
-import mozaik.stimuli.vision.visual_stimulus as vs
-import numpy
-from mozaik.stimuli import InternalStimulus
-from mozaik.tools.distribution_parametrization import ParameterWithUnitsAndPeriod, MozaikExtendedParameterSet
-from mozaik.sheets.direct_stimulator import Depolarization
+import os
 from collections import OrderedDict
 
+import numpy
+import yaml
+from parameters import ParameterSet
+
+import mozaik
+import mozaik.stimuli.vision.topographica_based as topo
+import mozaik.stimuli.vision.visual_stimulus as vs
+from mozaik.controller import Global
+from mozaik.experiments import Experiment
+from mozaik.sheets.direct_stimulator import Depolarization
+from mozaik.stimuli import InternalStimulus
+from mozaik.tools.distribution_parametrization import (
+    MozaikExtendedParameterSet, ParameterWithUnitsAndPeriod)
 
 logger = mozaik.getMozaikLogger()
 
@@ -1675,7 +1676,7 @@ class MeasureTextureSensitivityFullfield(VisualExperiment):
 
     def generate_stimuli(self):
 	# we place this import here to avoid the need for octave dependency unless this experiment is actually used.
-        import mozaik.stimuli.vision.texture_based as textu #vf
+        import mozaik.stimuli.vision.texture_based as textu  # vf
 
         for image in self.parameters.images:
             for ty, t in enumerate(self.parameters.types):
@@ -1767,8 +1768,8 @@ class MeasureTextureSizeTuning(VisualExperiment):
 
     def generate_stimuli(self):
         # we place this import here to avoid the need for octave dependency unless this experiment is actually used.
-        import mozaik.stimuli.vision.texture_based as textu #vf
-            
+        import mozaik.stimuli.vision.texture_based as textu  # vf
+
         # linear or logarithmic spaced sizes
         if self.parameters.log_spacing:
             base2max = numpy.log2(self.parameters.max_size)
@@ -1843,7 +1844,7 @@ class MeasureInformativePixelCorrelationStatisticsResponse(VisualExperiment):
 
     def generate_stimuli(self):
         # we place this import here to avoid the need for octave dependency unless this experiment is actually used.
-        import mozaik.stimuli.vision.texture_based as textu #vf
+        import mozaik.stimuli.vision.texture_based as textu  # vf
 
         for i in range(10):
             for value in self.parameters.correlation_values:
@@ -1905,7 +1906,7 @@ class MeasureUninformativePixelCorrelationStatisticsResponse(VisualExperiment):
 
     def generate_stimuli(self):
         # we place this import here to avoid the need for octave dependency unless this experiment is actually used.
-        import mozaik.stimuli.vision.texture_based as textu #vf
+        import mozaik.stimuli.vision.texture_based as textu  # vf
 
         for i in range(2):
             for value in self.parameters.correlation_values:

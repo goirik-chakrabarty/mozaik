@@ -2,9 +2,10 @@ r"""
 Various helper functions.
 """
 
-import numpy                                                                             
-import numpy.random                                                                             
-from numpy import pi, sqrt, exp, power
+import numpy
+import numpy.random
+from numpy import exp, pi, power, sqrt
+
 
 def sample_from_bin_distribution(bins, number_of_samples, seed):
     r"""

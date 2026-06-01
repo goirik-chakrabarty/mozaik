@@ -5,17 +5,26 @@ In future pyNN plans to make an comprehensive merge between the parameters param
 in which case this code should become obsolete and mozaik should fully switch to such new system.
 """
 from future.standard_library import install_aliases
+
 install_aliases()
-from past.builtins import basestring
-from urllib.parse import urlparse
-from parameters import ParameterSet, ParameterRange, ParameterTable, ParameterReference
-from pyNN.random import RandomDistribution, NumpyRNG
-from urllib import request
-import urllib, copy, warnings, numpy, numpy.random  # to be replaced with srblib
-from collections import OrderedDict
-import mozaik
-import sys
+import copy
 import json
+import sys
+import urllib  # to be replaced with srblib
+import warnings
+from collections import OrderedDict
+from urllib import request
+from urllib.parse import urlparse
+
+import numpy
+import numpy.random
+from parameters import (ParameterRange, ParameterReference, ParameterSet,
+                        ParameterTable)
+from past.builtins import basestring
+from pyNN.random import NumpyRNG, RandomDistribution
+
+import mozaik
+
 
 def load_parameters(parameter_url,modified_parameters=ParameterSet({})):
     r"""

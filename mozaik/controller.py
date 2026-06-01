@@ -1,21 +1,24 @@
 r"""
 This is the nexus of workflow execution controll of *mozaik*.
 """
-from mozaik.cli import parse_workflow_args
-from mozaik.storage.datastore import Hdf5DataStore, PickledDataStore
-from mozaik.tools.distribution_parametrization import MozaikExtendedParameterSet, load_parameters
-from mozaik.tools.misc import result_directory_name
-from mozaik.stimuli import EndOfSimulationBlank
-from collections import OrderedDict
-import sys
-import os
-import mozaik
-import time
-from datetime import datetime
 import logging
-from mozaik.tools.json_export import save_json, get_experimental_protocols, get_recorders, get_stimuli
+import os
+import sys
+import time
+from collections import OrderedDict
+from datetime import datetime
+
 from parameters import ParameterSet
 
+import mozaik
+from mozaik.cli import parse_workflow_args
+from mozaik.stimuli import EndOfSimulationBlank
+from mozaik.storage.datastore import Hdf5DataStore, PickledDataStore
+from mozaik.tools.distribution_parametrization import (
+    MozaikExtendedParameterSet, load_parameters)
+from mozaik.tools.json_export import (get_experimental_protocols,
+                                      get_recorders, get_stimuli, save_json)
+from mozaik.tools.misc import result_directory_name
 
 logger = mozaik.getMozaikLogger()
 

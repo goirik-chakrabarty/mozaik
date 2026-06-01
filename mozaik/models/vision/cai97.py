@@ -1,6 +1,7 @@
+from collections import OrderedDict
+
 import numpy
 from numpy import exp, sqrt
-from collections import OrderedDict
 
 
 def meshgrid3D(x, y, z):

@@ -6,11 +6,12 @@ they tend to use the more native pyNN or even backend specific pyNN methods.
 To obtain speed they generally sacrifice ease customization.
 """
 
-import mozaik
-from mozaik.connectors import Connector
+import numpy
 from parameters import ParameterSet
 from pyNN import space
-import numpy
+
+import mozaik
+from mozaik.connectors import Connector
 
 logger = mozaik.getMozaikLogger()
 

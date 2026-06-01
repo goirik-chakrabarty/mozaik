@@ -3,24 +3,27 @@ The file contains stimuli generated based on a texture image
 
 """
 
-from mozaik.stimuli.vision.visual_stimulus import VisualStimulus
-import mozaik.stimuli.vision.visual_stimulus
+import os
+import pickle
+
 import imagen
 import imagen.random
-from imagen.transferfn import TransferFn
-import param
-from imagen.image import BoundingBox
-import pickle
 import numpy
-from mozaik.tools.mozaik_parametrized import SNumber, SString, SInteger
-from mozaik.tools.units import cpd
-from mozaik.controller import Global
+import param
+import scipy.misc  # for testing
+from imagen.image import BoundingBox
+from imagen.transferfn import TransferFn
 from numpy import pi
-from quantities import Hz, rad, degrees, ms, dimensionless
-from oct2py import octave #octave interface
-import scipy.misc #for testing
-from PIL import Image #for testing
-import os
+from oct2py import octave  # octave interface
+from PIL import Image  # for testing
+from quantities import Hz, degrees, dimensionless, ms, rad
+
+import mozaik.stimuli.vision.visual_stimulus
+from mozaik.controller import Global
+from mozaik.stimuli.vision.visual_stimulus import VisualStimulus
+from mozaik.tools.mozaik_parametrized import SInteger, SNumber, SString
+from mozaik.tools.units import cpd
+
 
 class TextureBasedVisualStimulus(VisualStimulus):
     r"""

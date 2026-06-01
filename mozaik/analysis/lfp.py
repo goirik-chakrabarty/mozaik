@@ -2,29 +2,36 @@
 """
 Module containing lfp specific analysis.
 """
-import mozaik
-import numpy
-import scipy
-import quantities as qt
-from .analysis import Analysis
-from mozaik.tools.mozaik_parametrized import colapse, colapse_to_dictionary, MozaikParametrized
-from mozaik.analysis.data_structures import AnalogSignal, AnalogSignalList, PerNeuronPairAnalogSignalList, PerAreaAnalogSignalList, SingleObject, PerNeuronValue, PerAreaValue
-from mozaik.analysis.helper_functions import psth
-from parameters import ParameterSet
-from mozaik.storage import queries
-from mozaik.tools.circ_stat import circ_mean, circ_len, circular_dist
-from mozaik.tools.stats import explained_variance
-from mozaik.tools.neo_object_operations import neo_mean, neo_sum
+import pickle
 from builtins import zip
 from collections import OrderedDict
-from mozaik.tools.distribution_parametrization import PyNNDistribution
+
+import numpy
+import quantities as qt
+import scipy
 from neo.core.analogsignal import AnalogSignal as NeoAnalogSignal
-from scipy.signal import butter, lfilter, filtfilt, hilbert
-from scipy.interpolate import PchipInterpolator
-from skimage import measure
+from parameters import ParameterSet
 from PIL import Image
-from scipy.interpolate import NearestNDInterpolator
-import pickle
+from scipy.interpolate import NearestNDInterpolator, PchipInterpolator
+from scipy.signal import butter, filtfilt, hilbert, lfilter
+from skimage import measure
+
+import mozaik
+from mozaik.analysis.data_structures import (AnalogSignal, AnalogSignalList,
+                                             PerAreaAnalogSignalList,
+                                             PerAreaValue,
+                                             PerNeuronPairAnalogSignalList,
+                                             PerNeuronValue, SingleObject)
+from mozaik.analysis.helper_functions import psth
+from mozaik.storage import queries
+from mozaik.tools.circ_stat import circ_len, circ_mean, circular_dist
+from mozaik.tools.distribution_parametrization import PyNNDistribution
+from mozaik.tools.mozaik_parametrized import (MozaikParametrized, colapse,
+                                              colapse_to_dictionary)
+from mozaik.tools.neo_object_operations import neo_mean, neo_sum
+from mozaik.tools.stats import explained_variance
+
+from .analysis import Analysis
 
 logger = mozaik.getMozaikLogger()
 

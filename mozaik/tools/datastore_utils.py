@@ -1,15 +1,15 @@
-import mozaik
-from mozaik.storage.datastore import PickledDataStore
-from neo.core.segment import Segment
-from mozaik.storage.neo_neurotools_wrapper import (
-    MozaikSegment,
-    PickledDataStoreNeoWrapper,
-)
-from parameters import ParameterSet
-import numpy
+import os
 import pickle
 import re
-import os
+
+import numpy
+from neo.core.segment import Segment
+from parameters import ParameterSet
+
+import mozaik
+from mozaik.storage.datastore import PickledDataStore
+from mozaik.storage.neo_neurotools_wrapper import (MozaikSegment,
+                                                   PickledDataStoreNeoWrapper)
 
 logger = mozaik.getMozaikLogger()
 

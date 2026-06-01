@@ -1,11 +1,11 @@
 # encoding: utf-8
 import numpy
-from mozaik.core import ParametrizedObject
 from parameters import ParameterSet
+
+import mozaik
+from mozaik.core import ParametrizedObject
 from mozaik.tools.distribution_parametrization import PyNNDistribution
 from mozaik.tools.misc import *
-from parameters import ParameterSet
-import mozaik
 
 logger = mozaik.getMozaikLogger()
 

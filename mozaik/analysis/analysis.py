@@ -4,35 +4,32 @@ This module contains the Mozaik analysis interface and implementation of various
 
 For more documentation refer to :doc:`mozaik.analysis`
 """
-import numpy
-import scipy
-import scipy.signal
 import time
-import quantities as qt
-import mozaik.tools.units as munits
-from mozaik.tools.mozaik_parametrized import colapse
-from mozaik.tools.mozaik_parametrized import colapse_to_dictionary
-from mozaik.tools.mozaik_parametrized import MozaikParametrized
-from mozaik.analysis.data_structures import ConductanceSignalList
-from mozaik.analysis.data_structures import SingleValue
-from mozaik.analysis.data_structures import AnalogSignal
-from mozaik.analysis.data_structures import AnalogSignalList
-from mozaik.analysis.data_structures import PerNeuronValue
-from mozaik.analysis.data_structures import PerNeuronPairValue
-from mozaik.analysis.data_structures import PerNeuronPairAnalogSignalList
+from builtins import zip
 from collections import OrderedDict
 
-                                        
+import numpy
+import quantities as qt
+import scipy
+import scipy.signal
+from neo.core.analogsignal import AnalogSignal as NeoAnalogSignal
+from parameters import ParameterSet
+
+import mozaik
+import mozaik.tools.units as munits
+from mozaik.analysis.data_structures import (AnalogSignal, AnalogSignalList,
+                                             ConductanceSignalList,
+                                             PerNeuronPairAnalogSignalList,
+                                             PerNeuronPairValue,
+                                             PerNeuronValue, SingleValue)
 from mozaik.analysis.helper_functions import psth
 from mozaik.core import ParametrizedObject
-from parameters import ParameterSet
 from mozaik.storage import queries
-from neo.core.analogsignal import AnalogSignal as NeoAnalogSignal
 from mozaik.tools.circ_stat import circ_mean, circular_dist
-from mozaik.tools.neo_object_operations import neo_mean, neo_sum, down_sample_analog_signal_average_method
-import mozaik
-
-from builtins import zip
+from mozaik.tools.mozaik_parametrized import (MozaikParametrized, colapse,
+                                              colapse_to_dictionary)
+from mozaik.tools.neo_object_operations import (
+    down_sample_analog_signal_average_method, neo_mean, neo_sum)
 
 logger = mozaik.getMozaikLogger()
 

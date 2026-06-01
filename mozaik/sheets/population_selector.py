@@ -6,12 +6,14 @@ a PopulationSelector can for example simulate the sampling of neurons
 when using a multi-electrode array of some specific spatial configuration.
 """
 
+import math
+
+import numpy
+from parameters import ParameterSet
+
+import mozaik
 from mozaik.core import ParametrizedObject
 from mozaik.tools.circ_stat import circular_dist
-from parameters import ParameterSet
-import math
-import numpy
-import mozaik
 
 logger = mozaik.getMozaikLogger()
 

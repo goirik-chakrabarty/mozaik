@@ -1,16 +1,20 @@
 import os
-import numpy as np
-from mozaik.experiments import Experiment
-from parameters import ParameterSet
-from mozaik.stimuli import InternalStimulus
-from mozaik.stimuli.vision.topographica_based import FullfieldDriftingSquareGrating
-from mozaik.experiments.vision import VisualExperiment
-from mozaik.tools.distribution_parametrization import MozaikExtendedParameterSet
-from collections import OrderedDict
-from mozaik.sheets.direct_stimulator import OpticalStimulatorArrayChR
-import matplotlib
-from copy import deepcopy
 import random
+from collections import OrderedDict
+from copy import deepcopy
+
+import matplotlib
+import numpy as np
+from parameters import ParameterSet
+
+from mozaik.experiments import Experiment
+from mozaik.experiments.vision import VisualExperiment
+from mozaik.sheets.direct_stimulator import OpticalStimulatorArrayChR
+from mozaik.stimuli import InternalStimulus
+from mozaik.stimuli.vision.topographica_based import \
+    FullfieldDriftingSquareGrating
+from mozaik.tools.distribution_parametrization import \
+    MozaikExtendedParameterSet
 
 
 class CorticalStimulationWithOptogeneticArray(Experiment):
