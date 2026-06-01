@@ -16,3 +16,8 @@ data/
 slurm_files/*
 slurm*
 copilot_summary/*
+.DS_Store
+__pycache__/
+*.egg-info/
+dist/
+.ipynb_checkpoints/
