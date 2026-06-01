@@ -58,4 +58,4 @@ apptainer exec \
  --bind "$MOZAIK_ROOT:/mozaik" \
  --bind "$DATA_ROOT:/data" \
  "$SIF_IMAGE" \
- bash -c "cd /project && python -u compute_psth_datastore.py"
+ bash -c "cd /project && python -u analysis/compute_psth_datastore.py"
