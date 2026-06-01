@@ -82,9 +82,9 @@ $MPI_EXEC --mca pmix pmix_v5 --bind-to core \
     -x NUMEXPR_NUM_THREADS=1 \
     -x VECLIB_MAXIMUM_THREADS=1 \
     -x PYTHONPATH \
-    "$PYTHON_EXEC" -u run.py nest 32 param_MSA/defaults 'test:pyenv_ntasks32'
+    "$PYTHON_EXEC" -u run.py nest 32 params/param_MSA/defaults 'test:pyenv_ntasks32'
 
 # $MPI_EXEC -n 32 \
-#     "$PYTHON_EXEC" -u run.py nest 32 param_MSA/defaults 'test:pyenv_ntasks32'
+#     "$PYTHON_EXEC" -u run.py nest 32 params/param_MSA/defaults 'test:pyenv_ntasks32'
 
 echo "--- Simulation Finished with Code $? ---"

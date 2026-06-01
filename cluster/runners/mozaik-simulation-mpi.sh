@@ -34,6 +34,6 @@ mpirun --bind-to core \
     -x MKL_NUM_THREADS=1 \
     -x OPENBLAS_NUM_THREADS=1 \
     -x PYTHONPATH \
-    python -u run.py nest 32 param_MSA/defaults 'test:test32'
+    python -u run.py nest 32 params/param_MSA/defaults 'test:test32'
 
 echo "--- Simulation Finished with Code $? ---"

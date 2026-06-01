@@ -40,6 +40,6 @@ $MPI_EXEC --bind-to core \
     -x MKL_NUM_THREADS=1 \
     -x OPENBLAS_NUM_THREADS=1 \
     -x PYTHONPATH \
-    $CONTAINER_PYTHON -u run.py nest 32 param_MSA/defaults 'test:optntasks32'
+    $CONTAINER_PYTHON -u run.py nest 32 params/param_MSA/defaults 'test:optntasks32'
 
 echo "--- Simulation Finished with Code $? ---"

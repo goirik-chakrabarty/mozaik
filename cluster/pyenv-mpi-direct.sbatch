@@ -37,7 +37,7 @@ rm -rf SelfSustainedPushPull_test_____/
 
 # 4. RUN SIMULATION
 #    Using srun to launch the MPI tasks. 
-#    Check if 'param_MSA/defaults' exists relative to where you are running.
+#    Check if 'params/param_MSA/defaults' exists relative to where you are running.
 #    Note: If --mpi=pmix_v5 fails, try removing the flag or using --mpi=pmi2
 
-srun --mpi=pmix_v5 "$PYTHON_EXEC" -u run.py nest 32 param_MSA/defaults test
+srun --mpi=pmix_v5 "$PYTHON_EXEC" -u run.py nest 32 params/param_MSA/defaults test
