@@ -1,16 +1,16 @@
 #!/bin/bash
 
 #SBATCH --account=nix00014
-#SBATCH --job-name=export-test33
+#SBATCH --job-name=mozaik-test33
 #SBATCH --nodes=1
-#SBATCH --ntasks=1
+#SBATCH --ntasks=12
 #SBATCH --cpus-per-task=4
 #SBATCH --hint=nomultithread
-#SBATCH --mem=64G
+#SBATCH --mem=150G
 #SBATCH --array=20-50
-#SBATCH --time=06:00:00
-#SBATCH --output=./slurm_test33/export-%A_%a.out
-#SBATCH --error=./slurm_test33/export-%A_%a.err
+#SBATCH --time=6:00:00
+#SBATCH --output=./slurm_test33/mozaik-test33-%A_%a.out
+#SBATCH --error=./slurm_test33/mozaik-test33-%A_%a.err
 #SBATCH -p standard96
 #SBATCH -C cascadelake
 #SBATCH --mail-type=ALL
@@ -22,17 +22,27 @@ export FTP_PROXY="http://www-cache.gwdg.de:3128"
 
 module load apptainer
 
+cd /mnt/vast-nhr/projects/nix00014/goirik/MOZAIK-new/mozaik
+
+# Threading environment
 export OMP_NUM_THREADS=4
 export MKL_NUM_THREADS=4
 export OPENBLAS_NUM_THREADS=4
 export MKL_DYNAMIC=FALSE
+export OMP_PLACES=cores
+export OMP_PROC_BIND=TRUE
 
+# 20 trials, 1 chunk each — array ID = trial
+N_CHUNKS=1
 export TRIAL=$SLURM_ARRAY_TASK_ID
-
-mkdir -p ./slurm_test33
+export CHUNK=0
+export CHUNK_DIR="/data/mozaik_chunk_test33"
 
 echo "Job Array ID: ${SLURM_ARRAY_TASK_ID}"
-echo "Exporting trial: ${TRIAL}"
+echo "Trial: ${TRIAL}, Chunk: ${CHUNK}"
+echo "Chunk dir: ${CHUNK_DIR}"
+
+echo "Submitting from: ${SLURM_SUBMIT_DIR}"
 echo "Working directory: $PWD"
 echo "Current node: ${SLURM_NODELIST}"
 
@@ -41,10 +51,6 @@ unset HTTP_PROXY
 unset HTTPS_PROXY
 unset FTP_PROXY
 
-cd /mnt/vast-nhr/projects/nix00014/goirik/MOZAIK-new/mozaik
+mkdir -p ./slurm_test33
 
-export CHUNK_START=0 CHUNK_END=1 BATCH_SIZE=1 N_CHUNKS=1
-export CHUNK_DIR="/data/mozaik_chunk_test33"
-export OUTPUT_PREFIX="/data/mozaik_data_test33/trial"
-
-bash apptainer-compose-export.sh
+bash cluster/apptainer-compose-array.sh

@@ -53,4 +53,4 @@ unset FTP_PROXY
 
 mkdir -p ./slurm_test3
 
-bash apptainer-compose-array.sh
+bash cluster/apptainer-compose-array.sh

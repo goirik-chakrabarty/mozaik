@@ -47,4 +47,4 @@ unset FTP_PROXY
 cd /mnt/vast-nhr/projects/nix00014/goirik/MOZAIK-new/mozaik
 
 export CHUNK_START=0 CHUNK_END=12 BATCH_SIZE=12 EXPORT_MODE="--screen-only"
-bash apptainer-compose-export.sh
+bash cluster/apptainer-compose-export.sh

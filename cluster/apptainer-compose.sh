@@ -43,4 +43,4 @@ apptainer exec \
  --bind "$EXPERANTO_ROOT:/experanto" \
  --bind "$DATA_ROOT:/data" \
  "$SIF_IMAGE" \
- bash apptainer-runners/mozaik-data-export-ipynb.sh
+ bash cluster/runners/mozaik-data-export-ipynb.sh

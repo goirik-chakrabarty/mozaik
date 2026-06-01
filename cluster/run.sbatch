@@ -34,4 +34,4 @@ unset HTTP_PROXY
 unset HTTPS_PROXY
 unset FTP_PROXY
 
-bash apptainer-compose.sh
+bash cluster/apptainer-compose.sh
