@@ -7,7 +7,7 @@
 #SBATCH --cpus-per-task=4
 #SBATCH --hint=nomultithread
 #SBATCH --mem=64G
-#SBATCH --array=0-19
+#SBATCH --array=20-50
 #SBATCH --time=06:00:00
 #SBATCH --output=./slurm_test33/export-%A_%a.out
 #SBATCH --error=./slurm_test33/export-%A_%a.err

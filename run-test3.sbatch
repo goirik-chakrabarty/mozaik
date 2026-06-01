@@ -1,18 +1,18 @@
 #!/bin/bash
 
 #SBATCH --account=nix00014
-#SBATCH --job-name=mozaik-test33
+#SBATCH --job-name=mozaik-test3
 #SBATCH --nodes=1
 #SBATCH --ntasks=12
 #SBATCH --cpus-per-task=4
 #SBATCH --hint=nomultithread
-#SBATCH --mem=150G
-#SBATCH --array=20-50
-#SBATCH --time=6:00:00
-#SBATCH --output=./slurm_test33/mozaik-test33-%A_%a.out
-#SBATCH --error=./slurm_test33/mozaik-test33-%A_%a.err
-#SBATCH -p standard96
-#SBATCH -C cascadelake
+#SBATCH --mem=250G
+#SBATCH --array=0-2
+#SBATCH --time=02:00:00
+#SBATCH --output=./slurm_test3/mozaik-test3-%A_%a.out
+#SBATCH --error=./slurm_test3/mozaik-test3-%A_%a.err
+#SBATCH -p medium96s
+#SBATCH -C sapphirerapids
 #SBATCH --mail-type=ALL
 #SBATCH --mail-user=goirik.chakrabarty@uni-goettingen.de
 
@@ -32,11 +32,11 @@ export MKL_DYNAMIC=FALSE
 export OMP_PLACES=cores
 export OMP_PROC_BIND=TRUE
 
-# 20 trials, 1 chunk each — array ID = trial
+# 3 trials, 1 chunk each (2 images + 1 video) — array ID = trial
 N_CHUNKS=1
 export TRIAL=$SLURM_ARRAY_TASK_ID
 export CHUNK=0
-export CHUNK_DIR="/data/mozaik_chunk_test33"
+export CHUNK_DIR="/data/mozaik_chunk_test3"
 
 echo "Job Array ID: ${SLURM_ARRAY_TASK_ID}"
 echo "Trial: ${TRIAL}, Chunk: ${CHUNK}"
@@ -51,6 +51,6 @@ unset HTTP_PROXY
 unset HTTPS_PROXY
 unset FTP_PROXY
 
-mkdir -p ./slurm_test33
+mkdir -p ./slurm_test3
 
 bash apptainer-compose-array.sh
