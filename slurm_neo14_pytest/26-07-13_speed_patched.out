@@ -1,0 +1,10 @@
+# Excerpt of patched inline test3 (1-image) — rank-0 per-presentation (full 52M log not committed)
+=== NEST build flags (expect -O3, no march) ===
+-O3
+=== sim: run_name=perf_patched noise_seed=999988 TRIAL=0 CHUNK=0 CHUNK_DIR=/data/MOZAIK/mozaik_chunk_perf1 NTASKS=12 ===
+...
+took 82 s, of which 5 s was simulation
+took 78 s, of which 3 s was simulation
+took 71 s, of which 0 s was simulation
+=== run.py exit ===
+=== run.py exit code: 0 ===

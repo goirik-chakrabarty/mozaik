@@ -1,0 +1,45 @@
+--- /mnt/vast-nhr/projects/nix00014/goirik/tmp/neo-pristine/objectlist.py	2026-07-13 22:41:20.911102587 +0200
++++ /mnt/vast-nhr/projects/nix00014/goirik/tmp/neo-patch/objectlist.py	2026-07-13 22:12:12.986640948 +0200
+@@ -48,12 +48,29 @@
+                 # use weakref here? - see https://github.com/NeuralEnsemble/python-neo/issues/684
+                 setattr(obj, relationship_name, self.parent)
+ 
++        # PERF PATCH (26-07-13): keep the _contains id-set cache in sync in O(1). obj is appended to
++        # self._items by the caller immediately after this returns, so pre-register its id and bump
++        # the tracked length. (No-op unless a valid cache for the current list exists.)
++        cache = self.__dict__.get("_id_cache")
++        if cache is not None and cache[0] == id(self._items):
++            cache[2].add(id(obj))
++            self.__dict__["_id_cache"] = (cache[0], cache[1] + 1, cache[2])
++
+     def _contains(self, obj):
+-        if self._items is None:
+-            obj_ids = []
+-        else:
+-            obj_ids = [id(item) for item in self._items]
+-        return id(obj) in obj_ids
++        # PERF PATCH (26-07-13): identity-membership in O(1) via a cached id-set, tagged by the
++        # _items list's id() + length. Original rebuilt [id(x) for x in self._items] on EVERY call,
++        # making per-item append O(N) and cross-rank Segment merge (pyNN gather_blocks ->
++        # container.merge) O(N^2) — the neo14 P1 get_data slowdown. The cache is rebuilt (O(N)) only
++        # when the list is replaced, its length changes unexpectedly, or after unpickling (id()
++        # changes); _handle_append keeps it in sync on the hot append path so appends stay O(1).
++        items = self._items
++        if items is None:
++            return False
++        cache = self.__dict__.get("_id_cache")
++        if cache is None or cache[0] != id(items) or cache[1] != len(items):
++            cache = (id(items), len(items), set(map(id, items)))
++            self.__dict__["_id_cache"] = cache
++        return id(obj) in cache[2]
+ 
+     def __str__(self):
+         return str(self._items)
+@@ -94,6 +111,7 @@
+ 
+     def __setitem__(self, key, value):
+         self._items[key] = value
++        self.__dict__.pop("_id_cache", None)  # PERF PATCH: in-place replace may change membership
+ 
+     def append(self, obj):
+         self._handle_append(obj)

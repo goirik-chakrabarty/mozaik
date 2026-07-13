@@ -1,0 +1,409 @@
+=== patched test3 nt12 on c0015 Mon Jul 13 22:24:11 CEST 2026 ===
+=== NEST flags: -O3 | neo 0.14.4 ===
+=== run_name=sb_patched seed=999987 NTASKS=12 OMP=4 PLACES= BIND= ===
+>>>>>>>>>>>>>>>> /mozaik/mozaik/__init__.py
+>>>>>>>>>>>>>>>> /mozaik/mozaik/__init__.py
+>>>>>>>>>>>>>>>> /mozaik/mozaik/__init__.py
+>>>>>>>>>>>>>>>> /mozaik/mozaik/__init__.py
+>>>>>>>>>>>>>>>> /mozaik/mozaik/__init__.py
+>>>>>>>>>>>>>>>> /mozaik/mozaik/__init__.py
+>>>>>>>>>>>>>>>> /mozaik/mozaik/__init__.py
+>>>>>>>>>>>>>>>> /mozaik/mozaik/__init__.py
+>>>>>>>>>>>>>>>> /mozaik/mozaik/__init__.py
+>>>>>>>>>>>>>>>> /mozaik/mozaik/__init__.py
+>>>>>>>>>>>>>>>> /mozaik/mozaik/__init__.py
+>>>>>>>>>>>>>>>> /mozaik/mozaik/__init__.py
+
+              -- N E S T --
+  Copyright (C) 2004 The NEST Initiative
+
+ Version: 3.4
+
+              -- N E S T --
+  Copyright (C) 2004 The NEST Initiative
+
+ Version: 
+              -- N E S T --
+  Copyright (C) 2004 The NEST Initiative
+
+ Version: 3.4
+ Built: Jul 13 2026 16:46:10
+
+ This program is provided AS IS and comes with
+
+              -- N E S T --
+  Copyright (C) 2004 The NEST Initiative
+
+3.4
+ Built: Jul 13 2026 16:46:10
+
+ This program is provided AS IS and comes with
+
+              -- N E S T --
+  Copyright (C) 2004 The NEST Initiative
+
+ Version: 3.4
+ Built:  NO WARRANTY. See the file LICENSE for details.
+
+ Problems or suggestions?
+   Visit https://www.nest-simulator.org
+
+ Type 'nest.help()' to find out more about NEST.
+
+ Version: 3.4
+ Built: Jul 13 2026 16:46:10
+
+ This program is provided AS IS and comes with
+
+              -- N E S T --
+  Copyright (C) 2004 The NEST Initiative
+
+ Version: 3.4
+ Built: Jul 13 2026 16:46:10
+
+ This program is provided AS IS and comes with
+              -- N E S T --
+  Copyright (C) 2004 The NEST Initiative
+
+ Version: 3.4
+
+              -- N E S T --
+  Copyright (C) 2004 The NEST Initiative
+
+ Version:  Built: Jul 13 2026 16:46:10
+
+ This program is provided AS IS and comes with
+ NO WARRANTY. See the file LICENSE for details.
+
+ Problems or suggestions?
+   Visit https://www.nest-simulator.org
+
+ Type 'nest.help()' to find out more about NEST.
+
+ NO WARRANTY. See the file LICENSE for details.
+
+ Problems or suggestions?
+   Visit https://www.nest-simulator.org
+
+ Type 'nest.help()' to find out more about NEST.
+
+ NO WARRANTY. See the file LICENSE for details.
+
+ Problems or suggestions?
+   Visit https://www.nest-simulator.org
+
+ Type 'nest.help()' to find out more about NEST.
+
+ Built: Jul 13 2026 16:46:10
+
+ This program is provided AS IS and comes with
+ NO WARRANTY. See the file LICENSE for details.
+
+3.4
+ Built: Jul 13 2026 16:46:10
+
+ This program is provided AS IS and comes with
+ NO WARRANTY. See the file LICENSE for details.
+
+ Problems or suggestions?
+   Visit https://www.nest-simulator.org
+
+ Type 'nest.help()' to find out more about NEST.
+
+Jul 13 2026 16:46:10
+
+ This program is provided AS IS and comes with
+ NO WARRANTY. See the file LICENSE for details.
+
+ Problems or suggestions?
+   Visit https://www.nest-simulator.org
+
+ Type 'nest.help()' to find out more about NEST.
+
+
+ Problems or suggestions?
+   Visit https://www.nest-simulator.org
+
+ Type 'nest.help()' to find out more about NEST.
+ NO WARRANTY. See the file LICENSE for details.
+
+ Problems or suggestions?
+   Visit https://www.nest-simulator.org
+
+
+ Type 'nest.help()' to find out more about NEST.
+
+
+              -- N E S T --
+  Copyright (C) 2004 The NEST Initiative
+
+ Version: 3.4
+ Built: Jul 13 2026 16:46:10
+
+ This program is provided AS IS and comes with
+ NO WARRANTY. See the file LICENSE for details.
+
+ Problems or suggestions?
+   Visit https://www.nest-simulator.org
+
+ Type 'nest.help()' to find out more about NEST.
+
+
+              -- N E S T --
+  Copyright (C) 2004 The NEST Initiative
+
+ Version: 3.4
+ Built: Jul 13 2026 16:46:10
+
+ This program is provided AS IS and comes with
+ NO WARRANTY. See the file LICENSE for details.
+
+ Problems or suggestions?
+   Visit https://www.nest-simulator.org
+
+ Type 'nest.help()' to find out more about NEST.
+
+
+              -- N E S T --
+  Copyright (C) 2004 The NEST Initiative
+
+ Version: 3.4
+ Built: Jul 13 2026 16:46:10
+
+ This program is provided AS IS and comes with
+ NO WARRANTY. See the file LICENSE for details.
+
+ Problems or suggestions?
+   Visit https://www.nest-simulator.org
+
+ Type 'nest.help()' to find out more about NEST.
+
+
+              -- N E S T --
+  Copyright (C) 2004 The NEST Initiative
+
+ Version: 3.4
+ Built: Jul 13 2026 16:46:10
+
+ This program is provided AS IS and comes with
+ NO WARRANTY. See the file LICENSE for details.
+
+ Problems or suggestions?
+   Visit https://www.nest-simulator.org
+
+ Type 'nest.help()' to find out more about NEST.
+
+START MPI
+START MPI
+START MPI
+START MPI
+START MPI
+START MPI
+START MPI
+START MPI
+START MPI
+START MPI
+Loading parameters
+Loading parameters
+Loading parameters
+Loading parameters
+Loading parameters
+Loading parameters
+Loading parameters
+Loading parameters
+Loading parameters
+Loading parameters
+START MPI
+START MPI
+Loading parameters
+Loading parameters
+Finished loading parameters
+Finished loading parameters
+Finished loading parameters
+Finished loading parameters
+Finished loading parameters
+Finished loading parameters
+Finished loading parameters
+Finished loading parameters
+Finished loading parameters
+Finished loading parameters
+Finished loading parameters
+Finished loading parameters
+Using trial: 0, chunk: 0, chunk_path: /data/MOZAIK/mozaik_chunk_test3/0_0.json, base_path: /data/test_upsampling_without_hamming_30.0Hz/dynamic26872-17-20-Video-021a75e56847d574b9acbcc06c675055_30hz
+Chunk: 
+
+ [{'modality': 'image', 'file': '09943.yml', 'trial': 0, 'noise_seed': 0}, {'modality': 'image', 'file': '11353.yml', 'trial': 0, 'noise_seed': 0}, {'modality': 'video', 'file': '01911.yml', 'trial': 0, 'noise_seed': 0}]
+>>>>>>>>>>>>>>>>>>>>>>>>> Meta File 09943.yml
+Using trial: 0, chunk: 0, chunk_path: /data/MOZAIK/mozaik_chunk_test3/0_0.json, base_path: /data/test_upsampling_without_hamming_30.0Hz/dynamic26872-17-20-Video-021a75e56847d574b9acbcc06c675055_30hz
+Chunk: 
+
+ [{'modality': 'image', 'file': '09943.yml', 'trial': 0, 'noise_seed': 0}, {'modality': 'image', 'file': '11353.yml', 'trial': 0, 'noise_seed': 0}, {'modality': 'video', 'file': '01911.yml', 'trial': 0, 'noise_seed': 0}]
+>>>>>>>>>>>>>>>>>>>>>>>>> Meta File 09943.yml
+image
+Duration: 497.0
+image
+Duration: 497.0
+>>>>>>>>>>>>>>>>>>>>>>>>> Meta File 11353.yml
+>>>>>>>>>>>>>>>>>>>>>>>>> Meta File 11353.yml
+image
+Duration: 497.0
+image
+Duration: 497.0
+>>>>>>>>>>>>>>>>>>>>>>>>> Meta File 01911.yml
+>>>>>>>>>>>>>>>>>>>>>>>>> Meta File 01911.yml
+video
+Duration: 10500
+video
+Duration: 10500
+Using trial: 0, chunk: 0, chunk_path: /data/MOZAIK/mozaik_chunk_test3/0_0.json, base_path: /data/test_upsampling_without_hamming_30.0Hz/dynamic26872-17-20-Video-021a75e56847d574b9acbcc06c675055_30hz
+Chunk: 
+
+ [{'modality': 'image', 'file': '09943.yml', 'trial': 0, 'noise_seed': 0}, {'modality': 'image', 'file': '11353.yml', 'trial': 0, 'noise_seed': 0}, {'modality': 'video', 'file': '01911.yml', 'trial': 0, 'noise_seed': 0}]
+>>>>>>>>>>>>>>>>>>>>>>>>> Meta File 09943.yml
+image
+Duration: 497.0
+>>>>>>>>>>>>>>>>>>>>>>>>> Meta File 11353.yml
+Using trial: 0, chunk: 0, chunk_path: /data/MOZAIK/mozaik_chunk_test3/0_0.json, base_path: /data/test_upsampling_without_hamming_30.0Hz/dynamic26872-17-20-Video-021a75e56847d574b9acbcc06c675055_30hz
+image
+Duration: 497.0
+Using trial: 0, chunk: 0, chunk_path: /data/MOZAIK/mozaik_chunk_test3/0_0.json, base_path: /data/test_upsampling_without_hamming_30.0Hz/dynamic26872-17-20-Video-021a75e56847d574b9acbcc06c675055_30hz
+Chunk: 
+
+ [{'modality': 'image', 'file': '09943.yml', 'trial': 0, 'noise_seed': 0}, {'modality': 'image', 'file': '11353.yml', 'trial': 0, 'noise_seed': 0}, {'modality': 'video', 'file': '01911.yml', 'trial': 0, 'noise_seed': 0}]
+>>>>>>>>>>>>>>>>>>>>>>>>> Meta File 09943.yml
+>>>>>>>>>>>>>>>>>>>>>>>>> Meta File 01911.yml
+Chunk: 
+
+ [{'modality': 'image', 'file': '09943.yml', 'trial': 0, 'noise_seed': 0}, {'modality': 'image', 'file': '11353.yml', 'trial': 0, 'noise_seed': 0}, {'modality': 'video', 'file': '01911.yml', 'trial': 0, 'noise_seed': 0}]
+>>>>>>>>>>>>>>>>>>>>>>>>> Meta File 09943.yml
+Using trial: 0, chunk: 0, chunk_path: /data/MOZAIK/mozaik_chunk_test3/0_0.json, base_path: /data/test_upsampling_without_hamming_30.0Hz/dynamic26872-17-20-Video-021a75e56847d574b9acbcc06c675055_30hz
+video
+Duration: 10500
+image
+Duration: 497.0
+Chunk: 
+
+ [{'modality': 'image', 'file': '09943.yml', 'trial': 0, 'noise_seed': 0}, {'modality': 'image', 'file': '11353.yml', 'trial': 0, 'noise_seed': 0}, {'modality': 'video', 'file': '01911.yml', 'trial': 0, 'noise_seed': 0}]
+>>>>>>>>>>>>>>>>>>>>>>>>> Meta File 09943.yml
+image
+Duration: 497.0
+>>>>>>>>>>>>>>>>>>>>>>>>> Meta File 11353.yml
+image
+Duration: 497.0
+Using trial: 0, chunk: 0, chunk_path: /data/MOZAIK/mozaik_chunk_test3/0_0.json, base_path: /data/test_upsampling_without_hamming_30.0Hz/dynamic26872-17-20-Video-021a75e56847d574b9acbcc06c675055_30hz
+>>>>>>>>>>>>>>>>>>>>>>>>> Meta File 11353.yml
+image
+Duration: 497.0
+Using trial: 0, chunk: 0, chunk_path: /data/MOZAIK/mozaik_chunk_test3/0_0.json, base_path: /data/test_upsampling_without_hamming_30.0Hz/dynamic26872-17-20-Video-021a75e56847d574b9acbcc06c675055_30hz
+Chunk: 
+
+ [{'modality': 'image', 'file': '09943.yml', 'trial': 0, 'noise_seed': 0}, {'modality': 'image', 'file': '11353.yml', 'trial': 0, 'noise_seed': 0}, {'modality': 'video', 'file': '01911.yml', 'trial': 0, 'noise_seed': 0}]
+>>>>>>>>>>>>>>>>>>>>>>>>> Meta File 09943.yml
+>>>>>>>>>>>>>>>>>>>>>>>>> Meta File 01911.yml
+>>>>>>>>>>>>>>>>>>>>>>>>> Meta File 11353.yml
+image
+Duration: 497.0
+Using trial: 0, chunk: 0, chunk_path: /data/MOZAIK/mozaik_chunk_test3/0_0.json, base_path: /data/test_upsampling_without_hamming_30.0Hz/dynamic26872-17-20-Video-021a75e56847d574b9acbcc06c675055_30hz
+Chunk: 
+
+ [{'modality': 'image', 'file': '09943.yml', 'trial': 0, 'noise_seed': 0}, {'modality': 'image', 'file': '11353.yml', 'trial': 0, 'noise_seed': 0}, {'modality': 'video', 'file': '01911.yml', 'trial': 0, 'noise_seed': 0}]
+>>>>>>>>>>>>>>>>>>>>>>>>> Meta File 09943.yml
+video
+Duration: 10500
+>>>>>>>>>>>>>>>>>>>>>>>>> Meta File 01911.yml
+Chunk: 
+
+ [{'modality': 'image', 'file': '09943.yml', 'trial': 0, 'noise_seed': 0}, {'modality': 'image', 'file': '11353.yml', 'trial': 0, 'noise_seed': 0}, {'modality': 'video', 'file': '01911.yml', 'trial': 0, 'noise_seed': 0}]
+>>>>>>>>>>>>>>>>>>>>>>>>> Meta File 09943.yml
+image
+Duration: 497.0
+image
+Duration: 497.0
+Using trial: 0, chunk: 0, chunk_path: /data/MOZAIK/mozaik_chunk_test3/0_0.json, base_path: /data/test_upsampling_without_hamming_30.0Hz/dynamic26872-17-20-Video-021a75e56847d574b9acbcc06c675055_30hz
+video
+Duration: 10500
+image
+Duration: 497.0
+>>>>>>>>>>>>>>>>>>>>>>>>> Meta File 01911.yml
+Chunk: 
+
+ image
+Duration: 497.0
+[{'modality': 'image', 'file': '09943.yml', 'trial': 0, 'noise_seed': 0}, {'modality': 'image', 'file': '11353.yml', 'trial': 0, 'noise_seed': 0}, {'modality': 'video', 'file': '01911.yml', 'trial': 0, 'noise_seed': 0}]
+>>>>>>>>>>>>>>>>>>>>>>>>> Meta File 09943.yml
+>>>>>>>>>>>>>>>>>>>>>>>>> Meta File 11353.yml
+>>>>>>>>>>>>>>>>>>>>>>>>> Meta File 11353.yml
+video
+Duration: 10500
+>>>>>>>>>>>>>>>>>>>>>>>>> Meta File 11353.yml
+image
+Duration: 497.0
+image
+Duration: 497.0
+image
+Duration: 497.0
+>>>>>>>>>>>>>>>>>>>>>>>>> Meta File 01911.yml
+image
+Duration: 497.0
+>>>>>>>>>>>>>>>>>>>>>>>>> Meta File 01911.yml
+video
+Duration: 10500>>>>>>>>>>>>>>>>>>>>>>>>> Meta File 01911.yml
+
+>>>>>>>>>>>>>>>>>>>>>>>>> Meta File 11353.yml
+video
+Duration: 10500
+Using trial: 0, chunk: 0, chunk_path: /data/MOZAIK/mozaik_chunk_test3/0_0.json, base_path: /data/test_upsampling_without_hamming_30.0Hz/dynamic26872-17-20-Video-021a75e56847d574b9acbcc06c675055_30hz
+Using trial: 0, chunk: 0, chunk_path: /data/MOZAIK/mozaik_chunk_test3/0_0.json, base_path: /data/test_upsampling_without_hamming_30.0Hz/dynamic26872-17-20-Video-021a75e56847d574b9acbcc06c675055_30hz
+video
+Duration: 10500
+Chunk: 
+
+ [{'modality': 'image', 'file': '09943.yml', 'trial': 0, 'noise_seed': 0}, {'modality': 'image', 'file': '11353.yml', 'trial': 0, 'noise_seed': 0}, {'modality': 'video', 'file': '01911.yml', 'trial': 0, 'noise_seed': 0}]
+>>>>>>>>>>>>>>>>>>>>>>>>> Meta File 09943.yml
+image
+Duration: 497.0
+Chunk: 
+
+ [{'modality': 'image', 'file': '09943.yml', 'trial': 0, 'noise_seed': 0}, {'modality': 'image', 'file': '11353.yml', 'trial': 0, 'noise_seed': 0}, {'modality': 'video', 'file': '01911.yml', 'trial': 0, 'noise_seed': 0}]
+>>>>>>>>>>>>>>>>>>>>>>>>> Meta File 09943.yml
+image
+Duration: 497.0
+>>>>>>>>>>>>>>>>>>>>>>>>> Meta File 01911.yml
+image
+Duration: 497.0
+video
+Duration: 10500
+>>>>>>>>>>>>>>>>>>>>>>>>> Meta File 11353.yml
+>>>>>>>>>>>>>>>>>>>>>>>>> Meta File 11353.yml
+image
+Duration: 497.0
+image
+Duration: 497.0
+>>>>>>>>>>>>>>>>>>>>>>>>> Meta File 01911.yml
+>>>>>>>>>>>>>>>>>>>>>>>>> Meta File 01911.yml
+video
+Duration: 10500
+video
+Duration: 10500
+Final memory usage: 3117MB
+Final memory usage: 3110MB
+Final memory usage: 3114MB
+Final memory usage: 3110MB
+Final memory usage: 3113MB
+Final memory usage: 3110MB
+Final memory usage: 3125MB
+Final memory usage: 3119MB
+Final memory usage: 3112MB
+Final memory usage: 3112MB
+Final memory usage: 3109MB
+Final memory usage: 4081MB
+=== run.py exit: 0 ===
+=== sb_patched_WALL=913s  (golden test3 nt12 = 1015s / 16:55; unpatched neo14 ~2x) ===
+============ Job Information ===================================================
+Submitted: 2026-07-13T22:23:48
+Started: 2026-07-13T22:24:09
+Ended: 2026-07-13T22:39:24
+Elapsed: 16 min, Limit: 60 min, Difference: 44 min
+CPUs: 192, Nodes: 1
+Estimated credit Consumption: 19.20 core-hours
+================================================================================

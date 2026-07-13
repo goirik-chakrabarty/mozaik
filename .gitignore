@@ -26,3 +26,4 @@ slurm_neo14_pytest/neo12ovr-test3-*.err
 # sim datastores (never track)
 *_____/
 *_____*:*/
+slurm_neo14_pytest/patched-test3-*.err

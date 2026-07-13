@@ -1,0 +1,35 @@
+Mon Jul 13 22:03:57 2026    /scr/getdata_rank0.prof
+
+         5107764656 function calls (5080058579 primitive calls) in 1372.037 seconds
+
+   Ordered by: cumulative time
+   List reduced from 11069 to 25 due to restriction <25>
+
+   ncalls  tottime  percall  cumtime  percall filename:lineno(function)
+        1    0.000    0.000 1373.296 1373.296 /usr/lib/python3.10/runpy.py:260(run_path)
+   2048/2    0.037    0.000 1373.292  686.646 {built-in method builtins.exec}
+        1    0.000    0.000 1373.291 1373.291 /usr/lib/python3.10/runpy.py:89(_run_module_code)
+        1    0.000    0.000 1373.291 1373.291 /usr/lib/python3.10/runpy.py:63(_run_code)
+        1    0.000    0.000 1373.291 1373.291 /project/run.py:1(<module>)
+        1    0.000    0.000 1366.736 1366.736 /mozaik/mozaik/controller.py:398(run_workflow)
+        1    0.000    0.000 1164.765 1164.765 /mozaik/mozaik/controller.py:484(run_experiments)
+        1    0.023    0.023 1164.502 1164.502 /mozaik/mozaik/experiments/__init__.py:65(run)
+        3    0.003    0.001 1140.734  380.245 /mozaik/mozaik/models/__init__.py:128(present_stimulus_and_record)
+       18    1.047    0.058 1115.376   61.965 /mozaik/mozaik/sheets/__init__.py:279(get_data)
+       18    0.000    0.000  936.057   52.003 /opt/mozaik/lib/python3.10/site-packages/pyNN/common/populations.py:508(get_data)
+       18    0.003    0.000  936.057   52.003 /opt/mozaik/lib/python3.10/site-packages/pyNN/recording/__init__.py:418(get)
+       18    0.003    0.000  867.081   48.171 /opt/mozaik/lib/python3.10/site-packages/pyNN/recording/__init__.py:85(gather_blocks)
+  396/198   25.021    0.063  865.179    4.370 /opt/mozaik/lib/python3.10/site-packages/neo/core/container.py:504(merge)
+   946386   21.666    0.000  754.677    0.001 /opt/mozaik/lib/python3.10/site-packages/neo/core/objectlist.py:29(_handle_append)
+   297414    0.420    0.000  753.230    0.003 /opt/mozaik/lib/python3.10/site-packages/neo/core/spiketrainlist.py:262(append)
+   946386   24.955    0.000  731.834    0.001 /opt/mozaik/lib/python3.10/site-packages/neo/core/objectlist.py:51(_contains)
+   946386  432.314    0.000  706.780    0.001 /opt/mozaik/lib/python3.10/site-packages/neo/core/objectlist.py:55(<listcomp>)
+4611573130  275.048    0.000  275.048    0.000 {built-in method builtins.id}
+        1    0.001    0.001  200.668  200.668 /project/model.py:34(__init__)
+29121205/6378939    7.829    0.000  184.866    0.000 {built-in method builtins.hash}
+  4548394   11.344    0.000  182.478    0.000 /opt/mozaik/lib/python3.10/site-packages/quantities/dimensionality.py:59(__hash__)
+  4876469   10.897    0.000  168.879    0.000 /opt/mozaik/lib/python3.10/site-packages/quantities/registry.py:72(__getitem__)
+   973350    2.067    0.000  162.183    0.000 /opt/mozaik/lib/python3.10/site-packages/quantities/quantity.py:60(g)
+       16    0.024    0.002  150.037    9.377 /mozaik/mozaik/connectors/__init__.py:65(connect)
+
+

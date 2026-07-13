@@ -1,0 +1,10 @@
+--- /mnt/vast-nhr/projects/nix00014/goirik/tmp/neo-pristine/spiketrainlist.py	2026-07-13 22:41:20.914958236 +0200
++++ /mnt/vast-nhr/projects/nix00014/goirik/tmp/neo-patch/spiketrainlist.py	2026-07-13 22:12:46.160829799 +0200
+@@ -145,6 +145,7 @@
+         if self._items is None:
+             self._spiketrains_from_array()
+         self._items[i] = value
++        self.__dict__.pop("_id_cache", None)  # PERF PATCH (26-07-13): keep _contains cache consistent
+ 
+     def __str__(self):
+         """Return str(self)"""
