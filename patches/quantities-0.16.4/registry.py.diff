@@ -1,0 +1,59 @@
+--- registry.orig.py	2026-07-14 00:01:41.635719159 +0200
++++ registry.py	2026-07-14 00:04:23.291704239 +0200
+@@ -4,6 +4,14 @@
+ import ast
+ import re
+ 
++# PERF PATCH (26-07-14): a bare unit name (only [A-Za-z_][A-Za-z0-9_]*) parses to a single ast.Name
++# and eval()s to the ONE pre-registered singleton object — identity-stable across calls. Only such
++# labels are memoized below, so the cache returns the exact object the original would. Compound
++# expressions ('m/s', 'g/cc') eval to a FRESH object each call; caching them would change identity,
++# so they deliberately fall through to the original path.
++_simple_name_re = re.compile(r'^[A-Za-z_][A-Za-z0-9_]*$')
++_MISS = object()  # sentinel: distinguishes a real cached value from an absent key
++
+ 
+ class UnitRegistry:
+     # Note that this structure ensures that UnitRegistry behaves as a singleton
+@@ -72,14 +80,35 @@
+     def __getitem__(self, label):
+         """Parses a string description of a unit e.g., 'g/cc'"""
+ 
+-        label = self.__regex.sub(
++        # PERF PATCH (26-07-14): memoize bare-name lookups by raw label. A bare name resolves to the
++        # registry's pre-registered singleton (identity-stable — see _simple_name_re note above), so
++        # caching is behavior-identical to the original. This removes a full regex-normalize +
++        # ast.parse + compile + eval on the hot path: in the neo14 P1 get_data cross-rank merge,
++        # Dimensionality.__hash__ does unit_registry['dimensionless'] on every hash (~4.8M calls /
++        # ~168 s of pure redundant re-parsing). Compound expressions are NOT cached (they eval fresh
++        # each call — caching would change object identity); a LookupError also propagates uncached,
++        # so a unit registered later still resolves.
++        cacheable = _simple_name_re.match(label) is not None
++        if cacheable:
++            try:
++                cache = self.__memo
++            except AttributeError:
++                cache = self.__memo = {}
++            hit = cache.get(label, _MISS)
++            if hit is not _MISS:
++                return hit
++
++        norm = self.__regex.sub(
+             r"\g<1>*\g<2>", label.replace('^', '**').replace('·', '*'))
+ 
+         # make sure we can parse the label ....
+-        if label == '': label = 'dimensionless'
+-        if "%" in label: label = label.replace("%", "percent")
+-        if label.lower() == "in": label = "inch"
+-
+-        return self.__registry[label]
++        if norm == '': norm = 'dimensionless'
++        if "%" in norm: norm = norm.replace("%", "percent")
++        if norm.lower() == "in": norm = "inch"
++
++        result = self.__registry[norm]
++        if cacheable:
++            cache[label] = result
++        return result
+ 
+ unit_registry = UnitRegistry()

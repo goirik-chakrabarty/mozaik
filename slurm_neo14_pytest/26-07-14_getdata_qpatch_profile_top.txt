@@ -1,0 +1,40 @@
+# qpatch (neo _contains O(1) + quantities registry-memo) — rank-0 cProfile, perf1 chunk, nt12.
+# Compare vs the BEFORE (neopatch-only): getdata_rank0.prof top had (cumulative):
+#   dimensionality.__hash__ 184s | registry.py:72 __getitem__ 168s | builtins.hash 186s | quantity.py:60(g) 163s
+#   total 604.6s | get_data 366s
+# AFTER (this file): total 436.5s (-168s / -28%); the WHOLE quantities-hash chain has dropped out of the
+#   top-22; get_data 366s -> 198s. What now tops the list is genuine NEST work (catching_sli_run, spike
+#   retrieval) + one-time connector construction (model.__init__ / connect) — not addressable by caching.
+# Faithful test3 nt12 wall (the goal metric, node-exclusive): 913s (neopatch) -> 741s (qpatch) < golden 1015s.
+Tue Jul 14 00:45:15 2026    /scr/getdata_rank0_qpatch.prof
+
+         270259347 function calls (242554043 primitive calls) in 436.513 seconds
+
+   Ordered by: cumulative time
+   List reduced from 11079 to 22 due to restriction <22>
+
+   ncalls  tottime  percall  cumtime  percall filename:lineno(function)
+        1    0.000    0.000  436.517  436.517 /usr/lib/python3.10/runpy.py:260(run_path)
+   2048/2    0.036    0.000  436.505  218.252 {built-in method builtins.exec}
+        1    0.000    0.000  436.503  436.503 /usr/lib/python3.10/runpy.py:89(_run_module_code)
+        1    0.000    0.000  436.503  436.503 /usr/lib/python3.10/runpy.py:63(_run_code)
+        1    0.000    0.000  436.503  436.503 /project/run.py:1(<module>)
+        1    0.000    0.000  428.066  428.066 /mozaik/mozaik/controller.py:398(run_workflow)
+        1    0.000    0.000  243.193  243.193 /mozaik/mozaik/controller.py:484(run_experiments)
+        1    0.082    0.082  242.949  242.949 /mozaik/mozaik/experiments/__init__.py:65(run)
+        3    0.002    0.001  222.809   74.270 /mozaik/mozaik/models/__init__.py:128(present_stimulus_and_record)
+       18    0.719    0.040  197.830   10.991 /mozaik/mozaik/sheets/__init__.py:279(get_data)
+        1    0.001    0.001  183.591  183.591 /project/model.py:34(__init__)
+       16    0.017    0.001  150.604    9.413 /mozaik/mozaik/connectors/__init__.py:65(connect)
+       18    0.000    0.000  147.116    8.173 /opt/mozaik/lib/python3.10/site-packages/pyNN/common/populations.py:508(get_data)
+       18    0.002    0.000  147.116    8.173 /opt/mozaik/lib/python3.10/site-packages/pyNN/recording/__init__.py:418(get)
+  1023732  144.177    0.000  144.308    0.000 /opt/mozaik/lib/python3.10/site-packages/nest/ll_api.py:80(catching_sli_run)
+66704/66696    0.184    0.000  115.878    0.002 /opt/mozaik/lib/python3.10/site-packages/nest/ll_api.py:226(stack_checker_func)
+       10    0.020    0.002  101.829   10.183 /mozaik/mozaik/connectors/modular.py:306(_connect)
+       16    0.001    0.000   91.156    5.697 /opt/mozaik/lib/python3.10/site-packages/pyNN/nest/projections.py:61(__init__)
+       16    1.150    0.072   90.547    5.659 /opt/mozaik/lib/python3.10/site-packages/pyNN/connectors.py:571(connect)
+       18    0.010    0.001   78.264    4.348 /opt/mozaik/lib/python3.10/site-packages/pyNN/recording/__init__.py:85(gather_blocks)
+    31248    1.363    0.000   76.915    0.002 /opt/mozaik/lib/python3.10/site-packages/pyNN/nest/projections.py:182(_convergent_connect)
+  396/198   24.079    0.061   75.459    0.381 /opt/mozaik/lib/python3.10/site-packages/neo/core/container.py:504(merge)
+
+
