@@ -1,0 +1,1644 @@
+=== [Mon Jul 13 18:20:45 CEST 2026] download NEST 3.4 source ===
+=== [Mon Jul 13 18:20:57 CEST 2026] cmake (-O3 ONLY, no -march=native) ===
+-- The CXX compiler identification is GNU 11.4.0
+-- The C compiler identification is GNU 11.4.0
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Check for working CXX compiler: /usr/bin/c++ - skipped
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+-- Detecting C compiler ABI info
+-- Detecting C compiler ABI info - done
+-- Check for working C compiler: /usr/bin/cc - skipped
+-- Detecting C compile features
+-- Detecting C compile features - done
+-- Looking for include file inttypes.h
+-- Looking for include file inttypes.h - found
+-- Looking for include file mach-o/dyld.h
+-- Looking for include file mach-o/dyld.h - not found
+-- Looking for include file mach/mach.h
+-- Looking for include file mach/mach.h - not found
+-- Looking for include file memory.h
+-- Looking for include file memory.h - found
+-- Looking for include file stdint.h
+-- Looking for include file stdint.h - found
+-- Looking for include file sys/types.h
+-- Looking for include file sys/types.h - found
+-- Looking for C++ include istream
+-- Looking for C++ include istream - found
+-- Looking for C++ include ostream
+-- Looking for C++ include ostream - found
+-- Looking for C++ include sstream
+-- Looking for C++ include sstream - found
+-- Looking for stddef.h
+-- Looking for stddef.h - found
+-- Check size of long long
+-- Check size of long long - done
+-- Check size of u_int16_t
+-- Check size of u_int16_t - done
+-- Check size of uint16_t
+-- Check size of uint16_t - done
+-- Check size of u_int64_t
+-- Check size of u_int64_t - done
+-- Check size of uint64_t
+-- Check size of uint64_t - done
+-- Looking for NAN
+-- Looking for NAN - found
+-- Looking for isnan
+-- Looking for isnan - found
+-- Looking for M_E
+-- Looking for M_E - found
+-- Looking for M_PI
+-- Looking for M_PI - found
+-- Looking for expm1
+-- Looking for expm1 - not found
+-- [1;32mInfo: Host triple: x86_64-pc-linux [m
+-- [1;32mInfo: Target triple: x86_64-pc-linux [m
+-- Found Python: /opt/mozaik/bin/python3.10 (found suitable version "3.10.12", minimum required is "3.8") found components: Interpreter Development.Module 
+-- Found Cython: /opt/mozaik/bin/cython (found suitable version "3.0.10", minimum required is "0.28.3") 
+-- Found LTDL: /usr/lib/x86_64-linux-gnu/libltdl.so  
+-- Found Readline: /usr/lib/x86_64-linux-gnu/libreadline.so (found version "8.1") 
+-- Could NOT find PkgConfig (missing: PKG_CONFIG_EXECUTABLE) 
+-- Found GSL: /usr/include (found version "2.7.1") 
+-- Found OpenMP_C: -fopenmp (found version "4.5") 
+-- Found OpenMP_CXX: -fopenmp (found version "4.5") 
+-- Found OpenMP: TRUE (found version "4.5")  
+-- Found MPI_C: /usr/lib/x86_64-linux-gnu/openmpi/lib/libmpi.so (found version "3.1") 
+-- Found MPI_CXX: /usr/lib/x86_64-linux-gnu/openmpi/lib/libmpi_cxx.so (found version "3.1") 
+-- Found MPI: TRUE (found version "3.1")  
+-- Found PY_mpi4py: /opt/mozaik/lib/python3.10/site-packages/mpi4py  
+-- Found Boost: /usr/lib/x86_64-linux-gnu/cmake/Boost-1.74.0/BoostConfig.cmake (found suitable version "1.74.0", minimum required is "1.69.0")  
+-- [1;32mInfo: Check the abort exitcode. [m
+-- [1;32mInfo: Check the abort exitcode. 134 [m
+-- [1;32mInfo: Check the segmentation fault exitcode. [m
+-- [1;32mInfo: Check the segmentation fault exitcode. 139 [m
+-- [1;32mInfo: Check whether the compiler ignores cmath makros. [m
+-- [1;32mInfo: Check whether the compiler ignores cmath makros. OFF [m
+-- [1;32mInfo: Check whether the compiler does NOT include <*.h> headers ISO conformant. [m
+-- [1;32mInfo: Check whether the compiler does NOT include <*.h> headers ISO conformant. OFF [m
+-- [1;32mInfo: Check whether the compiler respects symbolic signal names in signal.h. [m
+-- [1;32mInfo: Check whether the compiler respects symbolic signal names in signal.h. OFF [m
+-- [1;32mInfo: Check static template member declaration. [m
+-- [1;32mInfo: Check static template member declaration. OFF [m
+-- [1;32mInfo: Check for STL vector capacity base unity. [m
+-- [1;32mInfo: Check for STL vector capacity base unity. ON [m
+-- [1;32mInfo: Check for STL vector capacity doubling strategy. [m
+-- [1;32mInfo: Check for STL vector capacity doubling strategy. ON [m
+-- [1;32mInfo: Check whether the compiler fails with ICE. [m
+-- [1;32mInfo: Check whether the compiler fails with ICE. OFF [m
+-- [1;32mInfo: Check if ::nan is available from cmath. [m
+-- [1;32mInfo: Check if ::nan is available from cmath. ON [m
+-- [1;32mInfo: Check if ::isnan is available from cmath. [m
+-- [1;32mInfo: Check if ::isnan is available from cmath. ON [m
+-- [1;32mInfo: Check if Random123 generators work. [m
+-- [1;32mInfo: Check if Random123 generators work. ON [m
+-- [1;32mInfo: -- NEST version: 3.4 [m
+[1;36m
+--------------------------------------------------------------------------------
+NEST Configuration Summary
+--------------------------------------------------------------------------------
+
+Target System       : Linux
+Cross Compiling     : FALSE
+C compiler          : GNU 11.4.0 (/usr/bin/cc)
+C compiler flags    :  -Wall -fopenmp    -O3 -fdiagnostics-color=auto
+C++ compiler        : GNU 11.4.0 (/usr/bin/c++)
+C++ compiler flags  :  -std=c++11 -Wall -fopenmp  -O3 -fdiagnostics-color=auto
+Build dynamic       : ON
+
+Built-in modules    : models
+User modules        : None
+
+Python bindings     : Yes (Python 3.10.12: /opt/mozaik/bin/python3.10)
+    Includes        : /usr/include/python3.10
+    Libraries       : 
+    Cython          : Yes (Cython 3.0.10: /opt/mozaik/bin/cython)
+    MPI4Py          : Yes (/opt/mozaik/lib/python3.10/site-packages/mpi4py/include)
+
+Documentation       : No
+
+Use threading       : Yes (OpenMP: -fopenmp)
+
+Use GSL             : Yes (GSL 2.7.1)
+    Includes        : /usr/include
+    Libraries       : /usr/lib/x86_64-linux-gnu/libgsl.so;/usr/lib/x86_64-linux-gnu/libgslcblas.so
+
+Use Readline        : Yes (GNU Readline 8.1)
+    Includes        : /usr/include
+    Libraries       : /usr/lib/x86_64-linux-gnu/libreadline.so;/usr/lib/x86_64-linux-gnu/libncurses.so
+
+Use libltdl         : Yes (LTDL )
+    Includes        : /usr/include
+    Libraries       : /usr/lib/x86_64-linux-gnu/libltdl.so
+
+Use MPI             : Yes (MPI: /usr/bin/mpicxx)
+    Includes        : /usr/lib/x86_64-linux-gnu/openmpi/include;/usr/lib/x86_64-linux-gnu/openmpi/include/openmpi
+    Libraries       : /usr/lib/x86_64-linux-gnu/openmpi/lib/libmpi_cxx.so;/usr/lib/x86_64-linux-gnu/openmpi/lib/libmpi.so
+    Launcher        : /usr/bin/mpiexec -n <np> <prog> <args>
+
+Detailed timers     : No
+
+Use MUSIC           : No
+
+Use libneurosim     : No
+
+Use Boost           : Yes (Boost 1.74.0)
+    Includes        : /usr/include
+    Libraries       : 
+
+Use SIONlib         : No
+
+For details on setting specific flags for your MPI launcher command, see the
+CMake documentation at https://cmake.org/cmake/help/latest/module/FindMPI.html
+
+--------------------------------------------------------------------------------
+
+The NEST executable will be installed to:
+  /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/bin/
+
+NEST dynamic libraries and user modules will be installed to:
+  /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/lib/nest/
+
+PyNEST will be installed to:
+    /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/lib/python3.10/site-packages
+
+To set necessary environment variables, add the following line
+to your ~/.bashrc :
+  source /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/bin/nest_vars.sh
+
+--------------------------------------------------------------------------------
+
+You can now build and install NEST with
+  make
+  make install
+  make installcheck
+
+If you experience problems with the installation or the use of NEST,
+please see https://www.nest-simulator.org/frequently_asked_questions
+or go to https://www.nest-simulator.org/community to find out how to
+join the user mailing list.
+[m
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-src/_build
+=== [Mon Jul 13 18:21:22 CEST 2026] make (-j32) ===
+[  0%] Building CXX object libnestutil/CMakeFiles/nestutil.dir/iaf_propagator.cpp.o
+[  1%] Building CXX object libnestutil/CMakeFiles/nestutil.dir/logging_event.cpp.o
+[  1%] Building CXX object libnestutil/CMakeFiles/nestutil.dir/stopwatch.cpp.o
+[  1%] Building CXX object libnestutil/CMakeFiles/nestutil.dir/numerics.cpp.o
+[  2%] Linking CXX shared library libnestutil.so
+[  2%] Built target nestutil
+[  2%] Building CXX object sli/CMakeFiles/sli_lib.dir/allocator.cpp.o
+[  2%] Building CXX object sli/CMakeFiles/sli_lib.dir/booldatum.cc.o
+[  3%] Building CXX object sli/CMakeFiles/sli_lib.dir/charcode.cc.o
+[  4%] Building CXX object sli/CMakeFiles/sli_lib.dir/arraydatum.cc.o
+[  4%] Building CXX object sli/CMakeFiles/sli_lib.dir/dict.cc.o
+[  5%] Building CXX object sli/CMakeFiles/sli_lib.dir/datum.cc.o
+[  5%] Building CXX object sli/CMakeFiles/sli_lib.dir/dictutils.cc.o
+[  7%] Building C object sli/CMakeFiles/sli_lib.dir/get_mem.c.o
+[  7%] Building CXX object sli/CMakeFiles/sli_lib.dir/dictstack.cc.o
+[  7%] Building CXX object sli/CMakeFiles/sli_lib.dir/fdstream.cc.o
+[  7%] Building CXX object sli/CMakeFiles/sli_lib.dir/doubledatum.cc.o
+[  7%] Building CXX object sli/CMakeFiles/sli_lib.dir/filesystem.cc.o
+[  7%] Building CXX object sli/CMakeFiles/sli_lib.dir/functiondatum.cc.o
+[  8%] Building CXX object sli/CMakeFiles/sli_lib.dir/interpret.cc.o
+[  9%] Building CXX object sli/CMakeFiles/sli_lib.dir/name.cc.o
+[  9%] Building CXX object sli/CMakeFiles/sli_lib.dir/integerdatum.cc.o
+[  9%] Building CXX object sli/CMakeFiles/sli_lib.dir/slinames.cpp.o
+[ 10%] Building CXX object sli/CMakeFiles/sli_lib.dir/oosupport.cc.o
+[ 10%] Building CXX object sli/CMakeFiles/sli_lib.dir/literaldatum.cc.o
+[ 11%] Building CXX object sli/CMakeFiles/sli_lib.dir/processes.cc.o
+[ 11%] Building CXX object sli/CMakeFiles/sli_lib.dir/namedatum.cc.o
+[ 11%] Building CXX object sli/CMakeFiles/sli_lib.dir/sliactions.cc.o
+[ 11%] Building CXX object sli/CMakeFiles/sli_lib.dir/sli_io.cc.o
+[ 13%] Building CXX object sli/CMakeFiles/sli_lib.dir/parser.cc.o
+[ 13%] Building CXX object sli/CMakeFiles/sli_lib.dir/scanner.cc.o
+[ 13%] Building CXX object sli/CMakeFiles/sli_lib.dir/slidata.cc.o
+[ 13%] Building CXX object sli/CMakeFiles/sli_lib.dir/slibuiltins.cc.o
+[ 14%] Building CXX object sli/CMakeFiles/sli_lib.dir/sliarray.cc.o
+[ 15%] Building CXX object sli/CMakeFiles/sli_lib.dir/slicontrol.cc.o
+[ 15%] Building CXX object sli/CMakeFiles/sli_lib.dir/slidict.cc.o
+[ 14%] Building CXX object sli/CMakeFiles/sli_lib.dir/sliexceptions.cc.o
+[ 14%] Building CXX object sli/CMakeFiles/sli_lib.dir/sligraphics.cc.o
+[ 16%] Building CXX object sli/CMakeFiles/sli_lib.dir/slimath.cc.o
+[ 16%] Building CXX object sli/CMakeFiles/sli_lib.dir/slimodule.cc.o
+[ 17%] Building CXX object sli/CMakeFiles/sli_lib.dir/sliregexp.cc.o
+[ 17%] Building CXX object sli/CMakeFiles/sli_lib.dir/slistack.cc.o
+[ 18%] Building CXX object sli/CMakeFiles/sli_lib.dir/slistartup.cc.o
+[ 18%] Building CXX object sli/CMakeFiles/sli_lib.dir/slitype.cc.o
+[ 18%] Building CXX object sli/CMakeFiles/sli_lib.dir/slitypecheck.cc.o
+[ 19%] Building CXX object sli/CMakeFiles/sli_lib.dir/specialfunctionsmodule.cc.o
+[ 19%] Building CXX object sli/CMakeFiles/sli_lib.dir/stringdatum.cc.o
+[ 20%] Building CXX object sli/CMakeFiles/sli_lib.dir/symboldatum.cc.o
+[ 20%] Building CXX object sli/CMakeFiles/sli_lib.dir/tarrayobj.cc.o
+[ 21%] Building CXX object sli/CMakeFiles/sli_lib.dir/token.cc.o
+[ 21%] Building CXX object sli/CMakeFiles/sli_lib.dir/tokenarray.cc.o
+[ 21%] Building CXX object sli/CMakeFiles/sli_lib.dir/tokenstack.cc.o
+[ 22%] Building CXX object sli/CMakeFiles/sli_lib.dir/tokenutils.cc.o
+[ 22%] Building CXX object sli/CMakeFiles/sli_lib.dir/triedatum.cc.o
+[ 23%] Building CXX object sli/CMakeFiles/sli_lib.dir/typechk.cc.o
+[ 23%] Building CXX object sli/CMakeFiles/sli_lib.dir/utils.cc.o
+[ 24%] Linking CXX shared library libsli.so
+[ 24%] Built target sli_lib
+[ 24%] Building CXX object sli/CMakeFiles/sli_readline.dir/gnureadline.cc.o
+[ 24%] Building CXX object nestkernel/CMakeFiles/nestkernel.dir/archiving_node.cpp.o
+[ 25%] Building CXX object nestkernel/CMakeFiles/nestkernel.dir/common_synapse_properties.cpp.o
+[ 26%] Building CXX object nestkernel/CMakeFiles/nestkernel.dir/connection_id.cpp.o
+[ 26%] Building CXX object nestkernel/CMakeFiles/nestkernel.dir/clopath_archiving_node.cpp.o
+[ 26%] Building CXX object nestkernel/CMakeFiles/nestkernel.dir/dynamicloader.cpp.o
+[ 26%] Building CXX object nestkernel/CMakeFiles/nestkernel.dir/deprecation_warning.cpp.o
+[ 28%] Building CXX object nestkernel/CMakeFiles/nestkernel.dir/histentry.cpp.o
+[ 28%] Building CXX object nestkernel/CMakeFiles/nestkernel.dir/nest_datums.cpp.o
+[ 28%] Building CXX object nestkernel/CMakeFiles/nestkernel.dir/exceptions.cpp.o
+[ 28%] Building CXX object nestkernel/CMakeFiles/nestkernel.dir/connector_model.cpp.o
+[ 28%] Building CXX object nestkernel/CMakeFiles/nestkernel.dir/model.cpp.o
+[ 28%] Building CXX object nestkernel/CMakeFiles/nestkernel.dir/device.cpp.o
+[ 31%] Building CXX object nestkernel/CMakeFiles/nestkernel.dir/node.cpp.o
+[ 31%] Building CXX object nestkernel/CMakeFiles/nestkernel.dir/modelrange.cpp.o
+[ 31%] Building CXX object nestkernel/CMakeFiles/nestkernel.dir/node_collection.cpp.o
+[ 31%] Building CXX object nestkernel/CMakeFiles/nestkernel.dir/nestmodule.cpp.o
+[ 31%] Building CXX object nestkernel/CMakeFiles/nestkernel.dir/model_manager.cpp.o
+[ 31%] Building CXX object nestkernel/CMakeFiles/nestkernel.dir/event.cpp.o
+[ 31%] Building CXX object nestkernel/CMakeFiles/nestkernel.dir/nest_timeconverter.cpp.o
+[ 34%] Building CXX object nestkernel/CMakeFiles/nestkernel.dir/nest_names.cpp.o
+[ 34%] Building CXX object nestkernel/CMakeFiles/nestkernel.dir/recording_device.cpp.o
+[ 34%] Building CXX object nestkernel/CMakeFiles/nestkernel.dir/nest_time.cpp.o
+[ 34%] Building CXX object nestkernel/CMakeFiles/nestkernel.dir/ring_buffer.cpp.o
+[ 34%] Building CXX object nestkernel/CMakeFiles/nestkernel.dir/spikecounter.cpp.o
+[ 34%] Building CXX object nestkernel/CMakeFiles/nestkernel.dir/modelrange_manager.cpp.o
+[ 34%] Building CXX object nestkernel/CMakeFiles/nestkernel.dir/per_thread_bool_indicator.cpp.o
+[ 37%] Building CXX object nestkernel/CMakeFiles/nestkernel.dir/parameter.cpp.o
+[ 37%] Building CXX object nestkernel/CMakeFiles/nestkernel.dir/slice_ring_buffer.cpp.o
+[ 37%] Building CXX object nestkernel/CMakeFiles/nestkernel.dir/sparse_node_array.cpp.o
+[ 37%] Building CXX object nestkernel/CMakeFiles/nestkernel.dir/proxynode.cpp.o
+[ 37%] Building CXX object nestkernel/CMakeFiles/nestkernel.dir/stimulation_device.cpp.o
+[ 38%] Building CXX object nestkernel/CMakeFiles/nestkernel.dir/conn_parameter.cpp.o
+[ 38%] Building CXX object nestkernel/CMakeFiles/nestkernel.dir/conn_builder.cpp.o
+[ 38%] Building CXX object nestkernel/CMakeFiles/nestkernel.dir/conn_builder_conngen.cpp.o
+[ 39%] Building CXX object nestkernel/CMakeFiles/nestkernel.dir/music_event_handler.cpp.o
+[ 39%] Building CXX object nestkernel/CMakeFiles/nestkernel.dir/music_rate_in_handler.cpp.o
+[ 40%] Building CXX object nestkernel/CMakeFiles/nestkernel.dir/music_manager.cpp.o
+[ 40%] Building CXX object nestkernel/CMakeFiles/nestkernel.dir/nest.cpp.o
+[ 41%] Building CXX object nestkernel/CMakeFiles/nestkernel.dir/synaptic_element.cpp.o
+[ 41%] Building CXX object nestkernel/CMakeFiles/nestkernel.dir/growth_curve.cpp.o
+[ 42%] Linking CXX shared library libsli_readline.so
+[ 42%] Building CXX object nestkernel/CMakeFiles/nestkernel.dir/kernel_manager.cpp.o
+[ 43%] Building CXX object nestkernel/CMakeFiles/nestkernel.dir/vp_manager.cpp.o
+[ 43%] Built target sli_readline
+[ 43%] Building CXX object nestkernel/CMakeFiles/nestkernel.dir/io_manager.cpp.o
+[ 43%] Building CXX object sli/CMakeFiles/sli.dir/puresli.cc.o
+[ 44%] Building CXX object nestkernel/CMakeFiles/nestkernel.dir/mpi_manager.cpp.o
+[ 44%] Building CXX object nestkernel/CMakeFiles/nestkernel.dir/simulation_manager.cpp.o
+[ 45%] Building CXX object nestkernel/CMakeFiles/nestkernel.dir/connection_manager.cpp.o
+[ 45%] Building CXX object nestkernel/CMakeFiles/nestkernel.dir/sp_manager.cpp.o
+[ 45%] Building CXX object nestkernel/CMakeFiles/nestkernel.dir/delay_checker.cpp.o
+[ 46%] Linking CXX executable sli
+[ 46%] Built target sli
+[ 47%] Building CXX object nestkernel/CMakeFiles/nestkernel.dir/random_manager.cpp.o
+[ 47%] Building CXX object nestkernel/CMakeFiles/nestkernel.dir/event_delivery_manager.cpp.o
+[ 48%] Building CXX object nestkernel/CMakeFiles/nestkernel.dir/node_manager.cpp.o
+[ 48%] Building CXX object nestkernel/CMakeFiles/nestkernel.dir/logging_manager.cpp.o
+[ 49%] Building CXX object nestkernel/CMakeFiles/nestkernel.dir/recording_backend.cpp.o
+[ 49%] Building CXX object nestkernel/CMakeFiles/nestkernel.dir/recording_backend_ascii.cpp.o
+[ 49%] Building CXX object nestkernel/CMakeFiles/nestkernel.dir/recording_backend_memory.cpp.o
+[ 50%] Building CXX object nestkernel/CMakeFiles/nestkernel.dir/recording_backend_screen.cpp.o
+[ 50%] Building CXX object nestkernel/CMakeFiles/nestkernel.dir/target_table.cpp.o
+[ 51%] Building CXX object nestkernel/CMakeFiles/nestkernel.dir/source_table.cpp.o
+[ 51%] Building CXX object nestkernel/CMakeFiles/nestkernel.dir/target_table_devices.cpp.o
+[ 52%] Building CXX object nestkernel/CMakeFiles/nestkernel.dir/structural_plasticity_node.cpp.o
+[ 52%] Building CXX object nestkernel/CMakeFiles/nestkernel.dir/connection_creator.cpp.o
+[ 52%] Building CXX object nestkernel/CMakeFiles/nestkernel.dir/layer.cpp.o
+[ 53%] Building CXX object nestkernel/CMakeFiles/nestkernel.dir/mask.cpp.o
+[ 53%] Building CXX object nestkernel/CMakeFiles/nestkernel.dir/spatial.cpp.o
+[ 54%] Building CXX object nestkernel/CMakeFiles/nestkernel.dir/recording_backend_mpi.cpp.o
+[ 54%] Building CXX object nestkernel/CMakeFiles/nestkernel.dir/stimulation_backend_mpi.cpp.o
+[ 55%] Linking CXX shared library libnestkernel.so
+[ 55%] Built target nestkernel
+[ 55%] Building CXX object models/CMakeFiles/models.dir/ac_generator.cpp.o
+[ 56%] Building CXX object models/CMakeFiles/models.dir/aeif_cond_exp.cpp.o
+[ 56%] Building CXX object models/CMakeFiles/models.dir/aeif_cond_alpha_multisynapse.cpp.o
+[ 58%] Building CXX object models/CMakeFiles/models.dir/cm_tree.cpp.o
+[ 58%] Building CXX object models/CMakeFiles/models.dir/aeif_psc_exp.cpp.o
+[ 58%] Building CXX object models/CMakeFiles/models.dir/amat2_psc_exp.cpp.o
+[ 58%] Building CXX object models/CMakeFiles/models.dir/aeif_psc_delta.cpp.o
+[ 58%] Building CXX object models/CMakeFiles/models.dir/aeif_cond_alpha.cpp.o
+[ 58%] Building CXX object models/CMakeFiles/models.dir/aeif_cond_beta_multisynapse.cpp.o
+[ 61%] Building CXX object models/CMakeFiles/models.dir/aeif_psc_alpha.cpp.o
+[ 61%] Building CXX object models/CMakeFiles/models.dir/aeif_psc_delta_clopath.cpp.o
+[ 61%] Building CXX object models/CMakeFiles/models.dir/cm_default.cpp.o
+[ 61%] Building CXX object models/CMakeFiles/models.dir/dc_generator.cpp.o
+[ 61%] Building CXX object models/CMakeFiles/models.dir/correlomatrix_detector.cpp.o
+[ 61%] Building CXX object models/CMakeFiles/models.dir/correlation_detector.cpp.o
+[ 63%] Building CXX object models/CMakeFiles/models.dir/gif_psc_exp_multisynapse.cpp.o
+[ 63%] Building CXX object models/CMakeFiles/models.dir/gif_cond_exp_multisynapse.cpp.o
+[ 63%] Building CXX object models/CMakeFiles/models.dir/gif_psc_exp.cpp.o
+[ 63%] Building CXX object models/CMakeFiles/models.dir/cm_compartmentcurrents.cpp.o
+[ 63%] Building CXX object models/CMakeFiles/models.dir/gamma_sup_generator.cpp.o
+[ 63%] Building CXX object models/CMakeFiles/models.dir/correlospinmatrix_detector.cpp.o
+[ 66%] Building CXX object models/CMakeFiles/models.dir/glif_psc.cpp.o
+[ 66%] Building CXX object models/CMakeFiles/models.dir/gauss_rate.cpp.o
+[ 66%] Building CXX object models/CMakeFiles/models.dir/erfc_neuron.cpp.o
+[ 66%] Building CXX object models/CMakeFiles/models.dir/hh_cond_exp_traub.cpp.o
+[ 66%] Building CXX object models/CMakeFiles/models.dir/ginzburg_neuron.cpp.o
+[ 67%] Building CXX object models/CMakeFiles/models.dir/gif_pop_psc_exp.cpp.o
+[ 67%] Building CXX object models/CMakeFiles/models.dir/gif_cond_exp.cpp.o
+[ 68%] Building CXX object models/CMakeFiles/models.dir/glif_cond.cpp.o
+[ 68%] Building CXX object models/CMakeFiles/models.dir/hh_psc_alpha.cpp.o
+[ 69%] Building CXX object models/CMakeFiles/models.dir/hh_cond_beta_gap_traub.cpp.o
+[ 69%] Building CXX object models/CMakeFiles/models.dir/hh_psc_alpha_clopath.cpp.o
+[ 69%] Building CXX object models/CMakeFiles/models.dir/hh_psc_alpha_gap.cpp.o
+[ 70%] Building CXX object models/CMakeFiles/models.dir/ht_neuron.cpp.o
+[ 70%] Building CXX object models/CMakeFiles/models.dir/iaf_chs_2007.cpp.o
+[ 70%] Building CXX object models/CMakeFiles/models.dir/iaf_chxk_2008.cpp.o
+[ 71%] Building CXX object models/CMakeFiles/models.dir/iaf_cond_alpha.cpp.o
+[ 71%] Building CXX object models/CMakeFiles/models.dir/iaf_cond_alpha_mc.cpp.o
+[ 72%] Building CXX object models/CMakeFiles/models.dir/iaf_cond_beta.cpp.o
+[ 72%] Building CXX object models/CMakeFiles/models.dir/iaf_cond_exp.cpp.o
+[ 73%] Building CXX object models/CMakeFiles/models.dir/iaf_cond_exp_sfa_rr.cpp.o
+[ 73%] Building CXX object models/CMakeFiles/models.dir/iaf_psc_alpha.cpp.o
+[ 73%] Building CXX object models/CMakeFiles/models.dir/iaf_psc_alpha_multisynapse.cpp.o
+[ 74%] Building CXX object models/CMakeFiles/models.dir/iaf_psc_delta.cpp.o
+[ 74%] Building CXX object models/CMakeFiles/models.dir/iaf_psc_alpha_ps.cpp.o
+[ 75%] Building CXX object models/CMakeFiles/models.dir/iaf_psc_delta_ps.cpp.o
+[ 75%] Building CXX object models/CMakeFiles/models.dir/iaf_psc_exp.cpp.o
+[ 76%] Building CXX object models/CMakeFiles/models.dir/iaf_psc_exp_htum.cpp.o
+[ 76%] Building CXX object models/CMakeFiles/models.dir/iaf_psc_exp_multisynapse.cpp.o
+[ 76%] Building CXX object models/CMakeFiles/models.dir/iaf_psc_exp_ps.cpp.o
+[ 77%] Building CXX object models/CMakeFiles/models.dir/iaf_psc_exp_ps_lossless.cpp.o
+[ 77%] Building CXX object models/CMakeFiles/models.dir/izhikevich.cpp.o
+[ 78%] Building CXX object models/CMakeFiles/models.dir/lin_rate.cpp.o
+[ 78%] Building CXX object models/CMakeFiles/models.dir/mat2_psc_exp.cpp.o
+[ 79%] Building CXX object models/CMakeFiles/models.dir/mip_generator.cpp.o
+[ 79%] Building CXX object models/CMakeFiles/models.dir/modelsmodule.cpp.o
+[ 79%] Building CXX object models/CMakeFiles/models.dir/mcculloch_pitts_neuron.cpp.o
+[ 80%] Building CXX object models/CMakeFiles/models.dir/multimeter.cpp.o
+[ 80%] Building CXX object models/CMakeFiles/models.dir/music_cont_in_proxy.cpp.o
+[ 81%] Building CXX object models/CMakeFiles/models.dir/music_cont_out_proxy.cpp.o
+[ 81%] Building CXX object models/CMakeFiles/models.dir/music_event_in_proxy.cpp.o
+[ 82%] Building CXX object models/CMakeFiles/models.dir/music_event_out_proxy.cpp.o
+[ 82%] Building CXX object models/CMakeFiles/models.dir/music_rate_in_proxy.cpp.o
+[ 82%] Building CXX object models/CMakeFiles/models.dir/music_rate_out_proxy.cpp.o
+[ 83%] Building CXX object models/CMakeFiles/models.dir/music_message_in_proxy.cpp.o
+[ 83%] Building CXX object models/CMakeFiles/models.dir/noise_generator.cpp.o
+[ 84%] Building CXX object models/CMakeFiles/models.dir/parrot_neuron_ps.cpp.o
+[ 84%] Building CXX object models/CMakeFiles/models.dir/parrot_neuron.cpp.o
+[ 85%] Building CXX object models/CMakeFiles/models.dir/inhomogeneous_poisson_generator.cpp.o
+[ 85%] Building CXX object models/CMakeFiles/models.dir/poisson_generator.cpp.o
+[ 85%] Building CXX object models/CMakeFiles/models.dir/poisson_generator_ps.cpp.o
+[ 86%] Building CXX object models/CMakeFiles/models.dir/pp_psc_delta.cpp.o
+[ 86%] Building CXX object models/CMakeFiles/models.dir/pp_cond_exp_mc_urbanczik.cpp.o
+[ 87%] Building CXX object models/CMakeFiles/models.dir/ppd_sup_generator.cpp.o
+[ 87%] Building CXX object models/CMakeFiles/models.dir/pulsepacket_generator.cpp.o
+[ 88%] Building CXX object models/CMakeFiles/models.dir/siegert_neuron.cpp.o
+[ 88%] Building CXX object models/CMakeFiles/models.dir/sigmoid_rate.cpp.o
+[ 88%] Building CXX object models/CMakeFiles/models.dir/sigmoid_rate_gg_1998.cpp.o
+[ 89%] Building CXX object models/CMakeFiles/models.dir/sinusoidal_poisson_generator.cpp.o
+[ 89%] Building CXX object models/CMakeFiles/models.dir/sinusoidal_gamma_generator.cpp.o
+[ 90%] Building CXX object models/CMakeFiles/models.dir/spike_recorder.cpp.o
+[ 90%] Building CXX object models/CMakeFiles/models.dir/spike_generator.cpp.o
+[ 91%] Building CXX object models/CMakeFiles/models.dir/spin_detector.cpp.o
+[ 91%] Building CXX object models/CMakeFiles/models.dir/stdp_dopamine_synapse.cpp.o
+[ 91%] Building CXX object models/CMakeFiles/models.dir/stdp_pl_synapse_hom.cpp.o
+[ 92%] Building CXX object models/CMakeFiles/models.dir/stdp_synapse_hom.cpp.o
+[ 92%] Building CXX object models/CMakeFiles/models.dir/step_current_generator.cpp.o
+[ 93%] Building CXX object models/CMakeFiles/models.dir/tanh_rate.cpp.o
+[ 93%] Building CXX object models/CMakeFiles/models.dir/step_rate_generator.cpp.o
+[ 94%] Building CXX object models/CMakeFiles/models.dir/threshold_lin_rate.cpp.o
+[ 94%] Building CXX object models/CMakeFiles/models.dir/tsodyks_synapse_hom.cpp.o
+[ 94%] Building CXX object models/CMakeFiles/models.dir/volume_transmitter.cpp.o
+[ 95%] Building CXX object models/CMakeFiles/models.dir/weight_recorder.cpp.o
+[ 95%] Building CXX object models/CMakeFiles/models.dir/spike_dilutor.cpp.o
+[ 96%] Linking CXX shared library libmodels.so
+[ 96%] Built target models
+[ 96%] Building CXX object nest/CMakeFiles/nest.dir/main.cpp.o
+[ 97%] Building CXX object nest/CMakeFiles/nest_lib.dir/neststartup.cpp.o
+[ 97%] Building CXX object nest/CMakeFiles/nest.dir/neststartup.cpp.o
+[ 97%] Linking CXX executable nest
+[ 97%] Built target nest
+[ 98%] Linking CXX shared library libnest.so
+[ 98%] Building CXX object testsuite/cpptests/CMakeFiles/run_all_cpptests.dir/run_all.cpp.o
+[ 98%] Built target nest_lib
+[ 98%] Compiling Cython CXX source for pynestkernel...
+warning: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-src/pynest/pynestkernel.pyx:624:4: Unreachable code
+warning: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-src/pynest/pynestkernel.pyx:624:4: Unreachable code
+[ 99%] Building CXX object pynest/CMakeFiles/pynestkernel.dir/pynestkernel.cxx.o
+[ 99%] Linking CXX shared module pynestkernel.so
+[ 99%] Built target pynestkernel
+[100%] Linking CXX executable run_all_cpptests
+[100%] Built target run_all_cpptests
+=== [Mon Jul 13 18:24:33 CEST 2026] make install ===
+Consolidate compiler generated dependencies of target nestutil
+[  2%] Built target nestutil
+Consolidate compiler generated dependencies of target sli_lib
+[ 24%] Built target sli_lib
+Consolidate compiler generated dependencies of target sli_readline
+[ 25%] Built target sli_readline
+Consolidate compiler generated dependencies of target sli
+[ 26%] Built target sli
+Consolidate compiler generated dependencies of target nestkernel
+[ 55%] Built target nestkernel
+Consolidate compiler generated dependencies of target models
+[ 96%] Built target models
+Consolidate compiler generated dependencies of target nest
+Consolidate compiler generated dependencies of target nest_lib
+[ 97%] Built target nest
+[ 98%] Built target nest_lib
+Consolidate compiler generated dependencies of target run_all_cpptests
+Consolidate compiler generated dependencies of target pynestkernel
+[100%] Built target run_all_cpptests
+[100%] Built target pynestkernel
+Install the project...
+-- Install configuration: ""
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/bin/nest-server
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/bin/nest-server-mpi
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/bin/nest-config
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/bin/nest_vars.sh
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/doc/nest/run_examples.sh
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/doc/nest/examples
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/doc/nest/examples/ArtificialSynchrony.pl
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/doc/nest/examples/ArtificialSynchrony.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/doc/nest/examples/Brette_et_al_2007
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/doc/nest/examples/Brette_et_al_2007/benchmark.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/doc/nest/examples/Brette_et_al_2007/coba.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/doc/nest/examples/Brette_et_al_2007/cuba.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/doc/nest/examples/Brette_et_al_2007/cuba_ps.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/doc/nest/examples/Brette_et_al_2007/cuba_stdp.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/doc/nest/examples/Brette_et_al_2007/hh_coba.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/doc/nest/examples/BrodyHopfield.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/doc/nest/examples/Potjans_2014
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/doc/nest/examples/Potjans_2014/README.txt
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/doc/nest/examples/Potjans_2014/microcircuit.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/doc/nest/examples/Potjans_2014/network_params.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/doc/nest/examples/Potjans_2014/run_microcircuit.sh
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/doc/nest/examples/Potjans_2014/sim_params.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/doc/nest/examples/Potjans_2014/spike_analysis.py
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/doc/nest/examples/balancedneuron-2.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/doc/nest/examples/balancedneuron.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/doc/nest/examples/brunel-2000.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/doc/nest/examples/brunel-2000_newconnect.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/doc/nest/examples/brunel-2000_newconnect_dc.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/doc/nest/examples/brunel_ps.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/doc/nest/examples/conngen_interface.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/doc/nest/examples/correlospinmatrix_detector.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/doc/nest/examples/hpc_benchmark.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/doc/nest/examples/multimeter.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/doc/nest/examples/music
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/doc/nest/examples/music/clocktest.music
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/doc/nest/examples/music/conttest.music
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/doc/nest/examples/music/conttest.py
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/doc/nest/examples/music/eventtest.music
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/doc/nest/examples/music/messages0.dat
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/doc/nest/examples/music/messages1.dat
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/doc/nest/examples/music/minimalmusicsetup.music
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/doc/nest/examples/music/minimalmusicsetup_receivenest.py
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/doc/nest/examples/music/minimalmusicsetup_sendnest.py
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/doc/nest/examples/music/msgtest.music
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/doc/nest/examples/music/msgtest.py
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/doc/nest/examples/music/spike_exporter.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/doc/nest/examples/music/three_neurons_threaded.music
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/doc/nest/examples/music/three_neurons_threaded_receivenest.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/doc/nest/examples/music/three_neurons_threaded_sendnest.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/doc/nest/examples/structural_plasticity_benchmark.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/doc/nest/EditorSupport/vim/syntax/sli.vim
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/sli/FormattedIO.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/sli/arraylib.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/sli/debug.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/sli/filesystem.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/sli/helpinit.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/sli/library.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/sli/mathematica.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/sli/misc_helpers.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/sli/nest-init.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/sli/oosupport.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/sli/processes.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/sli/ps-lib.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/sli/regexp.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/sli/sli-init.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/sli/typeinit.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/sli/unittest.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/lib/nest/libnestutil.so.3.4
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/lib/nest/libnestutil.so.3
+-- Set runtime path of "/mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/lib/nest/libnestutil.so.3.4" to "$ORIGIN/../lib/nest:$ORIGIN/../../lib/nest:$ORIGIN/../../../nest"
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/lib/nest/libnestutil.so
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/beta_normalization_factor.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/block_vector.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/dict_util.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/enum_bitfield.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/iaf_propagator.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/iterator_pair.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/lockptr.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/logging_event.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/logging.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/numerics.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/regula_falsi.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/sort.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/stopwatch.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/string_utils.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/vector_util.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/config.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/lib/nest/libmodels.so.3.4
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/lib/nest/libmodels.so.3
+-- Set runtime path of "/mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/lib/nest/libmodels.so.3.4" to "$ORIGIN/../lib/nest:$ORIGIN/../../lib/nest:$ORIGIN/../../../nest:/usr/lib/x86_64-linux-gnu/openmpi/lib"
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/lib/nest/libmodels.so
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/ac_generator.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/aeif_cond_alpha.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/aeif_cond_alpha_multisynapse.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/aeif_cond_beta_multisynapse.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/aeif_cond_exp.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/aeif_psc_alpha.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/aeif_psc_exp.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/aeif_psc_delta.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/aeif_psc_delta_clopath.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/amat2_psc_exp.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/bernoulli_synapse.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/binary_neuron.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/cm_default.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/cm_tree.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/cm_compartmentcurrents.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/clopath_synapse.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/cont_delay_synapse.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/cont_delay_synapse_impl.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/correlation_detector.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/correlomatrix_detector.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/correlospinmatrix_detector.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/dc_generator.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/diffusion_connection.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/erfc_neuron.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/gamma_sup_generator.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/gap_junction.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/gauss_rate.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/gif_psc_exp.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/gif_psc_exp_multisynapse.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/gif_cond_exp.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/gif_cond_exp_multisynapse.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/gif_pop_psc_exp.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/ginzburg_neuron.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/glif_cond.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/glif_psc.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/hh_cond_exp_traub.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/hh_cond_beta_gap_traub.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/hh_psc_alpha.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/hh_psc_alpha_clopath.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/hh_psc_alpha_gap.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/ht_synapse.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/ht_neuron.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/iaf_chs_2007.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/iaf_chxk_2008.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/iaf_cond_alpha.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/iaf_cond_alpha_mc.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/iaf_cond_beta.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/iaf_cond_exp.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/iaf_cond_exp_sfa_rr.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/iaf_psc_alpha.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/iaf_psc_alpha_multisynapse.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/iaf_psc_alpha_ps.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/iaf_psc_delta.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/iaf_psc_delta_ps.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/iaf_psc_exp.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/iaf_psc_exp_htum.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/iaf_psc_exp_multisynapse.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/iaf_psc_exp_ps.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/iaf_psc_exp_ps_lossless.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/izhikevich.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/jonke_synapse.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/lin_rate.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/mat2_psc_exp.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/mcculloch_pitts_neuron.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/mip_generator.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/modelsmodule.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/multimeter.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/music_cont_in_proxy.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/music_cont_out_proxy.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/music_event_in_proxy.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/music_event_out_proxy.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/music_rate_in_proxy.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/music_rate_out_proxy.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/music_message_in_proxy.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/noise_generator.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/parrot_neuron.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/parrot_neuron_ps.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/inhomogeneous_poisson_generator.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/poisson_generator.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/poisson_generator_ps.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/pp_psc_delta.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/pp_cond_exp_mc_urbanczik.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/ppd_sup_generator.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/pulsepacket_generator.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/quantal_stp_synapse.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/quantal_stp_synapse_impl.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/rate_connection_delayed.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/rate_connection_instantaneous.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/rate_neuron_opn.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/rate_neuron_opn_impl.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/rate_neuron_ipn.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/rate_neuron_ipn_impl.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/rate_transformer_node.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/rate_transformer_node_impl.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/siegert_neuron.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/sigmoid_rate.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/sigmoid_rate_gg_1998.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/sinusoidal_poisson_generator.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/sinusoidal_gamma_generator.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/spike_recorder.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/spike_generator.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/spin_detector.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/static_synapse.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/static_synapse_hom_w.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/stdp_dopamine_synapse.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/stdp_nn_pre_centered_synapse.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/stdp_nn_restr_synapse.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/stdp_nn_symm_synapse.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/stdp_pl_synapse_hom.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/stdp_synapse.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/stdp_synapse_facetshw_hom.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/stdp_synapse_facetshw_hom_impl.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/stdp_synapse_hom.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/stdp_triplet_synapse.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/step_current_generator.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/step_rate_generator.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/tanh_rate.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/threshold_lin_rate.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/tsodyks2_synapse.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/tsodyks_synapse.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/tsodyks_synapse_hom.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/urbanczik_synapse.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/volume_transmitter.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/vogels_sprekeler_synapse.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/weight_recorder.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/spike_dilutor.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/lib/nest/libsli_readline.so.3.4
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/lib/nest/libsli_readline.so.3
+-- Set runtime path of "/mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/lib/nest/libsli_readline.so.3.4" to "$ORIGIN/../lib/nest:$ORIGIN/../../lib/nest:$ORIGIN/../../../nest"
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/lib/nest/libsli_readline.so
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/lib/nest/libsli.so.3.4
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/lib/nest/libsli.so.3
+-- Set runtime path of "/mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/lib/nest/libsli.so.3.4" to "$ORIGIN/../lib/nest:$ORIGIN/../../lib/nest:$ORIGIN/../../../nest"
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/lib/nest/libsli.so
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/bin/sli
+-- Set runtime path of "/mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/bin/sli" to "$ORIGIN/../lib/nest:$ORIGIN/../../lib/nest:$ORIGIN/../../../nest"
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/allocator.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/aggregatedatum.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/arraydatum.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/booldatum.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/callbackdatum.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/charcode.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/datum.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/dict.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/dictdatum.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/dictstack.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/dictutils.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/doubledatum.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/fdstream.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/filesystem.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/functional.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/functiondatum.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/genericdatum.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/integerdatum.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/interpret.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/iostreamdatum.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/lockptrdatum.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/sharedptrdatum.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/name.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/slinames.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/namedatum.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/numericdatum.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/oosupport.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/parser.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/parserdatum.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/processes.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/scanner.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/sli_io.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/sliactions.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/sliarray.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/slibuiltins.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/slicontrol.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/slidata.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/slidict.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/sliexceptions.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/slifunction.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/sligraphics.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/slimath.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/slimodule.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/sliregexp.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/slistack.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/slistartup.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/slitype.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/slitypecheck.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/specialfunctionsmodule.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/stringdatum.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/symboldatum.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/tarrayobj.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/token.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/tokenarray.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/tokenstack.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/tokenutils.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/triedatum.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/typearray.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/typechk.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/utils.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/gnureadline.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/bin/nest
+-- Set runtime path of "/mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/bin/nest" to "$ORIGIN/../lib/nest:$ORIGIN/../../lib/nest:$ORIGIN/../../../nest:/usr/lib/x86_64-linux-gnu/openmpi/lib"
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/lib/nest/libnest.so.3.4
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/lib/nest/libnest.so.3
+-- Set runtime path of "/mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/lib/nest/libnest.so.3.4" to "$ORIGIN/../lib/nest:$ORIGIN/../../lib/nest:$ORIGIN/../../../nest:/usr/lib/x86_64-linux-gnu/openmpi/lib"
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/lib/nest/libnest.so
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/neststartup.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/lib/nest/libnestkernel.so.3.4
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/lib/nest/libnestkernel.so.3
+-- Set runtime path of "/mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/lib/nest/libnestkernel.so.3.4" to "$ORIGIN/../lib/nest:$ORIGIN/../../lib/nest:$ORIGIN/../../../nest:/usr/lib/x86_64-linux-gnu/openmpi/lib"
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/lib/nest/libnestkernel.so
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/universal_data_logger_impl.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/universal_data_logger.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/recordables_map.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/archiving_node.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/clopath_archiving_node.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/urbanczik_archiving_node.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/urbanczik_archiving_node_impl.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/common_synapse_properties.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/connection.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/connection_label.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/common_properties_hom_w.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/syn_id_delay.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/connector_base.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/connector_base_impl.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/connector_model.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/connector_model_impl.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/connection_id.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/deprecation_warning.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/device.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/device_node.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/dynamicloader.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/event.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/exceptions.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/genericmodel.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/genericmodel_impl.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/node_collection.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/generic_factory.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/histentry.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/model.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/model_manager.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/model_manager_impl.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/nest_types.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/nest_datums.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/nest_names.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/nestmodule.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/nest_time.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/nest_timeconverter.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/modelrange.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/modelrange_manager.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/node.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/parameter.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/per_thread_bool_indicator.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/proxynode.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/random_generators.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/recording_device.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/pseudo_recording_device.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/ring_buffer.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/ring_buffer_impl.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/secondary_event.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/slice_ring_buffer.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/spikecounter.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/stimulation_device.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/target_identifier.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/sparse_node_array.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/conn_parameter.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/conn_builder.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/conn_builder_impl.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/conn_builder_factory.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/conn_builder_conngen.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/music_event_handler.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/music_rate_in_handler.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/music_manager.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/nest.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/nest_impl.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/synaptic_element.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/growth_curve.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/growth_curve_factory.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/kernel_manager.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/vp_manager.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/vp_manager_impl.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/io_manager.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/io_manager_impl.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/mpi_manager.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/mpi_manager_impl.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/simulation_manager.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/connection_manager.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/connection_manager_impl.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/sp_manager.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/sp_manager_impl.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/delay_checker.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/random_manager.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/event_delivery_manager.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/event_delivery_manager_impl.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/node_manager.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/logging_manager.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/recording_backend.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/recording_backend_ascii.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/recording_backend_memory.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/recording_backend_screen.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/manager_interface.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/target_table.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/target_table_devices.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/target_table_devices_impl.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/target.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/target_data.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/static_assert.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/send_buffer_position.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/source.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/source_table.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/source_table_position.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/spike_data.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/structural_plasticity_node.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/connection_creator.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/connection_creator_impl.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/free_layer.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/grid_layer.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/grid_mask.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/layer.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/layer_impl.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/mask.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/mask_impl.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/ntree.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/ntree_impl.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/position.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/spatial.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/stimulation_backend.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/recording_backend_mpi.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/stimulation_backend_mpi.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/compose.hpp
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/randutils.hpp
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/Random123
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/Random123/aes.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/Random123/array.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/Random123/ars.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/Random123/conventional
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/Random123/conventional/gsl_cbrng.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/Random123/features
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/Random123/features/clangfeatures.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/Random123/features/compilerfeatures.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/Random123/features/gccfeatures.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/Random123/features/iccfeatures.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/Random123/features/metalfeatures.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/Random123/features/msvcfeatures.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/Random123/features/nvccfeatures.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/Random123/features/open64features.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/Random123/features/openclfeatures.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/Random123/features/pgccfeatures.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/Random123/features/sse.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/Random123/features/sunprofeatures.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/Random123/features/xlcfeatures.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/Random123/gsl_microrng.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/Random123/philox.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/Random123/tests
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/Random123/tests/kat.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/Random123/tests/kat_main.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/Random123/tests/rngNxW.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/Random123/tests/util.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/Random123/threefry.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/include/nest/Random123/u01fixedpt.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/bin/run_all_cpptests
+-- Set runtime path of "/mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/bin/run_all_cpptests" to "$ORIGIN/../lib/nest:$ORIGIN/../../lib/nest:$ORIGIN/../../../nest:/usr/lib/x86_64-linux-gnu/openmpi/lib"
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/selftests
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/selftests/CMakeLists.txt
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/selftests/exitcode0.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/selftests/exitcode1.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/selftests/exitcode126.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/selftests/exitcode2.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/selftests/exitcode3.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/selftests/exitcode99.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/selftests/test_assert_or_die_b.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/selftests/test_assert_or_die_p.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/selftests/test_badhandler.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/selftests/test_crash_or_die.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/selftests/test_fail.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/selftests/test_fail_or_die.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/selftests/test_failbutnocrash_or_die_crash.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/selftests/test_failbutnocrash_or_die_pass.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/selftests/test_goodhandler.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/selftests/test_lazyhandler.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/selftests/test_pass.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/selftests/test_pass_or_die.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/selftests/test_passorfailbutnocrash_or_die.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/selftests/test_stop.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/unittests
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/unittests/CMakeLists.txt
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/unittests/issue-463.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/unittests/issue-565.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/unittests/model_node_init.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/unittests/test_DoubleVector_IntVector.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/unittests/test_GetConnections.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/unittests/test_Map.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/unittests/test_MapIndexed.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/unittests/test_ac_generator.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/unittests/test_add_freeze_thaw.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/unittests/test_aeif_cond_alpha_multisynapse.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/unittests/test_aeif_cond_beta_multisynapse.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/unittests/test_amat2_psc_exp.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/unittests/test_bernoulli_synapse.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/unittests/test_binary.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/unittests/test_common_props_setting.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/unittests/test_compare_delta.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/unittests/test_cond_exp_models.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/unittests/test_connect.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/unittests/test_connect_after_simulate.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/unittests/test_connect_with_threads.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/unittests/test_cont_delay_synapse.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/unittests/test_copymodel.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/unittests/test_corr_det.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/unittests/test_corr_matrix_det.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/unittests/test_correlospinmatrix_detector.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/unittests/test_count_connections.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/unittests/test_cva.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/unittests/test_cvi.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/unittests/test_dcgen_versus_I_e.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/unittests/test_default_delays_weights.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/unittests/test_delay_after_res_change.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/unittests/test_delay_check.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/unittests/test_dirname.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/unittests/test_distance.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/unittests/test_fast_operators.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/unittests/test_free_mask_circ_anchor_00.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/unittests/test_free_mask_circ_anchor_01.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/unittests/test_free_mask_circ_anchor_10.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/unittests/test_free_mask_circ_anchor_11.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/unittests/test_free_mask_donut_anchor_00.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/unittests/test_free_mask_donut_anchor_01.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/unittests/test_free_mask_donut_anchor_10.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/unittests/test_free_mask_donut_anchor_11.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/unittests/test_free_mask_rect_00.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/unittests/test_free_mask_rect_01.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/unittests/test_free_mask_rect_11.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/unittests/test_free_mask_rect_13.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/unittests/test_gamma_sup_generator.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/unittests/test_gap_junction.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/unittests/test_gif_cond_exp.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/unittests/test_gif_cond_exp_multisynapse.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/unittests/test_gif_pop_psc_exp.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/unittests/test_gif_psc_exp.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/unittests/test_gif_psc_exp_multisynapse.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/unittests/test_ginzburg_and_mcculloch.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/unittests/test_hh_cond_beta_gap_traub.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/unittests/test_hh_cond_exp_traub.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/unittests/test_hh_psc_alpha_gap.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/unittests/test_hpc_synapse.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/unittests/test_iaf.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/unittests/test_iaf_1to2.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/unittests/test_iaf_1to2_default_delay.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/unittests/test_iaf_1to2_ex.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/unittests/test_iaf_dc.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/unittests/test_iaf_dc_aligned.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/unittests/test_iaf_dc_aligned_automatic.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/unittests/test_iaf_dc_aligned_delay.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/unittests/test_iaf_dc_aligned_stop.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/unittests/test_iaf_fudge.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/unittests/test_iaf_i0.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/unittests/test_iaf_i0_refractory.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/unittests/test_iaf_min_delay_create.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/unittests/test_iaf_min_delay_set.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/unittests/test_iaf_min_delay_simblocks.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/unittests/test_iaf_ps_dc_accuracy.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/unittests/test_iaf_ps_dc_t_accuracy.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/unittests/test_iaf_ps_psp_accuracy.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/unittests/test_iaf_ps_psp_poisson_accuracy.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/unittests/test_iaf_ps_psp_poisson_generator_accuracy.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/unittests/test_iaf_psc_alpha_multisynapse.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/unittests/test_iaf_psc_exp.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/unittests/test_iaf_psc_exp_multisynapse.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/unittests/test_iaf_psc_exp_ps.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/unittests/test_iaf_psc_exp_ps_lossless.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/unittests/test_iaf_psp.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/unittests/test_iaf_psp_normalized.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/unittests/test_iaf_psp_peak.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/unittests/test_inh_stdp_synapse.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/unittests/test_inhomogeneous_poisson_generator.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/unittests/test_lambertw.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/unittests/test_mat2_psc_exp.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/unittests/test_max_delay.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/unittests/test_message.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/unittests/test_min_delay.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/unittests/test_min_delay_tics_reset.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/unittests/test_mip_corrdet.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/unittests/test_multimeter.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/unittests/test_multimeter_freeze_thaw.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/unittests/test_multimeter_offset.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/unittests/test_multimeter_stepping.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/unittests/test_multimeter_support.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/unittests/test_multiple_multimeter.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/unittests/test_multiple_random_source_stepping.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/unittests/test_multisynapse_models.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/unittests/test_multithreading.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/unittests/test_neurons_handle_multiplicity.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/unittests/test_node_collection.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/unittests/test_noise_generator.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/unittests/test_ntree_split.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/unittests/test_oversize_mask.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/unittests/test_poisson_generator_campbell_alpha.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/unittests/test_poisson_generator_ps.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/unittests/test_poisson_ps_intervals.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/unittests/test_poisson_ps_min_interval.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/unittests/test_pp_psc_delta.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/unittests/test_ppd_sup_generator.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/unittests/test_psp_amplitude_consistency.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/unittests/test_pulsepacket_generator.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/unittests/test_rate_connections.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/unittests/test_reg_mask_circ_anchor_00.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/unittests/test_reg_mask_circ_anchor_01.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/unittests/test_reg_mask_circ_anchor_10.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/unittests/test_reg_mask_circ_anchor_11.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/unittests/test_reg_mask_donut_anchor_00.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/unittests/test_reg_mask_donut_anchor_01.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/unittests/test_reg_mask_donut_anchor_10.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/unittests/test_reg_mask_donut_anchor_11.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/unittests/test_reg_mask_grid_anchor_00.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/unittests/test_reg_mask_grid_anchor_01.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/unittests/test_reg_mask_grid_anchor_02.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/unittests/test_reg_mask_grid_anchor_03.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/unittests/test_reg_mask_grid_anchor_04.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/unittests/test_reg_mask_grid_anchor_05.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/unittests/test_reg_mask_grid_anchor_06.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/unittests/test_reg_mask_grid_anchor_10.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/unittests/test_reg_mask_grid_anchor_11.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/unittests/test_reg_mask_grid_anchor_13.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/unittests/test_reg_mask_grid_anchor_15.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/unittests/test_reg_mask_rect_00.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/unittests/test_reg_mask_rect_01.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/unittests/test_reg_mask_rect_02.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/unittests/test_reg_mask_rect_10.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/unittests/test_reg_mask_rect_11.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/unittests/test_round.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/unittests/test_rows_cols_pos.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/unittests/test_set_Vm.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/unittests/test_set_delay_extrema.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/unittests/test_set_start_stop_origin.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/unittests/test_set_tics.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/unittests/test_setconnections_threads.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/unittests/test_sinusoidal_gamma_generator.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/unittests/test_sinusoidal_poisson_generator.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/unittests/test_sort.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/unittests/test_spike_dilutor.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/unittests/test_spike_generator.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/unittests/test_spike_poisson_ps.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/unittests/test_spike_poisson_ps_base2.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/unittests/test_spike_rec_reset.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/unittests/test_spike_recorder.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/unittests/test_spike_transmission_ps.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/unittests/test_spike_transmission_ps_iaf.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/unittests/test_spin_detector.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/unittests/test_stdp_synapse.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/unittests/test_step_current_generator.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/unittests/test_steppedsim.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/unittests/test_symmetric_connections.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/unittests/test_syn_hom_w.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/unittests/test_thread_local_ids.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/unittests/test_threaded_multimeter.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/unittests/test_threaded_spike_recorder.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/unittests/test_time_input.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/unittests/test_tsodyks_depressing.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/unittests/test_tsodyks_facilitating.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/unittests/test_two_devices.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/unittests/test_voltmeter_reset.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/unittests/test_weight_delay.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/unittests/test_weight_delay_free.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/unittests/test_wfr_settings.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/regressiontests
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/regressiontests/CMakeLists.txt
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/regressiontests/issue-105.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/regressiontests/issue-1085.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/regressiontests/issue-1100.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/regressiontests/issue-1140.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/regressiontests/issue-1212.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/regressiontests/issue-1242.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/regressiontests/issue-1305.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/regressiontests/issue-1366.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/regressiontests/issue-1610.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/regressiontests/issue-1640.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/regressiontests/issue-1703.py
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/regressiontests/issue-2052.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/regressiontests/issue-211.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/regressiontests/issue-2282.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/regressiontests/issue-264.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/regressiontests/issue-311.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/regressiontests/issue-327.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/regressiontests/issue-351.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/regressiontests/issue-368.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/regressiontests/issue-410.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/regressiontests/issue-437.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/regressiontests/issue-521.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/regressiontests/issue-545.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/regressiontests/issue-596.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/regressiontests/issue-659.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/regressiontests/issue-665.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/regressiontests/issue-707.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/regressiontests/issue-708.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/regressiontests/issue-735.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/regressiontests/issue-737-threads.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/regressiontests/issue-737.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/regressiontests/issue-740.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/regressiontests/issue-77.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/regressiontests/issue-779-1016.py
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/regressiontests/issue-832.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/regressiontests/issue-888.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/regressiontests/ticket-156.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/regressiontests/ticket-157.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/regressiontests/ticket-235.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/regressiontests/ticket-293.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/regressiontests/ticket-310.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/regressiontests/ticket-349.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/regressiontests/ticket-382.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/regressiontests/ticket-386.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/regressiontests/ticket-414.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/regressiontests/ticket-421.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/regressiontests/ticket-433.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/regressiontests/ticket-451.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/regressiontests/ticket-452.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/regressiontests/ticket-459.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/regressiontests/ticket-464.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/regressiontests/ticket-466.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/regressiontests/ticket-475.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/regressiontests/ticket-478.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/regressiontests/ticket-481.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/regressiontests/ticket-507.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/regressiontests/ticket-514.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/regressiontests/ticket-537.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/regressiontests/ticket-564.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/regressiontests/ticket-566.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/regressiontests/ticket-573.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/regressiontests/ticket-580.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/regressiontests/ticket-618.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/regressiontests/ticket-619.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/regressiontests/ticket-638.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/regressiontests/ticket-643.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/regressiontests/ticket-673.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/regressiontests/ticket-681.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/regressiontests/ticket-686-positive-parameters.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/regressiontests/ticket-689.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/regressiontests/ticket-692-getconnections-args.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/regressiontests/ticket-710.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/regressiontests/ticket-716.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/regressiontests/ticket-733.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/regressiontests/ticket-737.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/regressiontests/ticket-754.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/regressiontests/ticket-772.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/regressiontests/ticket-777.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/regressiontests/ticket-784.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/regressiontests/ticket-785.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/regressiontests/ticket-787.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/regressiontests/ticket-798.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/regressiontests/ticket-80-175-179.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/regressiontests/ticket-800.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/regressiontests/ticket-85.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/regressiontests/ticket-881.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/regressiontests/ticket-903.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/regressiontests/ticket-921.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/regressiontests/ticket-926.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/regressiontests/ticket-941.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/regressiontests/ticket-949.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/regressiontests/ticket-959.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/mpitests
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/mpitests/CMakeLists.txt
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/mpitests/README
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/mpitests/issue-1957.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/mpitests/issue-1974.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/mpitests/issue-2119.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/mpitests/issue-281.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/mpitests/issue-600.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/mpitests/test_all_to_all.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/mpitests/test_connect_array_all_to_all_mpi.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/mpitests/test_connect_array_fixed_indegree_mpi.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/mpitests/test_connect_array_fixed_outdegree_mpi.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/mpitests/test_delay_exchange.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/mpitests/test_fixed_indegree.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/mpitests/test_gamma_sup_generator.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/mpitests/test_gap_junctions_mpi.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/mpitests/test_get_nodes.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/mpitests/test_ginzburg_neuron.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/mpitests/test_global_rng.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/mpitests/test_iaf_ring.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/mpitests/test_localonly.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/mpitests/test_mini_brunel_ps.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/mpitests/test_mip_generator.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/mpitests/test_multiple_synapses.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/mpitests/test_multiple_synapses_spatial_networks.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/mpitests/test_multiplicity.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/mpitests/test_neuron_vp.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/mpitests/test_neuron_vp_global.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/mpitests/test_noise_generator.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/mpitests/test_one_to_one.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/mpitests/test_pairwise_bernoulli.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/mpitests/test_parallel_conn_and_rand.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/mpitests/test_poisson_generator.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/mpitests/test_poisson_generator_ps.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/mpitests/test_pp_psc_delta.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/mpitests/test_ppd_sup_generator.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/mpitests/test_pulsepacket_generator.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/mpitests/test_rate_neurons_mpi.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/mpitests/test_sinusoidal_gamma_generator_1.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/mpitests/test_sinusoidal_gamma_generator_2.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/mpitests/test_sinusoidal_gamma_generator_3.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/mpitests/test_sinusoidal_gamma_generator_4.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/mpitests/test_sinusoidal_poisson_generator_1.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/mpitests/test_sinusoidal_poisson_generator_2.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/mpitests/test_sinusoidal_poisson_generator_3.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/mpitests/test_sinusoidal_poisson_generator_4.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/mpitests/test_sinusoidal_poisson_generator_5.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/mpitests/test_sinusoidal_poisson_generator_6.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/mpitests/test_spatial_distributed_positions.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/mpitests/test_spatial_pairwise_bernoulli_on_source_param.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/mpitests/test_symmetric_connections_mpi.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/mpitests/ticket-400.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/mpitests/ticket-516.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/mpitests/ticket-955.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/mpitests/topo_mpi_test_free_layer_to_layer_pairwise_bernoulli_on_source.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/mpitests/topo_mpi_test_free_layer_to_layer_pairwise_bernoulli_on_target.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/mpitests/topo_mpi_test_free_layer_to_layer_source_driven.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/mpitests/topo_mpi_test_free_layer_to_layer_target_driven.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/mpitests/topo_mpi_test_free_layer_to_sd_target_driven.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/mpitests/topo_mpi_test_free_pg_to_layer_pairwise_bernoulli_on_source.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/mpitests/topo_mpi_test_free_pg_to_layer_pairwise_bernoulli_on_target.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/mpitests/topo_mpi_test_free_pg_to_layer_source_driven.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/mpitests/topo_mpi_test_free_pg_to_layer_target_driven.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/mpitests/topo_mpi_test_pairwise_bernoulli_on_source.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/mpitests/topo_mpi_test_pairwise_bernoulli_on_target.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/mpi_selftests
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/mpi_selftests/fail
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/mpi_selftests/fail/CMakeLists.txt
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/mpi_selftests/fail/crash_distributed_assert_or_die.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/mpi_selftests/fail/crash_distributed_collect_assert_or_die.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/mpi_selftests/fail/crash_distributed_invariant_assert_or_die.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/mpi_selftests/fail/crash_distributed_pass_or_die.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/mpi_selftests/fail/crash_distributed_process_invariant_collect_assert_or_die.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/mpi_selftests/fail/crash_distributed_process_invariant_events_assert_or_die.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/mpi_selftests/fail/crash_distributed_rank_invariant_collect_assert_or_die.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/mpi_selftests/fail/fail_distributed_assert_or_die.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/mpi_selftests/fail/fail_distributed_collect_assert_or_die.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/mpi_selftests/fail/fail_distributed_invariant_assert_or_die.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/mpi_selftests/fail/fail_distributed_pass_or_die.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/mpi_selftests/fail/fail_distributed_process_invariant_collect_assert_or_die.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/mpi_selftests/fail/fail_distributed_process_invariant_events_assert_or_die.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/mpi_selftests/fail/fail_distributed_rank_invariant_collect_assert_or_die.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/mpi_selftests/pass
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/mpi_selftests/pass/CMakeLists.txt
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/mpi_selftests/pass/test_distributed_assert_or_die.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/mpi_selftests/pass/test_distributed_collect_assert_or_die.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/mpi_selftests/pass/test_distributed_invariant_assert_or_die.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/mpi_selftests/pass/test_distributed_pass_or_die.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/mpi_selftests/pass/test_distributed_process_invariant_collect_assert_or_die.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/mpi_selftests/pass/test_distributed_process_invariant_events_assert_or_die.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/mpi_selftests/pass/test_distributed_rank_invariant_collect_assert_or_die.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/mpi_selftests/pass/test_parse_message_line.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/musictests
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/musictests/CMakeLists.txt
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/musictests/README.md
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/musictests/empty.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/musictests/test_cont_proxy.music
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/musictests/test_cont_proxy_receiver.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/musictests/test_cont_proxy_sender.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/musictests/test_event_proxies.music
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/musictests/test_event_proxies.sh
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/musictests/test_event_proxies_issue-696.music
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/musictests/test_event_proxies_issue-696_receiver.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/musictests/test_event_proxies_issue-696_sender.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/musictests/test_event_proxies_receiver.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/musictests/test_event_proxies_sender.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/musictests/test_message.music
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/musictests/test_message0.dat
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/musictests/test_message_receiver.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/musictests/test_music_failure1.music
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/musictests/test_music_failure2.music
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/musictests/test_rate_proxy.music
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/musictests/test_rate_proxy_receiver.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/musictests/test_rate_proxy_sender.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/cpptests
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/cpptests/CMakeLists.txt
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/cpptests/README.md
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/cpptests/run_all.cpp
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/cpptests/test_block_vector.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/cpptests/test_enum_bitfield.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/cpptests/test_parameter.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/cpptests/test_sort.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/cpptests/test_target_fields.h
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/pytests
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/pytests/connect_test_base.py
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/pytests/mpi
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/pytests/mpi/2
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/pytests/mpi/2/connect_test_base.py
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/pytests/mpi/2/test_connect_all_to_all.py
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/pytests/mpi/2/test_connect_arrays_mpi.py
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/pytests/mpi/2/test_connect_fixed_indegree.py
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/pytests/mpi/2/test_connect_fixed_outdegree.py
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/pytests/mpi/2/test_connect_fixed_total_number.py
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/pytests/mpi/2/test_connect_one_to_one.py
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/pytests/mpi/2/test_connect_pairwise_bernoulli.py
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/pytests/mpi/2/test_connect_symmetric_pairwise_bernoulli.py
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/pytests/mpi/2/test_issue_576.py
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/pytests/mpi/2/test_spatial_positions.py
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/pytests/mpi/2/test_synapsecollection_mpi.py
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/pytests/mpi/4
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/pytests/mpi/4/test_consistent_local_vps.py
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/pytests/mpi/4/test_set_status_resolution_nthreads.py
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/pytests/mpi/4/test_spatial_positions.py
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/pytests/mpi/README.md
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/pytests/test_NodeCollection.py
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/pytests/test_aeif_data_lsodar.dat
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/pytests/test_aeif_lsodar.py
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/pytests/test_changing_tic_base.py
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/pytests/test_clopath_synapse.py
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/pytests/test_compartmental_model.py
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/pytests/test_connect_all_to_all.py
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/pytests/test_connect_array_fixed_indegree.py
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/pytests/test_connect_array_fixed_outdegree.py
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/pytests/test_connect_arrays.py
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/pytests/test_connect_conngen.py
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/pytests/test_connect_fixed_indegree.py
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/pytests/test_connect_fixed_outdegree.py
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/pytests/test_connect_fixed_total_number.py
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/pytests/test_connect_one_to_one.py
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/pytests/test_connect_pairwise_bernoulli.py
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/pytests/test_connect_symmetric_pairwise_bernoulli.py
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/pytests/test_copy_model.py
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/pytests/test_create.py
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/pytests/test_current_recording_generators.py
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/pytests/test_erfc_neuron.py
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/pytests/test_errors.py
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/pytests/test_events.py
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/pytests/test_facetshw_stdp.py
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/pytests/test_get_set.py
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/pytests/test_getconnections.py
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/pytests/test_getnodes.py
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/pytests/test_glif_cond.py
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/pytests/test_glif_psc.py
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/pytests/test_helper_functions.py
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/pytests/test_iaf_singularity.py
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/pytests/test_jonke_synapse.py
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/pytests/test_json.py
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/pytests/test_labeled_synapses.py
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/pytests/test_mc_neuron.py
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/pytests/test_multiple_synapses.py
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/pytests/test_nodeParametrization.py
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/pytests/test_onetooneconnect.py
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/pytests/test_parameter.py
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/pytests/test_parrot_neuron.py
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/pytests/test_parrot_neuron_ps.py
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/pytests/test_poisson_generator_rate_change.py
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/pytests/test_pp_psc_delta.py
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/pytests/test_pp_psc_delta_stdp.py
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/pytests/test_quantal_stp_synapse.py
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/pytests/test_random123.py
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/pytests/test_random_parameter.py
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/pytests/test_rate_copy_model.py
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/pytests/test_rate_instantaneous_and_delayed.py
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/pytests/test_rate_neuron.py
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/pytests/test_rate_neuron_communication.py
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/pytests/test_recording_backend_ascii.py
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/pytests/test_recording_backend_memory.py
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/pytests/test_recording_backends.py
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/pytests/test_refractory.py
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/pytests/test_regression_issue-1034.py
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/pytests/test_regression_issue-1409.py
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/pytests/test_regression_issue-2069.py
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/pytests/test_regression_issue-2125.py
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/pytests/test_regression_issue-2480.py
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/pytests/test_siegert_neuron.py
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/pytests/test_sp
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/pytests/test_sp/test_conn_builder.py
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/pytests/test_sp/test_disconnect.py
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/pytests/test_sp/test_disconnect_multiple.py
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/pytests/test_sp/test_enable_multithread.py
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/pytests/test_sp/test_growth_curves.py
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/pytests/test_sp/test_sp_manager.py
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/pytests/test_sp/test_synaptic_elements.py
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/pytests/test_sp/test_update_synaptic_elements.py
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/pytests/test_spatial
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/pytests/test_spatial/test_SynapseCollection_distance.py
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/pytests/test_spatial/test_basics.py
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/pytests/test_spatial/test_connect_layers.py
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/pytests/test_spatial/test_connect_sliced.py
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/pytests/test_spatial/test_connection_with_elliptical_mask.py
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/pytests/test_spatial/test_create_spatial.py
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/pytests/test_spatial/test_dumping.py
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/pytests/test_spatial/test_layerNodeCollection.py
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/pytests/test_spatial/test_layer_GetStatus_SetStatus.py
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/pytests/test_spatial/test_plotting.py
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/pytests/test_spatial/test_rotated_rect_mask.py
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/pytests/test_spatial/test_selection_function_and_elliptical_mask.py
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/pytests/test_spatial/test_spatial_distributions.py
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/pytests/test_spatial_positions.py
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/pytests/test_split_simulation.py
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/pytests/test_stack.py
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/pytests/test_status.py
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/pytests/test_stdp_multiplicity.py
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/pytests/test_stdp_nn_synapses.py
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/pytests/test_stdp_synapse.py
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/pytests/test_stdp_triplet_synapse.py
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/pytests/test_step_rate_generator.py
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/pytests/test_synapsecollection.py
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/pytests/test_threads.py
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/pytests/test_tsodyks2_synapse.py
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/pytests/test_urbanczik_synapse.py
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/pytests/test_visualization.py
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/pytests/test_vogels_sprekeler_synapse.py
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/pytests/test_weight_recorder.py
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/pytests/test_weights_as_lists.py
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/do_tests.sh
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/bin/nest_indirect
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/bin/nest_serial
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/junit_xml.sh
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/run_test.sh
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/nest/testsuite/summarize_tests.py
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/lib/python3.10/site-packages/nest
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/lib/python3.10/site-packages/nest/__init__.py
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/lib/python3.10/site-packages/nest/lib
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/lib/python3.10/site-packages/nest/lib/README.md
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/lib/python3.10/site-packages/nest/lib/__init__.py
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/lib/python3.10/site-packages/nest/lib/hl_api_connection_helpers.py
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/lib/python3.10/site-packages/nest/lib/hl_api_connections.py
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/lib/python3.10/site-packages/nest/lib/hl_api_exceptions.py
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/lib/python3.10/site-packages/nest/lib/hl_api_helper.py
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/lib/python3.10/site-packages/nest/lib/hl_api_info.py
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/lib/python3.10/site-packages/nest/lib/hl_api_models.py
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/lib/python3.10/site-packages/nest/lib/hl_api_nodes.py
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/lib/python3.10/site-packages/nest/lib/hl_api_parallel_computing.py
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/lib/python3.10/site-packages/nest/lib/hl_api_simulation.py
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/lib/python3.10/site-packages/nest/lib/hl_api_spatial.py
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/lib/python3.10/site-packages/nest/lib/hl_api_types.py
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/lib/python3.10/site-packages/nest/ll_api.py
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/lib/python3.10/site-packages/nest/logic
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/lib/python3.10/site-packages/nest/logic/__init__.py
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/lib/python3.10/site-packages/nest/logic/hl_api_logic.py
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/lib/python3.10/site-packages/nest/math
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/lib/python3.10/site-packages/nest/math/__init__.py
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/lib/python3.10/site-packages/nest/math/hl_api_math.py
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/lib/python3.10/site-packages/nest/pynest-init.sli
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/lib/python3.10/site-packages/nest/random
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/lib/python3.10/site-packages/nest/random/__init__.py
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/lib/python3.10/site-packages/nest/random/hl_api_random.py
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/lib/python3.10/site-packages/nest/raster_plot.py
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/lib/python3.10/site-packages/nest/server
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/lib/python3.10/site-packages/nest/server/__init__.py
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/lib/python3.10/site-packages/nest/server/hl_api_server.py
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/lib/python3.10/site-packages/nest/spatial
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/lib/python3.10/site-packages/nest/spatial/__init__.py
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/lib/python3.10/site-packages/nest/spatial/hl_api_spatial.py
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/lib/python3.10/site-packages/nest/spatial_distributions
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/lib/python3.10/site-packages/nest/spatial_distributions/__init__.py
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/lib/python3.10/site-packages/nest/spatial_distributions/hl_api_spatial_distributions.py
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/lib/python3.10/site-packages/nest/visualization.py
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/lib/python3.10/site-packages/nest/voltage_trace.py
+-- Up-to-date: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/lib/python3.10/site-packages/nest
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/lib/python3.10/site-packages/nest/versionchecker.py
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/lib/python3.10/site-packages/nest/pynestkernel.so
+-- Set runtime path of "/mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/lib/python3.10/site-packages/nest/pynestkernel.so" to "$ORIGIN/../lib/nest:$ORIGIN/../../lib/nest:$ORIGIN/../../../nest:/usr/lib/x86_64-linux-gnu/openmpi/lib"
+running install_egg_info
+/opt/mozaik/lib/python3.10/site-packages/setuptools/command/install.py:34: SetuptoolsDeprecationWarning: setup.py install is deprecated. Use build and pip and other standards-based tools.
+  warnings.warn(
+running egg_info
+creating nest_simulator.egg-info
+writing nest_simulator.egg-info/PKG-INFO
+writing dependency_links to nest_simulator.egg-info/dependency_links.txt
+writing requirements to nest_simulator.egg-info/requires.txt
+writing top-level names to nest_simulator.egg-info/top_level.txt
+writing manifest file 'nest_simulator.egg-info/SOURCES.txt'
+reading manifest file 'nest_simulator.egg-info/SOURCES.txt'
+writing manifest file 'nest_simulator.egg-info/SOURCES.txt'
+Copying nest_simulator.egg-info to /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/lib/python3.10/site-packages/nest_simulator-3.4.egg-info
+WARNING: Cache entry deserialization failed, entry ignored
+Requirement already satisfied: numpy in /opt/mozaik/lib/python3.10/site-packages (from -r /dev/stdin (line 1)) (1.26.4)
+Requirement already satisfied: scipy in /opt/mozaik/lib/python3.10/site-packages (from -r /dev/stdin (line 2)) (1.15.3)
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/doc/nest/examples/pynest
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/doc/nest/examples/pynest/BrodyHopfield.py
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/doc/nest/examples/pynest/CampbellSiegert.py
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/doc/nest/examples/pynest/Potjans_2014
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/doc/nest/examples/pynest/Potjans_2014/README.rst
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/doc/nest/examples/pynest/Potjans_2014/box_plot.png
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/doc/nest/examples/pynest/Potjans_2014/helpers.py
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/doc/nest/examples/pynest/Potjans_2014/microcircuit.png
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/doc/nest/examples/pynest/Potjans_2014/network.py
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/doc/nest/examples/pynest/Potjans_2014/network_params.py
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/doc/nest/examples/pynest/Potjans_2014/raster_plot.png
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/doc/nest/examples/pynest/Potjans_2014/reference_data
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/doc/nest/examples/pynest/Potjans_2014/reference_data/population_nodeids.dat
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/doc/nest/examples/pynest/Potjans_2014/reference_data/rate0.dat
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/doc/nest/examples/pynest/Potjans_2014/reference_data/rate1.dat
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/doc/nest/examples/pynest/Potjans_2014/reference_data/rate2.dat
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/doc/nest/examples/pynest/Potjans_2014/reference_data/rate3.dat
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/doc/nest/examples/pynest/Potjans_2014/reference_data/rate4.dat
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/doc/nest/examples/pynest/Potjans_2014/reference_data/rate5.dat
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/doc/nest/examples/pynest/Potjans_2014/reference_data/rate6.dat
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/doc/nest/examples/pynest/Potjans_2014/reference_data/rate7.dat
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/doc/nest/examples/pynest/Potjans_2014/reference_data/spike_recorder-7718-0.dat
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/doc/nest/examples/pynest/Potjans_2014/reference_data/spike_recorder-7719-0.dat
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/doc/nest/examples/pynest/Potjans_2014/reference_data/spike_recorder-7720-0.dat
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/doc/nest/examples/pynest/Potjans_2014/reference_data/spike_recorder-7721-0.dat
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/doc/nest/examples/pynest/Potjans_2014/reference_data/spike_recorder-7722-0.dat
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/doc/nest/examples/pynest/Potjans_2014/reference_data/spike_recorder-7723-0.dat
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/doc/nest/examples/pynest/Potjans_2014/reference_data/spike_recorder-7724-0.dat
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/doc/nest/examples/pynest/Potjans_2014/reference_data/spike_recorder-7725-0.dat
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/doc/nest/examples/pynest/Potjans_2014/run_microcircuit.py
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/doc/nest/examples/pynest/Potjans_2014/sim_params.py
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/doc/nest/examples/pynest/Potjans_2014/stimulus_params.py
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/doc/nest/examples/pynest/README.rst
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/doc/nest/examples/pynest/aeif_cond_beta_multisynapse.py
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/doc/nest/examples/pynest/balancedneuron.py
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/doc/nest/examples/pynest/brette_gerstner_fig_2c.py
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/doc/nest/examples/pynest/brette_gerstner_fig_3d.py
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/doc/nest/examples/pynest/brunel-py-ex-12502-0.gdf
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/doc/nest/examples/pynest/brunel-py-in-12503-0.gdf
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/doc/nest/examples/pynest/brunel_alpha_evolution_strategies.py
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/doc/nest/examples/pynest/brunel_alpha_nest.py
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/doc/nest/examples/pynest/brunel_delta_nest.py
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/doc/nest/examples/pynest/brunel_exp_multisynapse_nest.py
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/doc/nest/examples/pynest/brunel_siegert_nest.py
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/doc/nest/examples/pynest/clopath_synapse_small_network.py
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/doc/nest/examples/pynest/clopath_synapse_spike_pairing.py
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/doc/nest/examples/pynest/compartmental_model
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/doc/nest/examples/pynest/compartmental_model/README.rst
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/doc/nest/examples/pynest/compartmental_model/receptors_and_current.py
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/doc/nest/examples/pynest/compartmental_model/two_comps.py
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/doc/nest/examples/pynest/correlospinmatrix_detector_two_neuron.py
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/doc/nest/examples/pynest/cross_check_mip_corrdet.py
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/doc/nest/examples/pynest/csa_example.py
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/doc/nest/examples/pynest/csa_spatial_example.py
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/doc/nest/examples/pynest/evaluate_quantal_stp_synapse.py
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/doc/nest/examples/pynest/evaluate_tsodyks2_synapse.py
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/doc/nest/examples/pynest/gap_junctions_inhibitory_network.py
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/doc/nest/examples/pynest/gap_junctions_two_neurons.py
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/doc/nest/examples/pynest/gif_cond_exp_multisynapse.py
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/doc/nest/examples/pynest/gif_pop_psc_exp.py
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/doc/nest/examples/pynest/gif_population.py
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/doc/nest/examples/pynest/glif_cond_neuron.py
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/doc/nest/examples/pynest/glif_psc_neuron.py
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/doc/nest/examples/pynest/hh_phaseplane.py
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/doc/nest/examples/pynest/hh_psc_alpha.py
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/doc/nest/examples/pynest/hpc_benchmark.py
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/doc/nest/examples/pynest/hpc_benchmark_connectivity.svg
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/doc/nest/examples/pynest/if_curve.py
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/doc/nest/examples/pynest/intrinsic_currents_spiking.py
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/doc/nest/examples/pynest/intrinsic_currents_subthreshold.py
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/doc/nest/examples/pynest/lin_rate_ipn_network.py
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/doc/nest/examples/pynest/mc_neuron.py
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/doc/nest/examples/pynest/multimeter_file.py
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/doc/nest/examples/pynest/music_cont_out_proxy_example
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/doc/nest/examples/pynest/music_cont_out_proxy_example/README.md
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/doc/nest/examples/pynest/music_cont_out_proxy_example/README.rst
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/doc/nest/examples/pynest/music_cont_out_proxy_example/nest_script.py
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/doc/nest/examples/pynest/music_cont_out_proxy_example/receiver_script.py
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/doc/nest/examples/pynest/music_cont_out_proxy_example/test.music
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/doc/nest/examples/pynest/one_neuron.py
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/doc/nest/examples/pynest/one_neuron_with_noise.py
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/doc/nest/examples/pynest/plot_weight_matrices.py
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/doc/nest/examples/pynest/pong
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/doc/nest/examples/pynest/pong/README.rst
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/doc/nest/examples/pynest/pong/generate_gif.py
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/doc/nest/examples/pynest/pong/networks.py
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/doc/nest/examples/pynest/pong/pong.py
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/doc/nest/examples/pynest/pong/run_simulations.py
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/doc/nest/examples/pynest/precise_spiking.py
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/doc/nest/examples/pynest/pulsepacket.py
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/doc/nest/examples/pynest/rate_neuron_dm.py
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/doc/nest/examples/pynest/recording_demo.py
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/doc/nest/examples/pynest/repeated_stimulation.py
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/doc/nest/examples/pynest/sensitivity_to_perturbation.py
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/doc/nest/examples/pynest/sinusoidal_gamma_generator.py
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/doc/nest/examples/pynest/sinusoidal_poisson_generator.py
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/doc/nest/examples/pynest/spatial
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/doc/nest/examples/pynest/spatial/README.rst
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/doc/nest/examples/pynest/spatial/conncomp.py
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/doc/nest/examples/pynest/spatial/conncon_sources.py
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/doc/nest/examples/pynest/spatial/conncon_targets.py
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/doc/nest/examples/pynest/spatial/connex.py
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/doc/nest/examples/pynest/spatial/connex_ew.py
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/doc/nest/examples/pynest/spatial/ctx_2n.py
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/doc/nest/examples/pynest/spatial/gaussex.py
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/doc/nest/examples/pynest/spatial/grid_iaf.py
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/doc/nest/examples/pynest/spatial/grid_iaf_irr.py
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/doc/nest/examples/pynest/spatial/grid_iaf_oc.py
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/doc/nest/examples/pynest/spatial/nodes_source_target.py
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/doc/nest/examples/pynest/spatial/test_3d.py
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/doc/nest/examples/pynest/spatial/test_3d_exp.py
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/doc/nest/examples/pynest/spatial/test_3d_gauss.py
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/doc/nest/examples/pynest/store_restore_network.py
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/doc/nest/examples/pynest/structural_plasticity.py
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/doc/nest/examples/pynest/sudoku
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/doc/nest/examples/pynest/sudoku/README.rst
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/doc/nest/examples/pynest/sudoku/helpers.py
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/doc/nest/examples/pynest/sudoku/output
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/doc/nest/examples/pynest/sudoku/output/sudoku_noise_comparison.gif
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/doc/nest/examples/pynest/sudoku/output/sudoku_solution.gif
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/doc/nest/examples/pynest/sudoku/output/sudoku_solution.png
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/doc/nest/examples/pynest/sudoku/plot_progress.py
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/doc/nest/examples/pynest/sudoku/sudoku_net.py
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/doc/nest/examples/pynest/sudoku/sudoku_solver.py
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/doc/nest/examples/pynest/synapsecollection.py
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/doc/nest/examples/pynest/testiaf.py
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/doc/nest/examples/pynest/tsodyks_depressing.py
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/doc/nest/examples/pynest/tsodyks_facilitating.py
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/doc/nest/examples/pynest/twoneurons.py
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/doc/nest/examples/pynest/urbanczik_synapse_example.py
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/doc/nest/examples/pynest/vinit_example.py
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/doc/nest/LICENSE
+-- Installing: /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/share/doc/nest/README.md
+=== [Mon Jul 13 18:25:12 CEST 2026] verify flags ===
+-O3
+=== [Mon Jul 13 18:25:13 CEST 2026] BUILD DONE -> /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install ===

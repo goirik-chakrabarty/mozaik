@@ -7,3 +7,22 @@ build
 cover
 .coverage
 AGENTS.md
+
+# --- large run artifacts / logs / datastores: keep OUT of git (on-disk only; see ROLLBACK) ---
+_build/
+slurm_s500/
+slurm_scale/
+slurm_test3/
+slurm_neo14_leg1/
+slurm_neo14_smoke/
+/array.out
+/jit_test.out
+/nohup.out
+/psth.out
+/slurm-*.out
+# slurm_neo14_pytest: keep scripts + small logs, drop multi-MB sbatch stderrs
+slurm_neo14_pytest/repro-test3-*.err
+slurm_neo14_pytest/neo12ovr-test3-*.err
+# sim datastores (never track)
+*_____/
+*_____*:*/

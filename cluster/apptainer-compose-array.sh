@@ -30,6 +30,13 @@ export VECLIB_MAXIMUM_THREADS=${OMP_NUM_THREADS:-4}
 export NTASKS=${SLURM_NTASKS:-12}
 
 echo "Starting Mozaik Container..."
+# Optional input-dataset override: only injected when BASE_PATH is set, so confs that don't set it
+# produce a byte-identical apptainer argv (keeps the P1_launch golden gate green).
+BASE_PATH_ARG=()
+if [ -n "${BASE_PATH:-}" ]; then
+  BASE_PATH_ARG=(--env "BASE_PATH=$BASE_PATH")
+  echo "BASE_PATH override: $BASE_PATH"
+fi
 apptainer exec \
  --cleanenv \
  --env OMPI_MCA_orte_tmpdir_base=/tmp \
@@ -38,6 +45,7 @@ apptainer exec \
  --env CHUNK="$CHUNK" \
  --env CHUNK_DIR="${CHUNK_DIR:-/data/mozaik_chunk}" \
  --env PARAM_FILE="${PARAM_FILE:-param/defaults}" \
+ "${BASE_PATH_ARG[@]}" \
  --env OMP_NUM_THREADS=$OMP_NUM_THREADS \
  --env MKL_NUM_THREADS=$MKL_NUM_THREADS \
  --env OPENBLAS_NUM_THREADS=$OPENBLAS_NUM_THREADS \

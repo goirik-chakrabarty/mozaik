@@ -1,0 +1,40 @@
+=== sanity: which NEST + its build flags ===
+/mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/bin/nest-config
+-O3
+
+              -- N E S T --
+  Copyright (C) 2004 The NEST Initiative
+
+ Version: 3.4
+ Built: Jul 13 2026 18:21:23
+
+ This program is provided AS IS and comes with
+ NO WARRANTY. See the file LICENSE for details.
+
+ Problems or suggestions?
+   Visit https://www.nest-simulator.org
+
+ Type 'nest.help()' to find out more about NEST.
+
+nest module -> /mnt/vast-nhr/projects/nix00014/goirik/tmp/nest-o3-validate/nest-o3-install/lib/python3.10/site-packages/nest
+(expect: nest module path under nest-o3-install; flags -O3 and NO -march/-mtune)
+
+=== pytest LSV1M_tiny spikes+voltages (scratch -O3 NEST) ===
+============================= test session starts ==============================
+platform linux -- Python 3.10.12, pytest-9.1.1, pluggy-1.6.0 -- /opt/mozaik/bin/python
+cachedir: .pytest_cache
+rootdir: /mozaik
+configfile: pyproject.toml
+plugins: anyio-4.14.1, timeout-2.4.0, xdist-3.8.0
+collecting ... collected 8 items
+
+tests/full_model/test_models.py::TestLSV1MTiny::test_spikes[V1_Exc_L4] PASSED [ 12%]
+tests/full_model/test_models.py::TestLSV1MTiny::test_spikes[V1_Inh_L4] PASSED [ 25%]
+tests/full_model/test_models.py::TestLSV1MTiny::test_spikes[V1_Exc_L2/3] PASSED [ 37%]
+tests/full_model/test_models.py::TestLSV1MTiny::test_spikes[V1_Inh_L2/3] PASSED [ 50%]
+tests/full_model/test_models.py::TestLSV1MTiny::test_voltages[V1_Exc_L4] PASSED [ 62%]
+tests/full_model/test_models.py::TestLSV1MTiny::test_voltages[V1_Inh_L4] PASSED [ 75%]
+tests/full_model/test_models.py::TestLSV1MTiny::test_voltages[V1_Exc_L2/3] PASSED [ 87%]
+tests/full_model/test_models.py::TestLSV1MTiny::test_voltages[V1_Inh_L2/3] PASSED [100%]
+
+============================== 8 passed in 41.90s ==============================

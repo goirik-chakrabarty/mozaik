@@ -38,7 +38,8 @@ case "$WORKLOAD" in
     export CHUNK=$(( ${SLURM_ARRAY_TASK_ID:-0} % N_CHUNKS ))
     export CHUNK_DIR   # empty -> compose default /data/mozaik_chunk
     export SIF_IMAGE PARAM_FILE   # empty -> compose/runner defaults (old sif, param/defaults)
-    echo "Sim: TRIAL=$TRIAL CHUNK=$CHUNK (N_CHUNKS=$N_CHUNKS) CHUNK_DIR=${CHUNK_DIR:-<default>} SIF=${SIF_IMAGE:-<default>} PARAM=${PARAM_FILE:-<default>}"
+    export BASE_PATH   # empty -> compose skips the --env (byte-identical argv); set to override input dataset
+    echo "Sim: TRIAL=$TRIAL CHUNK=$CHUNK (N_CHUNKS=$N_CHUNKS) CHUNK_DIR=${CHUNK_DIR:-<default>} SIF=${SIF_IMAGE:-<default>} PARAM=${PARAM_FILE:-<default>} BASE_PATH=${BASE_PATH:-<default>}"
     bash cluster/apptainer-compose-array.sh
     ;;
   export)
