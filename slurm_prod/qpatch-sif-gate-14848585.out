@@ -1,0 +1,65 @@
+=== certifying baked SIF: mozaik-opt-qpatch_2026-07-14.sif ===
+quantities patch: True
+neo patch: True
+
+########## test_models.py :: VogelsAbbott + LSV1M_tiny + LSV1M_tiny_2024_LGN ##########
+============================= test session starts ==============================
+platform linux -- Python 3.10.12, pytest-9.1.1, pluggy-1.6.0 -- /opt/mozaik/bin/python
+cachedir: .pytest_cache
+rootdir: /mozaik
+configfile: pyproject.toml
+plugins: anyio-4.14.2, timeout-2.4.0, xdist-3.8.0
+collecting ... collected 34 items / 14 deselected / 20 selected
+
+tests/full_model/test_models.py::TestVogelsAbbott2005::test_spikes[Exc_Layer] PASSED [  5%]
+tests/full_model/test_models.py::TestVogelsAbbott2005::test_spikes[Inh_Layer] PASSED [ 10%]
+tests/full_model/test_models.py::TestVogelsAbbott2005::test_voltages[Exc_Layer] PASSED [ 15%]
+tests/full_model/test_models.py::TestVogelsAbbott2005::test_voltages[Inh_Layer] PASSED [ 20%]
+tests/full_model/test_models.py::TestLSV1MTiny::test_spikes[V1_Exc_L4] PASSED [ 25%]
+tests/full_model/test_models.py::TestLSV1MTiny::test_spikes[V1_Inh_L4] PASSED [ 30%]
+tests/full_model/test_models.py::TestLSV1MTiny::test_spikes[V1_Exc_L2/3] PASSED [ 35%]
+tests/full_model/test_models.py::TestLSV1MTiny::test_spikes[V1_Inh_L2/3] PASSED [ 40%]
+tests/full_model/test_models.py::TestLSV1MTiny::test_voltages[V1_Exc_L4] PASSED [ 45%]
+tests/full_model/test_models.py::TestLSV1MTiny::test_voltages[V1_Inh_L4] PASSED [ 50%]
+tests/full_model/test_models.py::TestLSV1MTiny::test_voltages[V1_Exc_L2/3] PASSED [ 55%]
+tests/full_model/test_models.py::TestLSV1MTiny::test_voltages[V1_Inh_L2/3] PASSED [ 60%]
+tests/full_model/test_models.py::TestLSV1MTiny2024LGN::test_spikes[V1_Exc_L4] PASSED [ 65%]
+tests/full_model/test_models.py::TestLSV1MTiny2024LGN::test_spikes[V1_Inh_L4] PASSED [ 70%]
+tests/full_model/test_models.py::TestLSV1MTiny2024LGN::test_spikes[V1_Exc_L2/3] PASSED [ 75%]
+tests/full_model/test_models.py::TestLSV1MTiny2024LGN::test_spikes[V1_Inh_L2/3] PASSED [ 80%]
+tests/full_model/test_models.py::TestLSV1MTiny2024LGN::test_voltages[V1_Exc_L4] PASSED [ 85%]
+tests/full_model/test_models.py::TestLSV1MTiny2024LGN::test_voltages[V1_Inh_L4] PASSED [ 90%]
+tests/full_model/test_models.py::TestLSV1MTiny2024LGN::test_voltages[V1_Exc_L2/3] PASSED [ 95%]
+tests/full_model/test_models.py::TestLSV1MTiny2024LGN::test_voltages[V1_Inh_L2/3] PASSED [100%]
+
+================= 20 passed, 14 deselected in 94.09s (0:01:34) =================
+
+########## test_models_stepcurrentmodule.py ##########
+============================= test session starts ==============================
+platform linux -- Python 3.10.12, pytest-9.1.1, pluggy-1.6.0 -- /opt/mozaik/bin/python
+cachedir: .pytest_cache
+rootdir: /mozaik
+configfile: pyproject.toml
+plugins: anyio-4.14.2, timeout-2.4.0, xdist-3.8.0
+collecting ... collected 10 items
+
+tests/full_model/test_models_stepcurrentmodule.py::TestLSV1MTinyStepCurrentModule::test_spikes[X_ON] PASSED [ 10%]
+tests/full_model/test_models_stepcurrentmodule.py::TestLSV1MTinyStepCurrentModule::test_spikes[X_OFF] PASSED [ 20%]
+tests/full_model/test_models_stepcurrentmodule.py::TestLSV1MTinyStepCurrentModule::test_spikes[V1_Exc_L4] PASSED [ 30%]
+tests/full_model/test_models_stepcurrentmodule.py::TestLSV1MTinyStepCurrentModule::test_spikes[V1_Inh_L4] PASSED [ 40%]
+tests/full_model/test_models_stepcurrentmodule.py::TestLSV1MTinyStepCurrentModule::test_spikes[V1_Exc_L2/3] PASSED [ 50%]
+tests/full_model/test_models_stepcurrentmodule.py::TestLSV1MTinyStepCurrentModule::test_spikes[V1_Inh_L2/3] PASSED [ 60%]
+tests/full_model/test_models_stepcurrentmodule.py::TestLSV1MTinyStepCurrentModule::test_voltages[V1_Exc_L4] PASSED [ 70%]
+tests/full_model/test_models_stepcurrentmodule.py::TestLSV1MTinyStepCurrentModule::test_voltages[V1_Inh_L4] PASSED [ 80%]
+tests/full_model/test_models_stepcurrentmodule.py::TestLSV1MTinyStepCurrentModule::test_voltages[V1_Exc_L2/3] PASSED [ 90%]
+tests/full_model/test_models_stepcurrentmodule.py::TestLSV1MTinyStepCurrentModule::test_voltages[V1_Inh_L2/3] PASSED [100%]
+
+======================== 10 passed in 63.14s (0:01:03) =========================
+============ Job Information ===================================================
+Submitted: 2026-07-14T10:18:27
+Started: 2026-07-14T10:18:31
+Ended: 2026-07-14T10:21:15
+Elapsed: 3 min, Limit: 50 min, Difference: 47 min
+CPUs: 192, Nodes: 1
+Estimated credit Consumption: 3.60 core-hours
+================================================================================

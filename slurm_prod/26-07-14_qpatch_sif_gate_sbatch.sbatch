@@ -10,8 +10,8 @@
 #SBATCH --cpus-per-task=8
 #SBATCH --mem=64G
 #SBATCH --time=00:50:00
-#SBATCH --output=./slurm_neo14_pytest/qpatch-sif-gate-%j.out
-#SBATCH --error=./slurm_neo14_pytest/qpatch-sif-gate-%j.err
+#SBATCH --output=./slurm_prod/qpatch-sif-gate-%j.out
+#SBATCH --error=./slurm_prod/qpatch-sif-gate-%j.err
 
 set -uo pipefail
 module load apptainer

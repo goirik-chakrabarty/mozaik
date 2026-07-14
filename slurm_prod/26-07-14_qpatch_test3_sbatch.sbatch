@@ -1,8 +1,8 @@
 #!/bin/bash
-# Faithful test3 nt12 timing with the neopatch SIF (neo O(1) _contains baked in) PLUS the candidate
-# quantities registry-memoization patch bind-mounted on top (lever B). Golden conditions
-# (node-exclusive, 12x4, nomultithread, plain mpirun, OMP_NUM_THREADS only). Goal: total wall BELOW
-# golden 1015s / 16:55. Isolated run-name/seed, direct run.py, no rm -rf -> live S500 untouched.
+# PRODUCTION faithful test3 nt12 timing with the BAKED qpatch SIF (neo O(1) _contains + quantities
+# registry-memo, BOTH baked in — self-contained, gate-verified 30/30; no runtime bind-mounts).
+# Golden conditions (node-exclusive, 12x4, nomultithread, plain mpirun, OMP_NUM_THREADS only). Goal:
+# total wall BELOW golden 1015s / 16:55 (expect ~741s). Isolated run-name/seed, direct run.py, no rm -rf.
 #SBATCH --account=nix00014
 #SBATCH --job-name=qpatch-test3-nt12
 #SBATCH --partition=medium96s
@@ -13,8 +13,8 @@
 #SBATCH --hint=nomultithread
 #SBATCH --mem=250G
 #SBATCH --time=01:00:00
-#SBATCH --output=./slurm_neo14_pytest/qpatch-test3-%j.out
-#SBATCH --error=./slurm_neo14_pytest/qpatch-test3-%j.err
+#SBATCH --output=./slurm_prod/qpatch-test3-%j.out
+#SBATCH --error=./slurm_prod/qpatch-test3-%j.err
 
 set -euo pipefail
 module load apptainer
@@ -25,10 +25,8 @@ MOZAIK_ROOT="$PWD"
 PROJECT_ROOT="$PWD/../mozaik-models/experanto"
 EXPERANTO_ROOT="$PWD/../../experanto"
 DATA_ROOT=/mnt/vast-react/projects/neural_foundation_model
-SCR="$PWD/slurm_neo14_pytest"
-SIF="$PWD/../mozaik-sif/mozaik-opt-neopatch_2026-07-13.sif"
-QPATCH=/mnt/vast-nhr/projects/nix00014/goirik/tmp/neo-patch/quantities-0.16.4/registry.py
-QDST=/opt/mozaik/lib/python3.10/site-packages/quantities/registry.py
+SCR="$PWD/slurm_prod"
+SIF="$PWD/../mozaik-sif/mozaik-opt-qpatch_2026-07-14.sif"   # baked: neo _contains + quantities memo (self-contained)
 
 echo "=== qpatch test3 nt12 on $(hostname) $(date) === (golden=1015s; neopatch-only=913s)"
 SECONDS=0
@@ -41,6 +39,5 @@ apptainer exec --cleanenv \
   --env NTASKS="$SLURM_NTASKS" --env RUN_NAME=sb_qpatch --env NOISE_SEED=999985 \
   --bind "$PROJECT_ROOT:/project" --bind "$MOZAIK_ROOT:/mozaik" --bind "$EXPERANTO_ROOT:/experanto" \
   --bind "$DATA_ROOT:/data" --bind "$SCR:/scr" \
-  --bind "$QPATCH:$QDST" \
   "$SIF" bash /scr/26-07-13_smoke_run_sbatch.sh || echo "FAILED rc=$?"
 echo "=== sb_qpatch_WALL=${SECONDS}s  (golden test3 nt12 = 1015s / 16:55; neopatch-only ~913s) ==="

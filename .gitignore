@@ -27,3 +27,15 @@ slurm_neo14_pytest/neo12ovr-test3-*.err
 *_____/
 *_____*:*/
 slurm_neo14_pytest/patched-test3-*.err
+slurm_neo14_pytest/*speed*full*
+
+# run logs / profile dumps — keep OUT of git (bulk; results captured in small .out + committed summaries)
+*.prof
+slurm_prod/*.err
+slurm_neo14_pytest/prof-*.err
+slurm_neo14_pytest/qpatch-*.err
+slurm_neo14_pytest/verify-*.err
+slurm_neo14_pytest/*.log
+slurm_test33/
+tests/tools/MergedDatastore*/
+tests/full_model/models/mozaik-models/
