@@ -40,7 +40,7 @@ unset FTP_PROXY
 cd /mnt/vast-nhr/projects/nix00014/goirik/MOZAIK-new/mozaik
 
 PROJECT_ROOT="$PWD/../mozaik-models/experanto"
-SIF_IMAGE="$PWD/../mozaik-sif/mozaik-opt.sif"
+SIF_IMAGE="${SIF_IMAGE:-$PWD/../mozaik-sif/mozaik-opt-qpatch_2026-07-14.sif}"
 MOZAIK_ROOT="$PWD"
 DATA_ROOT="/mnt/vast-react/projects/neural_foundation_model"
 
