@@ -16,11 +16,18 @@ RUN_NAME="trial${TRIAL}_chunk${CHUNK}"
 NOISE_SEED=$(( TRIAL * 1000 + CHUNK ))
 DIR_NAME=$(python -c "from mozaik.tools.misc import result_directory_name; print(result_directory_name('${RUN_NAME}','SelfSustainedPushPull',{'lgn_stepcurrentsource_noise_seed':${NOISE_SEED}}))")
 
-echo "Running simulation with name: $RUN_NAME"
-echo "Cleaning up directory: $DIR_NAME"
+# Optional datastore redirect: when RESULTS_DIR is set (via the compose --env), pass it to run.py as
+# `results_dir` so the datastore lands at $RESULTS_DIR/$DIR_NAME (run.py eval()s override values, so it
+# must be a quoted python-string literal). result_directory_name EXCLUDES results_dir, so $DIR_NAME is
+# unchanged; cleanup must target the same redirected location. Unset -> empty array -> behavior identical.
+RESULTS_ARG=()
+[ -n "${RESULTS_DIR:-}" ] && RESULTS_ARG=(results_dir "'${RESULTS_DIR}/'")
 
-# 4. Remove the specific directory for THIS job only
-rm -rf "$DIR_NAME"
+echo "Running simulation with name: $RUN_NAME"
+echo "Cleaning up directory: ${RESULTS_DIR:+$RESULTS_DIR/}$DIR_NAME"
+
+# 4. Remove the specific directory for THIS job only (redirected to $RESULTS_DIR when set)
+rm -rf "${RESULTS_DIR:+$RESULTS_DIR/}$DIR_NAME"
 
 echo "--- Starting Simulation (Internal MPI) ---"
 echo "Host Thread Limit Check: OMP_NUM_THREADS=$OMP_NUM_THREADS"
@@ -38,4 +45,4 @@ mpirun \
     -x MKL_NUM_THREADS \
     -x OPENBLAS_NUM_THREADS \
     -x PYTHONPATH \
-    python -u run.py nest $NTASKS "${PARAM_FILE:-param/defaults}" lgn_stepcurrentsource_noise_seed $NOISE_SEED "$RUN_NAME"
+    python -u run.py nest $NTASKS "${PARAM_FILE:-param/defaults}" lgn_stepcurrentsource_noise_seed $NOISE_SEED "${RESULTS_ARG[@]}" "$RUN_NAME"

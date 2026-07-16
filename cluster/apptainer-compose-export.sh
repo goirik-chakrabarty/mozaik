@@ -19,6 +19,14 @@ export NUMEXPR_NUM_THREADS=${OMP_NUM_THREADS:-4}
 export VECLIB_MAXIMUM_THREADS=${OMP_NUM_THREADS:-4}
 
 echo "Starting export container for trial ${TRIAL}..."
+# Optional workspace bind (byte-identical pattern): only injected when WORKSPACE is set, so gated
+# export confs keep the P1_launch golden green. Lets export read datastores under /ws (set
+# DATASTORE_PREFIX=/ws/... and OUTPUT_PREFIX=/ws/... in the conf) — the paired change to the sim redirect.
+WORKSPACE_ARG=()
+if [ -n "${WORKSPACE:-}" ]; then
+  WORKSPACE_ARG=(--bind "$WORKSPACE:/ws")
+  echo "WORKSPACE bind: $WORKSPACE -> /ws"
+fi
 apptainer exec \
  --cleanenv \
  --env PYTHONPATH="/mozaik:$PYTHONPATH" \
@@ -40,5 +48,6 @@ apptainer exec \
  --bind "$MOZAIK_ROOT:/mozaik" \
  --bind "$EXPERANTO_ROOT:/experanto" \
  --bind "$DATA_ROOT:/data" \
+ "${WORKSPACE_ARG[@]}" \
  "$SIF_IMAGE" \
  bash cluster/runners/mozaik-export-array.sh

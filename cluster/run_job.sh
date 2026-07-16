@@ -39,14 +39,16 @@ case "$WORKLOAD" in
     export CHUNK_DIR   # empty -> compose default /data/mozaik_chunk
     export SIF_IMAGE PARAM_FILE   # empty -> compose/runner defaults (old sif, param/defaults)
     export BASE_PATH   # empty -> compose skips the --env (byte-identical argv); set to override input dataset
-    echo "Sim: TRIAL=$TRIAL CHUNK=$CHUNK (N_CHUNKS=$N_CHUNKS) CHUNK_DIR=${CHUNK_DIR:-<default>} SIF=${SIF_IMAGE:-<default>} PARAM=${PARAM_FILE:-<default>} BASE_PATH=${BASE_PATH:-<default>}"
+    export RESULTS_DIR WORKSPACE   # empty -> compose skips the redirect/bind (byte-identical argv); set to redirect the datastore to a bound workspace
+    echo "Sim: TRIAL=$TRIAL CHUNK=$CHUNK (N_CHUNKS=$N_CHUNKS) CHUNK_DIR=${CHUNK_DIR:-<default>} SIF=${SIF_IMAGE:-<default>} PARAM=${PARAM_FILE:-<default>} BASE_PATH=${BASE_PATH:-<default>} RESULTS_DIR=${RESULTS_DIR:-<default>} WORKSPACE=${WORKSPACE:-<default>}"
     bash cluster/apptainer-compose-array.sh
     ;;
   export)
     export TRIAL="${SLURM_ARRAY_TASK_ID:-1}"
     # Any of these left unset by the config export as empty -> compose applies its own defaults.
     export N_CHUNKS CHUNK_START CHUNK_END BATCH_SIZE EXPORT_MODE CHUNK_DIR OUTPUT_PREFIX DATASTORE_PREFIX MODALITY_FILTER SIF_IMAGE
-    echo "Export: TRIAL=$TRIAL"
+    export WORKSPACE   # empty -> compose skips the --bind (byte-identical argv); set to read datastores under /ws
+    echo "Export: TRIAL=$TRIAL WORKSPACE=${WORKSPACE:-<default>}"
     bash cluster/apptainer-compose-export.sh
     ;;
   *)
