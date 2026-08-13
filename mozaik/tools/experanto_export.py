@@ -17,7 +17,14 @@ POST_BLANK_MS = 49.0
 # Canonical export order for sheets when multiple are exported into one spikes.npy. Sheets not listed
 # here are appended in sorted-name order, so unit indexing stays deterministic across trials/runs while
 # still handling models that add new sheets. See docs/plan/updating-mozaik/2026-08-13_multi-sheet-export.md.
-_SHEET_PRIORITY = ["X_ON", "X_OFF", "V1_Exc_L4", "V1_Inh_L4", "V1_Exc_L2/3", "V1_Inh_L2/3"]
+_SHEET_PRIORITY = [
+    "X_ON",
+    "X_OFF",
+    "V1_Exc_L4",
+    "V1_Inh_L4",
+    "V1_Exc_L2/3",
+    "V1_Inh_L2/3",
+]
 
 
 def canonical_sheet_order(found):
@@ -113,7 +120,9 @@ class MozaikTrialExporter:
         # recorded spiketrains in the DSV (discovered on the first batch). A list restricts to a subset.
         # Sheets are laid out contiguously in canonical_sheet_order(); the per-sheet unit boundaries are
         # recorded in meta.yml (`sheets`/`sheet_unit_indices`/`n_signals_layerwise`).
-        self.sheet_names_requested = list(sheet_names) if sheet_names is not None else None
+        self.sheet_names_requested = (
+            list(sheet_names) if sheet_names is not None else None
+        )
         self.sheet_names = None  # resolved (ordered) sheet list, set on first data
         self.sheet_unit_counts = None  # units per sheet, aligned with self.sheet_names
         self.sheet_unit_indices = None  # CSR boundaries, len == len(sheet_names)+1
@@ -265,7 +274,9 @@ class MozaikTrialExporter:
         A presentation is blank or non-blank for all sheets simultaneously (same stimulus), so at the
         first non-blank presentation every sheet has spiketrains to size from.
         """
-        counts = [len(segs_by_sheet[sn][i][0].get_spiketrains()) for sn in self.sheet_names]
+        counts = [
+            len(segs_by_sheet[sn][i][0].get_spiketrains()) for sn in self.sheet_names
+        ]
         indices = [0]
         for c in counts:
             indices.append(indices[-1] + c)
@@ -317,7 +328,11 @@ class MozaikTrialExporter:
             raise ValueError(f"Unequal segment counts across sheets: {lengths}")
 
         ref = sheet_names[0]
-        n_blanks = sum(1 for j in range(n_pres) if segs_by_sheet[ref][j][1].get(self.stim_name_key) is None)
+        n_blanks = sum(
+            1
+            for j in range(n_pres)
+            if segs_by_sheet[ref][j][1].get(self.stim_name_key) is None
+        )
         n_stim = n_pres - n_blanks
         print(
             f"  Scan total: {time.time() - scan_t0:.1f}s — {n_pres} presentations × "

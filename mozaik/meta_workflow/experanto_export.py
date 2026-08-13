@@ -29,8 +29,10 @@ from parameters import ParameterSet
 try:  # tqdm is only present in the export container; degrade gracefully elsewhere.
     from tqdm import tqdm
 except ImportError:  # pragma: no cover
+
     def tqdm(iterable, *args, **kwargs):
         return iterable
+
 
 DEFAULT_MODEL_NAME = "SelfSustainedPushPull"
 
@@ -89,8 +91,12 @@ def _make_spike_exporter(output_dir, trial_id, sampling_rate, append_mode, sheet
 
 
 def _make_screen_exporter(
-    output_dir, chunk_paths, frame_duration_ms, movie_frame_duration_ms,
-    modality_filter, tier_reference,
+    output_dir,
+    chunk_paths,
+    frame_duration_ms,
+    movie_frame_duration_ms,
+    modality_filter,
+    tier_reference,
 ):
     return MozaikScreenExporter(
         output_dir=output_dir,
@@ -127,13 +133,19 @@ def export_dsvs_to_experanto(
     """
     dsvs = dsv_list if isinstance(dsv_list, (list, tuple)) else [dsv_list]
     if export_spikes:
-        spikes = _make_spike_exporter(output_dir, trial_id, sampling_rate, append_mode, sheet_names)
+        spikes = _make_spike_exporter(
+            output_dir, trial_id, sampling_rate, append_mode, sheet_names
+        )
         spikes.process_batch(dsvs)
         spikes.finalize()
     if export_screen:
         screen = _make_screen_exporter(
-            output_dir, chunk_paths, frame_duration_ms, movie_frame_duration_ms,
-            modality_filter, tier_reference,
+            output_dir,
+            chunk_paths,
+            frame_duration_ms,
+            movie_frame_duration_ms,
+            modality_filter,
+            tier_reference,
         )
         screen.process_batch(dsvs)
         screen.finalize()
@@ -179,15 +191,23 @@ def run_experanto_export(
         experiment_dir = output_dir_for_trial(trial)
 
         spike_exporter = (
-            _make_spike_exporter(experiment_dir, trial, sampling_rate, is_resume, sheet_names)
-            if export_spikes else None
+            _make_spike_exporter(
+                experiment_dir, trial, sampling_rate, is_resume, sheet_names
+            )
+            if export_spikes
+            else None
         )
         screen_exporter = (
             _make_screen_exporter(
-                experiment_dir, chunk_paths_for_trial(trial), frame_duration_ms,
-                movie_frame_duration_ms, modality_filter, tier_reference,
+                experiment_dir,
+                chunk_paths_for_trial(trial),
+                frame_duration_ms,
+                movie_frame_duration_ms,
+                modality_filter,
+                tier_reference,
             )
-            if export_screen else None
+            if export_screen
+            else None
         )
 
         if screen_only:
