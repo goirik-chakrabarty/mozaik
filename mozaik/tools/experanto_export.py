@@ -40,9 +40,8 @@ def load_tier_reference(combined_meta_path):
     """Build a condition_hash → tier mapping from an existing combined_meta.json.
 
     When multiple entries share the same condition_hash, the first non-blank
-    tier encountered wins. This lets you pass the original (mouse) dataset's
-    combined_meta.json to preserve its train/validation/test splits in a
-    Mozaik re-export.
+    tier encountered wins. This enables passing a combined_meta.json to preserve
+    train/validation/test splits from a source dataset in a Mozaik re-export.
 
     Parameters
     ----------
