@@ -23,7 +23,6 @@ import os
 from mozaik.storage.datastore import PickledDataStore
 from mozaik.storage.queries import param_filter_query
 from mozaik.tools.experanto_export import MozaikScreenExporter, MozaikTrialExporter
-from mozaik.tools.misc import result_directory_name
 from parameters import ParameterSet
 
 try:  # tqdm is only present in the export container; degrade gracefully elsewhere.
@@ -40,11 +39,9 @@ DEFAULT_MODEL_NAME = "SelfSustainedPushPull"
 def resolve_datastore(datastore_prefix, trial, chunk, model_name=DEFAULT_MODEL_NAME):
     """Resolve the datastore directory for one ``(trial, chunk)``.
 
-    Globs the stable prefix ``<model_name>_trial{t}_chunk{c}_____*`` (agnostic to which seed the sim
-    used to disambiguate the run — old ``lgn_stepcurrentsource_noise_seed`` / ``lgn_stepcurre_<sha1>``
-    naming, or the new three-seed ``simulation_seed`` naming). Exactly one match -> that dir; several
-    -> ``RuntimeError``; none -> fall back to the historical explicit name via
-    ``result_directory_name`` (backward compatible).
+    Globs the stable prefix ``<model_name>_trial{t}_chunk{c}_____*``.
+    Exactly one match returns that directory; multiple matches raise
+    ``RuntimeError``; no matches raise ``FileNotFoundError``.
     """
     run_prefix = f"{model_name}_trial{trial}_chunk{chunk}_____"
     matches = sorted(glob.glob(os.path.join(datastore_prefix, run_prefix + "*")))
@@ -55,14 +52,7 @@ def resolve_datastore(datastore_prefix, trial, chunk, model_name=DEFAULT_MODEL_N
             f"Ambiguous datastore for trial{trial}_chunk{chunk}: {len(matches)} dirs match "
             f"'{run_prefix}*' under {datastore_prefix!r}: {[os.path.basename(m) for m in matches]}"
         )
-    # No glob match — fall back to the old-scheme explicit name.
-    seed = trial * 1000 + chunk
-    ddir = result_directory_name(
-        f"trial{trial}_chunk{chunk}",
-        model_name,
-        {"lgn_stepcurrentsource_noise_seed": seed},
-    )
-    return os.path.join(datastore_prefix, ddir)
+    raise FileNotFoundError(f"No datastore match for trial{trial}_chunk{chunk}")
 
 
 def open_datastore_dsv(path):
