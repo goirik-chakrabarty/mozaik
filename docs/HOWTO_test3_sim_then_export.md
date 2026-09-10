@@ -261,10 +261,10 @@ just wrote.)
 
 ## Seed scheme (three-stream, on csng)
 
-`param/defaults` is on the three-seed schema:
-`model_seed=1023` (was `mozaik_seed`+`pynn_seed`), `simulation_seed=1` (was
-`lgn_stepcurrentsource_noise_seed`; **nonzero** — NEST rejects `rng_seed=0`), `experiment_seed=0`.
-`controller.py` requires all three. Per-trial noise = vary `simulation_seed`.
+`param/defaults` is on the three-seed schema (`controller.py` requires all three):
+- `model_seed=1023` (was `mozaik_seed`+`pynn_seed`) — **network identity** (connectivity, positions, weights, sampling).
+- `simulation_seed=1` (was `lgn_stepcurrentsource_noise_seed`; **nonzero** — NEST rejects `rng_seed=0`) — **per-trial noise**; vary this per trial.
+- `experiment_seed=0` — **experiment-level RNG** (stimulus shuffling / random draws in shuffling experiments). `RandomizedExperanto` (this pipeline) presents the chunk in fixed order, so it has **no effect** on order here — the stimulus order is set offline by `generate_chunks.py --seed`.
 
 - **Direct `run.py … simulation_seed <n>`** (Workflow 2 above): ✅ works.
 - **The local cluster sim runner** still passes `lgn_stepcurrentsource_noise_seed`, which this branch

@@ -244,13 +244,19 @@ clock, so keep the two equal (`responses/meta.yml:end_time == screen/timestamps.
 
 ## Seeds (three-stream)
 
-`param/defaults` uses `model_seed` / `simulation_seed` / `experiment_seed`:
+`param/defaults` uses three seeds, each driving its own RNG (`controller.py` → `mozaik.setup_mozaik_seeds`):
 
-| Seed | Holds | Varies |
-|---|---|---|
-| `model_seed=1023` | network identity (connectivity, positions, weights, sampling, stimulus order) | fixed across trials |
-| `experiment_seed=0` | experiment-level RNG | fixed |
-| `simulation_seed` | NEST kernel noise | **override per trial** (nonzero) for independent noise, same network |
+| Seed | Drives (RNG) | Governs | Varies |
+|---|---|---|---|
+| `model_seed=1023` | `model_rng` / `model_pynn_rng` | **network identity** — connectivity, neuron positions, weights, connector sampling | fixed across trials |
+| `simulation_seed` | `simulation_rng` | **NEST kernel noise** (per-trial background) — must be **nonzero** | **override per trial** (nonzero) for independent noise, same network |
+| `experiment_seed=0` | `experiment_rng` | **experiment-level RNG** — stimulus shuffling / random draws, in experiments that shuffle at runtime | fixed |
+
+> **Stimulus order for this pipeline is NOT set by a runtime seed.** `RandomizedExperanto` presents the
+> chunk **in the order written in the JSON**, with no runtime shuffle — so `experiment_seed` has no effect on
+> the order here (it matters only for shuffling experiments like the tuning protocols). The order is fixed
+> **offline** by `generate_chunks.py --seed` (Step 0), which shuffles per trial with `Random(seed + trial)`.
+> Treat that as the pipeline's fourth, build-time seed.
 
 Per-trial noise is set on the `run.py` CLI (`simulation_seed <n>`), **not** in the chunk JSON. The sim is
 bit-reproducible under fixed seeds. The seed refactor changed noise bit-for-bit vs the old
