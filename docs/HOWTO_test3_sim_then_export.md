@@ -238,9 +238,15 @@ printf '%s\n' '[{"modality":"image","file":"09943.yml","trial":0},{"modality":"i
 ```
 
 Run **Workflow 2** as above with those two changes (and `NRANKS` = your physical cores). What to expect: on a
-small 2-core interactive alloc this completed in **~21 min** and produced a valid multi-sheet shard (timeline
-invariant held, 6 sheets, cortex ~10× smaller); on a full CPU-partition allocation it is a few minutes. The
-full-scale run (full `density` + the video) is much longer — network build and video filtering dominate.
+small 2-core interactive alloc this completed in **~13–21 min** and produced a valid multi-sheet shard; on a
+full CPU-partition allocation it is a few minutes. The full-scale run (full `density` + the video) is much
+longer — network build and video filtering dominate.
+
+**A successful smoke run (this exact fixture, `density=150`, images-only, `simulation_seed 1000`) yields:**
+6 sheets `[X_ON, X_OFF, V1_Exc_L4, V1_Inh_L4, V1_Exc_L2/3, V1_Inh_L2/3]` with `n_signals_layerwise =
+[7200, 7200, 3750, 937, 3750, 937]` (23,774 signals), **7 screen entries**, `end_time ≈ 1.946 s`, and the
+**timeline invariant holds** (`responses/meta.yml:end_time == screen/timestamps.npy[-1]`). Use these as a
+concrete target (the run is deterministic under fixed seeds, so the counts reproduce exactly).
 
 ---
 
@@ -330,6 +336,10 @@ just wrote.)
 ---
 
 ## Verify the export
+
+> ⚠️ The exported `.npy`/`.yml`/`.json` are plain files, but loading them needs **numpy + PyYAML**, which the
+> cluster login/host python usually does **not** have (`ModuleNotFoundError: numpy`). Run the checks **inside
+> the SIF** (`apptainer exec "$SIF" python - <<'PY' … PY`) or the project conda env — not the bare host python.
 
 - **PSTH notebook:** `mozaik-models/experanto/notebooks/verify_psth_export.ipynb` — point its config cell at
   the shard dir (`N_TRIALS=3`) and Run All: §1–6 check stimulus-locking; §7 compares export PSTHs vs
