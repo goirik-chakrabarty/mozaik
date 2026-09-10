@@ -10,6 +10,22 @@ generation, and export live in the sibling **`mozaik-models/experanto/`** projec
 general (any-dataset, any-chunk-count) runbook. For the tiny 3-trial smoke case with copy-paste commands
 see the workspace-level `HOWTO_test3_sim_then_export.md`.
 
+### The Experanto experiment family
+
+`RandomizedExperanto` is one of three subclasses of **`PixelMovieExperantoBase`** (`vision.py`), which owns
+the shared stimulus construction and timing (pre-blank → image → 49 ms post-blank; videos bare). The three
+differ only in **how they enumerate the stimuli** to present:
+
+| Class | Enumerates stimuli by | Status |
+|---|---|---|
+| **`RandomizedExperanto`** | an explicit, pre-computed **chunk JSON** (`chunk_dict_path`) | **production** — this HOWTO |
+| `MeasurePixelMovieExperanto` | scanning a whole Experanto **screen directory** (optionally windowed) | ad-hoc measurement |
+| `SingleMoviePixelMovieExperanto` | a single **movie file** presented as frame chunks | legacy, no live caller |
+
+Only `RandomizedExperanto` is documented here. Sibling protocols elsewhere in `vision.py`
+(`MeasureNaturalImages`, `MeasurePixelMovieFromFile`, …) are **not** part of the Experanto export pipeline
+and are out of scope.
+
 There are **two** ways to produce shards:
 
 | | **Workflow 1 — canonical (multi-chunk)** | **Workflow 2 — inline (single-chunk)** |
