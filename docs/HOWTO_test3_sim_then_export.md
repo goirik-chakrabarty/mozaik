@@ -129,7 +129,7 @@ experanto root (`/project`) unless `RESULTS_DIR`/`WORKSPACE` redirect it.
 
 ### Step 2 — Export (after the sim array is COMPLETED)
 ```bash
-SIF_IMAGE=$PWD/../mozaik-sif/<blessed>.sif \
+SIF_IMAGE=$PWD/../mozaik-sif/mozaik-opt-qpatch_2026-08-20.sif \
   ./cluster/submit.sh cluster/experiments/export-test3.conf
 ```
 `export-test3.conf`: `WORKLOAD=export`, `ARRAY=0-2`, `NTASKS=1`, `N_CHUNKS=1`, `CHUNK_START=0`,
@@ -152,39 +152,50 @@ separate export job, no `cluster/` tooling — this is the portable path.
 Invocation (e.g. on a compute node), using the bundled fixture:
 
 ```bash
-cd /mnt/vast-nhr/projects/nix00014/goirik/MOZAIK-new/mozaik
+cd /mnt/vast-nhr/projects/nix00014/goirik/MOZAIK-new/mozaik   # $PWD = mozaik repo ROOT
 module load apptainer
-SIF=$PWD/../mozaik-sif/<blessed>.sif       # see the LOG for the current freeze_time image
+SIF=$PWD/../mozaik-sif/mozaik-opt-qpatch_2026-08-20.sif   # freeze_time (pyNN 0.13.0) image; confirm in the LOG
 FIX=$PWD/docs/test3_fixture
+OUT=$HOME/scratch/test3_out; mkdir -p "$OUT"   # any writable dir — bound as /data for the shard output
+NRANKS=2                                        # = physical cores you have; one MPI rank per physical core
 
 apptainer exec --cleanenv \
   --env PYTHONPATH=/mozaik --env OMPI_MCA_orte_tmpdir_base=/tmp \
   --env TRIAL=0 --env CHUNK=0 --env CHUNK_DIR=/fixture/mozaik_chunk_test3 \
-  --env BASE_PATH=/fixture \
+  --env BASE_PATH=/fixture --env NRANKS=$NRANKS \
   --env OMP_NUM_THREADS=1 --env MKL_NUM_THREADS=1 --env OPENBLAS_NUM_THREADS=1 \
-  --bind "$PWD/mozaik:/mozaik" --bind "$PWD/../mozaik-models/experanto:/project" \
+  --bind "$PWD:/mozaik" --bind "$PWD/../mozaik-models/experanto:/project" \
   --bind "$PWD/../../experanto:/experanto" \
   --bind "$FIX:/fixture" \
-  --bind /mnt/vast-react/projects/neural_foundation_model:/data \
+  --bind "$OUT:/data" \
   "$SIF" bash -lc '
     unset HTTP_PROXY HTTPS_PROXY FTP_PROXY http_proxy https_proxy ftp_proxy
     cd /project
-    taskset -c 0-191 mpirun -n 12 --bind-to none --oversubscribe \
+    mpirun -n "$NRANKS" --oversubscribe \
       -x OMP_NUM_THREADS -x MKL_NUM_THREADS -x OPENBLAS_NUM_THREADS -x PYTHONPATH \
-      -x TRIAL -x CHUNK -x CHUNK_DIR -x BASE_PATH \
-      python -u run.py nest 12 param/defaults \
-        results_dir "'"'"'/data/<fresh-out-dir>/'"'"'" \
+      -x TRIAL -x CHUNK -x CHUNK_DIR -x BASE_PATH -x NRANKS \
+      python -u run.py nest "$NRANKS" param/defaults \
+        results_dir "'"'"'/data/t3out/'"'"'" \
         simulation_seed 1000 \
         trial0_chunk0_inline --export
   '
 ```
 
 Notes:
-- `--export` is stripped from `argv` before the mozaik CLI parses (so it can sit at the end).
+- **`--bind "$PWD:/mozaik"` binds the repo ROOT** (not `$PWD/mozaik`). With `PYTHONPATH=/mozaik`, `import mozaik`
+  resolves to `/mozaik/mozaik`; binding the package dir instead makes `import mozaik` fail. This is the single
+  most common way to get the run wrong.
+- **`/data` is your output** here — the stimuli come from `/fixture`, so bind any writable dir as `/data`
+  (`--bind "$OUT:/data"`) and the shard lands under it (`results_dir '/data/t3out/'`).
+- **Ranks:** `NRANKS` drives both `mpirun -n` and `nest N` (they must match); set it to your **physical** core
+  count, one rank per core (hyperthreads don't help NEST). `--oversubscribe` is here because a bare interactive
+  node reports one slot; on a proper SLURM task allocation you can drop it.
 - **`results_dir` must be a quoted Python-string literal** — mozaik `eval()`s override values, so a bare
-  `/data/...` fails. The `"'"'"'…'"'"'"` dance passes literal single quotes through the nested shells.
+  `/data/...` fails. Keep the `"'"'"'…'"'"'"` wrapper exactly as shown.
 - `simulation_seed` **must be nonzero** (NEST rejects `rng_seed=0`); it seeds the per-trial noise.
-- **Output:** `<datastore_dir>/experanto/{responses,screen}` — same shard format as Workflow 1.
+- **Harmless:** you will see `CMake … CMAKE_CXX_COMPILER not set` and a new `_build/` dir — ignore them. Most
+  of the wall time is retina/LGN filtering (independent of network size), so be patient on long stimuli.
+- **Output:** `/data/t3out/<datastore>/experanto/{responses,screen}` — same shard format as Workflow 1.
 
 *Validated 2026-08-04 on csng (sim 583 s, 12 ranks): shard structure + timeline invariant match the
 reference; spikes differ (new `simulation_seed`), as designed. See `experiments/LOG.md`.*

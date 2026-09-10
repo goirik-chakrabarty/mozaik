@@ -113,35 +113,47 @@ scheduler):
 ```bash
 cd /mnt/vast-nhr/projects/nix00014/goirik/MOZAIK-new/mozaik
 module load apptainer
-SIF=$PWD/../mozaik-sif/mozaik-opt-qpatch_2026-08-20.sif
+SIF=$PWD/../mozaik-sif/mozaik-opt-qpatch_2026-08-20.sif   # a freeze_time (pyNN 0.13.0) image; confirm in the LOG
 
 TRIAL=0 CHUNK=0                                   # ← the chunk to simulate
+NRANKS=12                                         # MPI ranks — set to the physical cores you allocated (see note)
 apptainer exec --cleanenv \
   --env PYTHONPATH=/mozaik --env OMPI_MCA_orte_tmpdir_base=/tmp \
   --env TRIAL=$TRIAL --env CHUNK=$CHUNK --env CHUNK_DIR=/data/mozaik_chunk \
-  --env BASE_PATH=/data/<input-screen-dataset> \
+  --env BASE_PATH=/data/<input-screen-dataset> --env NRANKS=$NRANKS \
   --env OMP_NUM_THREADS=1 --env MKL_NUM_THREADS=1 --env OPENBLAS_NUM_THREADS=1 \
-  --bind "$PWD/mozaik:/mozaik" --bind "$PWD/../mozaik-models/experanto:/project" \
+  --bind "$PWD:/mozaik" --bind "$PWD/../mozaik-models/experanto:/project" \
   --bind "$PWD/../../experanto:/experanto" \
   --bind /mnt/vast-react/projects/neural_foundation_model:/data \
   "$SIF" bash -lc '
     unset HTTP_PROXY HTTPS_PROXY FTP_PROXY http_proxy https_proxy ftp_proxy
     cd /project
-    taskset -c 0-191 mpirun -n 12 --bind-to none --oversubscribe \
+    mpirun -n "$NRANKS" \
       -x OMP_NUM_THREADS -x MKL_NUM_THREADS -x OPENBLAS_NUM_THREADS -x PYTHONPATH \
-      -x TRIAL -x CHUNK -x CHUNK_DIR -x BASE_PATH \
-      python -u run.py nest 12 param/defaults \
+      -x TRIAL -x CHUNK -x CHUNK_DIR -x BASE_PATH -x NRANKS \
+      python -u run.py nest "$NRANKS" param/defaults \
         results_dir "'"'"'/data/<fresh-out-dir>/'"'"'" \
         simulation_seed '"$(( TRIAL*1000 + CHUNK + 1 ))"' \
         trial'"$TRIAL"'_chunk'"$CHUNK"'
   '
 ```
 
+- **`--bind "$PWD:/mozaik"` binds the repo ROOT** (`$PWD`), not `$PWD/mozaik`. With `PYTHONPATH=/mozaik`,
+  `import mozaik` resolves to `/mozaik/mozaik` (the package). Binding the package dir `$PWD/mozaik` as `/mozaik`
+  makes `import mozaik` fail with `ModuleNotFoundError`. This matches the compose scripts' "mozaik root → /mozaik".
+- **Ranks:** `NRANKS` is used for **both** `mpirun -n` and `nest N` — they must match. Set it to the number of
+  **physical cores** you allocated; one rank per physical core (hyperthreads don't speed up NEST). On a proper
+  SLURM task allocation `mpirun -n "$NRANKS"` just works (this is what the cluster runner does). On a bare
+  interactive node where mpirun sees one slot, add `--oversubscribe` and pin with `taskset -c <your CPU list>`.
 - **Output:** one datastore per chunk,
   `SelfSustainedPushPull_trial{T}_chunk{C}_____simulation_seed:{n}/`, under `results_dir`.
 - **`results_dir` must be a quoted Python-string literal** — mozaik `eval()`s override values, so a bare
-  `/data/...` fails (hence the `"'"'"'…'"'"'"` quoting through the nested shells).
+  `/data/...` fails (hence the `"'"'"'…'"'"'"` quoting through the nested shells); keep that wrapper exactly.
 - **`simulation_seed` must be nonzero** (NEST rejects `rng_seed=0`); vary it per trial for per-trial noise.
+- **Harmless noise:** the container prints `CMake … CMAKE_CXX_COMPILER not set` (it tries to build a NEST
+  extension) and creates a `_build/` dir — ignore both. First-run wall time is dominated by retina/LGN
+  filtering, which is **independent of network size** — a large-stimulus (long-video) chunk can take far
+  longer than the NEST simulation itself.
 - To run **all** `(trial, chunk)` pairs, loop `idx = 0 .. n_trials*n_chunks-1` with
   `TRIAL = idx / N_CHUNKS`, `CHUNK = idx % N_CHUNKS` (a SLURM array is the natural fit).
 
@@ -184,10 +196,11 @@ DATASTORE_PREFIX=/data/<the results_dir the sim wrote to> \
 just-simulated chunk to a **full shard next to the datastore**, reusing the same exporter library. No
 separate export job; single chunk only (multi-chunk datasets → Workflow 1).
 
-Use the Step-1 invocation above and append `--export` to the `run.py` line:
+Use the Step-1 invocation above (same binds, `NRANKS`, and `mpirun`) and append `--export` to the `run.py`
+line:
 
 ```bash
-      python -u run.py nest 12 param/defaults \
+      python -u run.py nest "$NRANKS" param/defaults \
         results_dir "'"'"'/data/<fresh-out-dir>/'"'"'" \
         simulation_seed 1000 \
         trial0_chunk0_inline --export
