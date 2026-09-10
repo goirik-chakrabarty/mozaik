@@ -94,6 +94,9 @@ python ../mozaik-models/experanto/generate_chunks.py \
 > ⚠️ For Workflow 1, **read "Gotcha: datastore location" before the export** — the default sim and
 > export confs point at *different* datastore directories.
 
+> 💡 Just want to prove the pipeline works **fast**? See **"Fast smoke run (reduced scale)"** below —
+> cut the cortical `density` ~10× and use an images-only chunk to skip the slow video/LGN filtering.
+
 ---
 
 ## Prerequisites (both workflows)
@@ -199,6 +202,45 @@ Notes:
 
 *Validated 2026-08-04 on csng (sim 583 s, 12 ranks): shard structure + timeline invariant match the
 reference; spikes differ (new `simulation_seed`), as designed. See `experiments/LOG.md`.*
+
+---
+
+## Fast smoke run (reduced scale) — optional
+
+To prove the pipeline **mechanics** quickly (network → sim → export → a structurally valid, timeline-aligned
+shard) without waiting on a full-scale run, shrink two things.
+
+> ⚠️ **Smoke-test only.** The spikes and counts from a reduced run are **not scientifically meaningful** and
+> must **not** be used for the P1 golden, reproduction, or any result. Both edits below are local — revert
+> them before any real run.
+
+**1. Shrink the network (faster build + NEST sim).** Every cortical sheet size derives from a single knob:
+`density` in `mozaik-models/experanto/param/l4_cortex_exc` (the inhibitory and L2/3 sheets reference it via
+`ref()`). Cut it ~10×:
+
+```
+# mozaik-models/experanto/param/l4_cortex_exc
+'density': 150.0,   # was 1500.0  ->  exc sheets ~3,750 neurons (was ~37,500), inh ~937
+```
+
+Keep the reduction moderate (≈10×) so the populations stay large enough for the connectors to sample. The
+retina/LGN sheets are grid-based and unaffected (still ~7,200 each).
+
+**2. Drop the video (removes the real bottleneck).** Most of the wall time is retina/LGN filtering, which is
+**independent of network size** and is dominated by long videos (~0.55 s/frame — the fixture's 300-frame clip
+alone is minutes). For a quick run, use an images-only chunk instead of the generated one:
+
+```bash
+mkdir -p docs/test3_fixture/chunk_img_only
+printf '%s\n' '[{"modality":"image","file":"09943.yml","trial":0},{"modality":"image","file":"11353.yml","trial":0}]' \
+  > docs/test3_fixture/chunk_img_only/0_0.json
+# then in the Workflow 2 invocation, point CHUNK_DIR at it:  --env CHUNK_DIR=/fixture/chunk_img_only
+```
+
+Run **Workflow 2** as above with those two changes (and `NRANKS` = your physical cores). What to expect: on a
+small 2-core interactive alloc this completed in **~21 min** and produced a valid multi-sheet shard (timeline
+invariant held, 6 sheets, cortex ~10× smaller); on a full CPU-partition allocation it is a few minutes. The
+full-scale run (full `density` + the video) is much longer — network build and video filtering dominate.
 
 ---
 
